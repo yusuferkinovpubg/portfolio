@@ -1,0 +1,10 @@
+# Ignore raw original camera photos (850MB+) in root images/ to keep GitHub Pages fast & under limits
+/images/*.png
+/images/*.jpg
+/images/*.jpeg
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
