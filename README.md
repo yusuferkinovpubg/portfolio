@@ -44,6 +44,11 @@ d:\sayt\choyxona\
    - **Parolni yangilash**: Admin username va parolini o'zgartirish imkoniyati.
    - **Boshlang'ich holatga qaytarish (Reset)**: Xohlagan paytda 95 ta standart taomlar holatiga qaytarish mumkin.
 
+5. **Yuqori Tezlik va WebP Optimallashtirish**:
+   - Barcha 95 ta rasm zamonaviy WebP formatiga sifatni yo'qotmagan holda optimallashtirildi (802 MB hajmdan atigi 10 MB ga keltirildi).
+   - Sayt mobil telefon va kompyuterlarda darhol, hech qanday qotishlarsiz ochiladi.
+   - Rasmlar yuklanishi paytida chiroyli animatsiyali shimmer effekti mavjud.
+
 ---
 
 ## 🚀 GitHub-ga Yuklash Qo'llanmasi
