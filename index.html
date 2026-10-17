@@ -3,361 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sanzor kaboblar choyxonasi menyusi</title>
-  <meta name="description" content="Sanzor kaboblar choyxonasi rasmiy interaktiv elektron menyusi. Shirador olovli kaboblar, milliy taomlar, salatlar va salqin ichimliklar." />
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Choyxona Menyusi — Rasmlar Galereyasi</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Ornamental top decorative strip -->
-  <div class="ornament-strip"></div>
-
-  <!-- ================= SINGLE UNIFIED SITE HEADER ================= -->
+  <!-- ================= SINGLE MINIMALIST HEADER ================= -->
   <header class="site-header">
     <div class="header-inner">
-      <div class="brand-block">
-        <div class="brand-emblem" title="Sanzor Kabob">
-          🍢
-        </div>
-        <div>
-          <div class="brand-title" id="headerChoyxonaName">Sanzor kaboblar choyxonasi menyusi</div>
-          <div class="brand-meta">
-            <span style="font-size:12px; color:var(--text-muted); font-weight:600;">
-              📞 <a href="tel:+998945776772" style="color:inherit; text-decoration:none;">94 577-67-72</a> | 
-              <a href="tel:+998973292002" style="color:inherit; text-decoration:none;">97 329-20-02</a>
-            </span>
-            <select id="tableSelector" class="table-selector" onchange="updateSelectedTable(this.value)" title="Stol yoki so'rini tanlang">
-              <option value="1-So'ri (Chorpoya)">🪑 1-So'ri (Chorpoya)</option>
-              <option value="2-So'ri (Chorpoya)">🪑 2-So'ri (Chorpoya)</option>
-              <option value="3-So'ri (Favvora bo'yi)">🪑 3-So'ri (Favvora bo'yi)</option>
-              <option value="4-So'ri (Bog' ichi)">🪑 4-So'ri (Bog' ichi)</option>
-              <option value="VIP Xona 1">👑 VIP Xona 1</option>
-              <option value="VIP Xona 2">👑 VIP Xona 2</option>
-              <option value="Ichki Zal - 1-stol">🍽️ Ichki Zal - 1-stol</option>
-              <option value="Ichki Zal - 2-stol">🍽️ Ichki Zal - 2-stol</option>
-              <option value="Ichki Zal - 3-stol">🍽️ Ichki Zal - 3-stol</option>
-            </select>
-          </div>
-        </div>
+      <div class="brand" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <span class="brand-dot"></span>
+        <span class="brand-name">Choyxona Menyusi</span>
       </div>
 
-      <div class="header-center">
-        <div class="search-box">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="menuSearchInput" placeholder="Taom yoki kabob qidirish..." oninput="handleGlobalSearch()" />
-        </div>
-      </div>
-
-      <div class="header-actions">
-        <button class="btn-header btn-waiter" onclick="callWaiter()">
-          🔔 Ofitsiant
-        </button>
-
-        <!-- Shown when NOT logged in -->
-        <button class="btn-header btn-login-trigger" id="btnOpenLogin" onclick="openLoginModal()">
+      <div class="header-right">
+        <!-- Visible when logged out -->
+        <button class="btn" id="btnOpenLogin" type="button">
           👤 Kirish
         </button>
 
-        <!-- Shown inside the SAME header when logged in via Username -->
-        <div class="auth-user-group" id="authUserGroup">
-          <span class="user-chip">👤 <span id="loggedUsernameText">admin</span></span>
-          <button class="btn-header btn-add-top" onclick="openDishModal()">➕ Yangi tovar</button>
-          <button class="btn-header btn-manage-toggle" id="btnToggleManageView" onclick="toggleAdminView()">📊 Boshqaruv jadvali</button>
-          <button class="btn-header btn-logout" onclick="logoutAdmin()" title="Hisobdan chiqish">Chiqish</button>
+        <!-- Visible when logged in with Username -->
+        <div class="admin-controls-group" id="adminHeaderGroup">
+          <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
+          <button class="btn btn-gold" id="btnOpenAddModal" type="button">+ Tovar qo'shish</button>
+          <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish">⚙️ Parol</button>
+          <button class="btn btn-danger" id="btnLogout" type="button">Chiqish</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ================= STICKY CATEGORY NAVIGATION ================= -->
-  <nav class="category-bar-wrap" id="categoryBarWrap">
-    <div class="category-bar" id="categoryBar"></div>
+  <!-- ================= BO'LIMLAR (SECTIONS) ================= -->
+  <nav class="sections-nav">
+    <div class="sections-scroll" id="sectionsBar"></div>
   </nav>
 
-  <!-- ================= MAIN PAGE BODY ================= -->
-  <div class="page-container">
-    <main class="main-column">
+  <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY ================= -->
+  <main class="gallery-wrapper" id="galleryContainer"></main>
 
-      <!-- 1. MENU VIEW (Default for everyone; also has inline price/edit controls when logged in) -->
-      <section id="menuSectionView">
-        <div class="section-toolbar">
-          <h1 class="section-title" id="currentCategoryTitle">Barcha Taomlar</h1>
-          <div class="filter-pills">
-            <button class="filter-pill active" onclick="setTagFilter('all', this)">Barchasi</button>
-            <button class="filter-pill" onclick="setTagFilter('hit', this)">🔥 Xit taomlar</button>
-            <button class="filter-pill" onclick="setTagFilter('chef', this)">👨‍🍳 Oshpaz tavsiyasi</button>
-            <button class="filter-pill" onclick="setTagFilter('new', this)">✨ Yangi</button>
-          </div>
-        </div>
+  <!-- ================= SITE FOOTER ================= -->
+  <footer class="site-footer">
+    <p><strong>Choyxona Menyusi</strong> &copy; 2026. Barcha huquqlar himoyalangan.</p>
+    <p>Milliy taomlar, xushbo'y shashliklar, salqin ichimliklar va shirinliklar.</p>
+  </footer>
 
-        <div class="menu-grid" id="menuGrid"></div>
-      </section>
-
-      <!-- 2. ADMIN TABLE & SETTINGS SECTION (Toggled inside main column) -->
-      <section class="admin-section" id="adminSectionView">
-        <div class="admin-subnav">
-          <div class="admin-view-pills">
-            <button class="admin-pill-btn active" id="pillTabProducts" onclick="switchAdminSubTab('products')">🍲 Tovarlar va Narxlar Jadvali</button>
-            <button class="admin-pill-btn" id="pillTabOrders" onclick="switchAdminSubTab('orders')">📋 Kelib tushgan buyurtmalar (<span id="adminOrdersBadge">0</span>)</button>
-            <button class="admin-pill-btn" id="pillTabSettings" onclick="switchAdminSubTab('settings')">⚙️ Sozlamalar va Parol</button>
-          </div>
-          <button class="btn-outline" onclick="toggleAdminView()">← Menyu vitrinasiga qaytish</button>
-        </div>
-
-        <!-- Subtab A: Products & Prices Table -->
-        <div id="adminSubTabProducts">
-          <div class="admin-kpi-grid" id="adminKpiGrid"></div>
-
-          <div class="admin-action-bar">
-            <div class="admin-filters">
-              <select id="adminCatFilter" class="admin-select" onchange="renderAdminTable()"></select>
-              <div style="display:flex; align-items:center; gap:6px; background:#F6F3EC; padding:6px 12px; border-radius:10px; border:1px solid var(--border);">
-                <span style="font-size:12.5px; font-weight:700; color:#4A5955;">Ommaviy narx o'zgartirish:</span>
-                <button class="btn-outline" style="padding:4px 9px; font-size:12px;" onclick="bulkAdjustPrices(5)">+5%</button>
-                <button class="btn-outline" style="padding:4px 9px; font-size:12px;" onclick="bulkAdjustPrices(10)">+10%</button>
-                <button class="btn-outline" style="padding:4px 9px; font-size:12px;" onclick="bulkAdjustPrices(-5)">-5%</button>
-              </div>
-            </div>
-            <button class="btn-primary" onclick="openDishModal()">➕ Yangi tovar qo'shish</button>
-          </div>
-
-          <div class="admin-table-card">
-            <div class="admin-table-wrap">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Taom va Rasmi</th>
-                    <th>Kategoriya</th>
-                    <th>Porsiya / Vaqt</th>
-                    <th>Narxi (so'm)</th>
-                    <th>Sotuvda bor</th>
-                    <th>Amallar</th>
-                  </tr>
-                </thead>
-                <tbody id="adminTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Subtab B: Orders -->
-        <div id="adminSubTabOrders" style="display:none;">
-          <div class="admin-action-bar">
-            <h3 style="font-size:16px; color:var(--primary-dark);">Kelib tushgan buyurtmalar ro'yxati</h3>
-            <button class="btn-outline" onclick="clearAllOrdersHistory()">Tarixni tozalash</button>
-          </div>
-          <div id="adminOrdersList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(290px, 1fr)); gap:16px;"></div>
-        </div>
-
-        <!-- Subtab C: Settings & Username/Password -->
-        <div id="adminSubTabSettings" style="display:none;">
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-            <div class="admin-table-card" style="padding:22px;">
-              <h3 style="margin-bottom:14px; color:var(--primary-dark);">🏛️ Choyxona Ma'lumotlari</h3>
-              <div class="form-group" style="margin-bottom:12px;">
-                <label>Choyxona Nomi</label>
-                <input type="text" id="settingChoyxonaName" />
-              </div>
-              <div class="form-group" style="margin-bottom:16px;">
-                <label>Xizmat ko'rsatish foizi (%)</label>
-                <input type="number" id="settingServiceFee" min="0" max="30" />
-              </div>
-              <button class="btn-primary" onclick="saveGeneralSettings()">Saqlash</button>
-            </div>
-
-            <div class="admin-table-card" style="padding:22px;">
-              <h3 style="margin-bottom:14px; color:var(--primary-dark);">👤 Username va Parolni O'zgartirish</h3>
-              <div class="form-group" style="margin-bottom:12px;">
-                <label>Admin Username</label>
-                <input type="text" id="settingAdminUser" />
-              </div>
-              <div class="form-group" style="margin-bottom:16px;">
-                <label>Admin Parol</label>
-                <input type="text" id="settingAdminPass" />
-              </div>
-              <button class="btn-gold" onclick="saveCredentials()">Username va parolni yangilash</button>
-            </div>
-
-            <div class="admin-table-card" style="padding:22px;">
-              <h3 style="margin-bottom:10px; color:var(--primary-dark);">🔄 Ma'lumotlar Bazasi</h3>
-              <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.45;">
-                Barcha tovarlar va narxlar brauzer xotirasida (<code>localStorage</code>) saqlanadi. Menyuni JSON formatida yuklab olishingiz yoki dastlabki holatga qaytarishingiz mumkin.
-              </p>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn-outline" onclick="exportMenuJson()">📥 JSON Eksport</button>
-                <button class="btn-icon danger" onclick="resetToDefaultMenu()">⚠️ Boshlang'ich menyuni tiklash</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- ================= ORDER CART SIDEBAR ================= -->
-    <aside class="order-sidebar" id="orderSidebar">
-      <div class="order-header">
-        <h3>🧾 Buyurtma (<span id="orderCountBadge">0</span>)</h3>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button class="btn-clear-order" onclick="clearCart()">Tozalash</button>
-          <button class="btn-outline" id="btnCloseMobileCart" style="display:none; padding:4px 9px;" onclick="toggleMobileCart(false)">✕</button>
-        </div>
-      </div>
-
-      <div class="order-items-list" id="orderItemsList"></div>
-
-      <div class="order-summary-footer">
-        <div class="summary-line">
-          <span>Taomlar summasi:</span>
-          <strong id="subtotalText">0 so'm</strong>
-        </div>
-        <div class="summary-line">
-          <span>Xizmat (<span id="serviceFeePercentText">10</span>%):</span>
-          <strong id="serviceFeeText">0 so'm</strong>
-        </div>
-        <div class="summary-line total">
-          <span>Jami to'lov:</span>
-          <span id="grandTotalText">0 so'm</span>
-        </div>
-        <button class="btn-submit-order" id="btnSubmitOrder" onclick="submitOrder()" disabled>
-          Buyurtmani tasdiqlash
-        </button>
-      </div>
-    </aside>
-  </div>
-
-  <!-- Mobile / Tablet Sticky Bottom Cart Bar -->
-  <div class="mobile-cart-bar" id="mobileCartBar" onclick="toggleMobileCart(true)">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <span style="background:var(--gold); color:#121A18; font-weight:800; padding:4px 10px; border-radius:999px; font-size:13px;" id="mobileCartCount">0 ta</span>
-      <span style="font-weight:700; font-size:14.5px;">Savatchani ko'rish</span>
-    </div>
-    <strong style="font-size:16px; color:#F5C878;" id="mobileCartTotal">0 so'm</strong>
-  </div>
-
-  <!-- ================= MODALS ================= -->
-
-  <!-- 1. Username & Password Login Modal -->
+  <!-- ================= 1. LOGIN MODAL (USERNAME & PASSWORD) ================= -->
   <div class="modal-backdrop" id="loginModal">
-    <div class="modal-card" style="max-width:400px;">
-      <div class="modal-header">
-        <h3>👤 Tizimga kirish (Admin)</h3>
-        <button class="btn-close-modal" onclick="closeModal('loginModal')">×</button>
+    <div class="modal-box" style="max-width: 380px;">
+      <div class="modal-top">
+        <h3>Admin kirish</h3>
+        <button class="btn-close" type="button" data-close="loginModal">×</button>
       </div>
-      <form onsubmit="handleAdminLogin(event)">
+      <form id="loginForm">
         <div class="modal-body">
-          <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:14px;">
-            Yangi tovar qo'shish va narxlarni o'zgartirish uchun username hamda parolni kiriting.
-          </p>
-          <div class="form-group" style="margin-bottom:12px;">
-            <label>Username (Foydalanuvchi nomi)</label>
-            <input type="text" id="loginUsernameInput" placeholder="admin" required autocomplete="username" />
+          <div class="field">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="admin" required autocomplete="username" />
           </div>
-          <div class="form-group" style="margin-bottom:10px;">
-            <label>Parol</label>
-            <input type="password" id="loginPasswordInput" placeholder="••••" required autocomplete="current-password" />
+          <div class="field">
+            <label for="loginPassword">Parol</label>
+            <input type="password" id="loginPassword" placeholder="••••" required autocomplete="current-password" />
           </div>
-          <div id="loginErrorMsg" style="color:var(--danger); font-size:12.5px; font-weight:600; display:none; margin-top:6px;">
-            ❌ Username yoki parol noto'g'ri!
+          <div id="loginError" style="display:none; color:#FF8589; font-size:12.5px; font-weight:600;">
+            Username yoki parol noto'g'ri.
           </div>
-          <div style="margin-top:12px; padding:10px 12px; background:var(--gold-light); border-radius:10px; font-size:12px; color:#7A5010;">
-            💡 Standart kirish: Username: <code>admin</code> | Parol: <code>1234</code>
+          <div style="font-size:12px; color:var(--text-muted); background:#0D0D10; padding:10px 12px; border-radius:10px; border:1px solid var(--border-dark);">
+            Standart kirish: Username <strong style="color:var(--gold);">admin</strong> | Parol <strong style="color:var(--gold);">1234</strong>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-outline" onclick="closeModal('loginModal')">Bekor qilish</button>
-          <button type="submit" class="btn-primary">Kirish</button>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="loginModal">Bekor qilish</button>
+          <button class="btn btn-gold" type="submit">Kirish</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- 2. Add / Edit Dish Modal -->
-  <div class="modal-backdrop" id="dishFormModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 id="dishModalTitle">➕ Yangi Tovar Qo'shish</h3>
-        <button class="btn-close-modal" onclick="closeModal('dishFormModal')">×</button>
+  <!-- ================= 2. ADD / EDIT ITEM MODAL ================= -->
+  <div class="modal-backdrop" id="itemModal">
+    <div class="modal-box">
+      <div class="modal-top">
+        <h3 id="itemModalTitle">Yangi tovar qo'shish</h3>
+        <button class="btn-close" type="button" data-close="itemModal">×</button>
       </div>
-      <form onsubmit="saveDishForm(event)">
-        <input type="hidden" id="dishIdInput" />
+      <form id="itemForm">
+        <input type="hidden" id="itemIdInput" />
         <div class="modal-body">
-          <div class="form-grid">
-            <div class="form-group full">
-              <label>Taom yoki tovar nomi *</label>
-              <input type="text" id="dishNameInput" placeholder="Masalan: G'ijduvon Kabob" required />
-            </div>
+          <div class="field">
+            <label for="itemNameInput">Taom / Mahsulot nomi *</label>
+            <input type="text" id="itemNameInput" placeholder="Masalan: Samarqand Zig'ir Oshi" required />
+          </div>
 
-            <div class="form-group">
-              <label>Kategoriya *</label>
-              <select id="dishCatInput" required></select>
-            </div>
+          <div class="field">
+            <label for="itemSectionInput">Bo'lim *</label>
+            <select id="itemSectionInput" required></select>
+          </div>
 
-            <div class="form-group">
-              <label>Narxi (so'mda) *</label>
-              <input type="number" id="dishPriceInput" placeholder="26000" min="500" step="500" required />
-            </div>
+          <div class="field">
+            <label for="itemPriceInput">Narxi (so'm) *</label>
+            <input type="number" id="itemPriceInput" placeholder="55000" min="500" step="500" required />
+          </div>
 
-            <div class="form-group">
-              <label>O'lchov birligi / Porsiya *</label>
-              <input type="text" id="dishPortionInput" placeholder="1 six (120 g)" required />
-            </div>
+          <div class="field">
+            <label for="itemDescInput">Qisqacha ma'lumot / Tarkibi</label>
+            <textarea id="itemDescInput" rows="2" placeholder="Tarkibi, porsiya va tayyorlanish usuli..."></textarea>
+          </div>
 
-            <div class="form-group">
-              <label>Tayyorlanish vaqti</label>
-              <input type="text" id="dishTimeInput" placeholder="15 daq" />
-            </div>
+          <div class="field">
+            <label for="itemPresetPhoto">Galereyadagi rasmlardan tanlash</label>
+            <select id="itemPresetPhoto"></select>
+          </div>
 
-            <div class="form-group">
-              <label>Maxsus belgi</label>
-              <select id="dishBadgeInput">
-                <option value="">Belgisiz</option>
-                <option value="hit">🔥 Xit taom</option>
-                <option value="chef">👨‍🍳 Oshpaz tavsiyasi</option>
-                <option value="new">✨ Yangi</option>
-              </select>
-            </div>
-
-            <div class="form-group full">
-              <label>Rasm yuklash (ixtiyoriy — qurilmadan rasm tanlash)</label>
-              <input type="file" id="dishImageFileInput" accept="image/*" onchange="handleDishImageUpload(event)" />
-              <input type="hidden" id="dishCustomImageData" />
-            </div>
-
-            <div class="form-group full">
-              <label>Taom tarkibi va tavsifi *</label>
-              <textarea id="dishDescInput" rows="3" placeholder="Taom haqida mijozlar uchun qisqacha ma'lumot..." required></textarea>
-            </div>
+          <div class="field">
+            <label for="itemFileInput">Yoki qurilmadan yangi rasm yuklash</label>
+            <input type="file" id="itemFileInput" accept="image/*" />
+            <input type="hidden" id="itemCustomImageData" />
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn-outline" onclick="closeModal('dishFormModal')">Bekor qilish</button>
-          <button type="submit" class="btn-primary">Saqlash</button>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="itemModal">Bekor qilish</button>
+          <button class="btn btn-gold" type="submit">Saqlash</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- 3. Fullscreen Food Image Lightbox -->
-  <div class="image-lightbox-modal" id="dishImageLightbox" onclick="closeImageLightbox()">
-    <button class="lightbox-close-btn" onclick="closeImageLightbox()" title="Yopish (Esc)">✕</button>
-    <div class="lightbox-content" onclick="event.stopPropagation()">
-      <img id="lightboxImage" src="" alt="" onclick="closeImageLightbox()" title="Yopish uchun bosing" style="cursor:zoom-out;" />
-      <div class="lightbox-caption">
-        <h3 id="lightboxTitle"></h3>
-        <span id="lightboxPrice"></span>
+  <!-- ================= 3. CREDENTIALS & RESET MODAL ================= -->
+  <div class="modal-backdrop" id="credModal">
+    <div class="modal-box" style="max-width: 400px;">
+      <div class="modal-top">
+        <h3>Admin sozlamalari</h3>
+        <button class="btn-close" type="button" data-close="credModal">×</button>
+      </div>
+      <form id="credForm">
+        <div class="modal-body">
+          <div class="field">
+            <label for="newAdminUser">Yangi Username</label>
+            <input type="text" id="newAdminUser" required />
+          </div>
+          <div class="field">
+            <label for="newAdminPass">Yangi Parol</label>
+            <input type="text" id="newAdminPass" required />
+          </div>
+          <div style="border-top:1px solid var(--border-dark); padding-top:12px; margin-top:4px; display:flex; justify-content:space-between; align-items:center; gap: 8px;">
+            <span style="font-size:12.5px; color:var(--text-muted);">Standart rasmlarni tiklash:</span>
+            <button class="btn btn-danger" type="button" id="btnResetGallery">Boshlang'ich holat</button>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="credModal">Yopish</button>
+          <button class="btn btn-gold" type="submit">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 4. PHOTO LIGHTBOX MODAL ================= -->
+  <div class="modal-backdrop" id="lightboxModal">
+    <div class="lightbox-box">
+      <div class="modal-top">
+        <h3 id="lightboxTitle">Taom rasmi</h3>
+        <button class="btn-close" type="button" data-close="lightboxModal">×</button>
+      </div>
+      <img id="lightboxImage" src="" alt="Taom rasmi" />
+      <div style="padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <span id="lightboxDesc" style="font-size:13.5px; color:var(--text-muted);"></span>
+        <strong id="lightboxPrice" style="font-size:18px; color:var(--gold);"></strong>
       </div>
     </div>
   </div>
 
-  <!-- Toast Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- Toast xabarnomalar -->
+  <div class="toast-wrap" id="toastWrap"></div>
 
-  <!-- External Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Asosiy JavaScript kodi -->
+  <script src="script.js" defer></script>
 </body>
 </html>
