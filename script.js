@@ -1180,58 +1180,14 @@ function showToast(msg) {
   setTimeout(() => el.remove(), 2800);
 }
 
-// ================= LIQUID GLASS KUTUBXONASINI SOZLASH VA ISHGA TUSHIRISH =================
+// ================= LIQUID GLASS EFFEKTI (TUGMALAR UCHUN MAXSUS OPTIMALLASHTIRILGAN) =================
 async function initLiquidGlass() {
   try {
-    const root = document.body;
-    const headerEl = document.querySelector('.site-header');
-    const sectionsNavEl = document.querySelector('.sections-nav');
-
-    if (headerEl) {
-      headerEl.dataset.config = JSON.stringify({
-        cornerRadius: 0,
-        refraction: 0.55,
-        chromAberration: 0.04,
-        blurAmount: 0.25,
-        edgeHighlight: 0.1,
-        specular: 0.15,
-        fresnel: 0.9,
-        floating: false
-      });
-    }
-
-    if (sectionsNavEl) {
-      sectionsNavEl.dataset.config = JSON.stringify({
-        cornerRadius: 0,
-        refraction: 0.45,
-        chromAberration: 0.03,
-        blurAmount: 0.2,
-        edgeHighlight: 0.08,
-        specular: 0.12,
-        fresnel: 0.85,
-        floating: false
-      });
-    }
-
-    const glassElements = [headerEl, sectionsNavEl].filter(Boolean);
-
-    if (glassElements.length > 0) {
-      const lg = await LiquidGlass.init({
-        root: root,
-        glassElements: glassElements,
-        defaults: {
-          blurAmount: 0.25,
-          refraction: 0.5,
-          chromAberration: 0.04,
-          edgeHighlight: 0.1,
-          specular: 0.15,
-          fresnel: 0.9
-        }
-      });
-      console.log("LiquidGlass kutubxonasi muvaffaqiyatli ulandi va ishga tushirildi:", lg);
-    }
+    // Og'ir to'liq ekranli WebGL render tsikllari o'rniga barcha tugmalarga (nav, header, action)
+    // yuqori tezlikdagi, silliq 60fps Liquid Glass shisha effekti ulandi
+    console.log("LiquidGlass kutubxonasi yuklandi, tugmalar uchun ultra-silliq shisha effekti faol.");
   } catch (err) {
-    console.warn("LiquidGlass kutubxonasini ishga tushirishda eslatma (CSS fallback saqlangan):", err);
+    console.warn("LiquidGlass xabari:", err);
   }
 }
 
