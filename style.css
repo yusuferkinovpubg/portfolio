@@ -30,8 +30,8 @@ body {
   background-image: 
     radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.09), transparent 50%),
     linear-gradient(rgba(7, 7, 9, 0.82), rgba(7, 7, 9, 0.90)),
-    url('images/full-background.webp'),
-    url('images/full-background.jpg');
+    url('images/background.webp'),
+    url('images/background.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -317,8 +317,8 @@ body {
   background-color: #121217;
   background-image: 
     linear-gradient(rgba(10, 10, 14, 0.25), rgba(10, 10, 14, 0.25)),
-    url('images/background.webp'),
-    url('images/background.jpg');
+    url('images/full-background.webp'),
+    url('images/full-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -578,8 +578,8 @@ body {
   background-color: #08080C;
   background-image: 
     linear-gradient(rgba(10, 10, 14, 0.45), rgba(10, 10, 14, 0.45)),
-    url('images/background.webp'),
-    url('images/background.jpg');
+    url('images/full-background.webp'),
+    url('images/full-background.jpg');
   background-size: cover;
   background-position: center;
   display: block;
