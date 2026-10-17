@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- LiquidGlass WebGL sampling uchun fon qatlami -->
+  <img class="liquid-bg-layer" src="images/full-background.webp" alt="" aria-hidden="true" />
 
   <!-- ================= SINGLE MINIMALIST HEADER ================= -->
   <header class="site-header">
@@ -39,16 +41,16 @@
   </nav>
 
   <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY ================= -->
-  <main class="gallery-wrapper" id="galleryContainer"></main>
+  <main class="gallery-wrapper" id="galleryContainer" data-dynamic></main>
 
   <!-- ================= SITE FOOTER ================= -->
-  <footer class="site-footer">
+  <footer class="site-footer" data-dynamic>
     <p><strong>Choyxona Menyusi</strong> &copy; 2026. Barcha huquqlar himoyalangan.</p>
     <p>Milliy taomlar, xushbo'y shashliklar, salqin ichimliklar va shirinliklar.</p>
   </footer>
 
   <!-- ================= 1. LOGIN MODAL (USERNAME & PASSWORD) ================= -->
-  <div class="modal-backdrop" id="loginModal">
+  <div class="modal-backdrop" id="loginModal" data-dynamic>
     <div class="modal-box" style="max-width: 380px;">
       <div class="modal-top">
         <h3>Admin kirish</h3>
@@ -80,7 +82,7 @@
   </div>
 
   <!-- ================= 2. ADD / EDIT ITEM MODAL ================= -->
-  <div class="modal-backdrop" id="itemModal">
+  <div class="modal-backdrop" id="itemModal" data-dynamic>
     <div class="modal-box">
       <div class="modal-top">
         <h3 id="itemModalTitle">Yangi tovar qo'shish</h3>
@@ -129,7 +131,7 @@
   </div>
 
   <!-- ================= 3. CREDENTIALS & RESET MODAL ================= -->
-  <div class="modal-backdrop" id="credModal">
+  <div class="modal-backdrop" id="credModal" data-dynamic>
     <div class="modal-box" style="max-width: 400px;">
       <div class="modal-top">
         <h3>Admin sozlamalari</h3>
@@ -159,7 +161,7 @@
   </div>
 
   <!-- ================= 4. PHOTO LIGHTBOX MODAL ================= -->
-  <div class="modal-backdrop" id="lightboxModal">
+  <div class="modal-backdrop" id="lightboxModal" data-dynamic>
     <div class="lightbox-box">
       <div class="modal-top">
         <h3 id="lightboxTitle">Taom rasmi</h3>
@@ -176,9 +178,9 @@
   </div>
 
   <!-- Toast xabarnomalar -->
-  <div class="toast-wrap" id="toastWrap"></div>
+  <div class="toast-wrap" id="toastWrap" data-dynamic></div>
 
-  <!-- Asosiy JavaScript kodi -->
-  <script src="script.js" defer></script>
+  <!-- Asosiy JavaScript kodi (ES Module LiquidGlass bilan) -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
