@@ -1,4 +1,4 @@
-// ================= BO'LIMLAR (SECTIONS) =================
+﻿// ================= BO'LIMLAR (SECTIONS) =================
 const SECTIONS = [
   { id: 'all', name: 'Barchasi' },
   { id: 'asosiy', name: 'Milliy Taomlar' },
@@ -19,7 +19,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 38000,
     desc: "Qovurilgan qo'ziqorinlar, cherri pomidori, barra ko'katlar va maxsus zaytun sousi",
-    image: "images/030A0254.png"
+    image: "images/030A0254.webp"
   },
   {
     id: 'item_2',
@@ -27,7 +27,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 35000,
     desc: "Tilli va sabzavotli to'yimli an'anaviy salat, mayonezli maxsus sous bilan",
-    image: "images/030A0256.png"
+    image: "images/030A0256.webp"
   },
   {
     id: 'item_3',
@@ -35,7 +35,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 28000,
     desc: "Qizil lavlagi, tuzlangan bodring, no'xat, sabzi va xushbo'y o'simlik yog'i",
-    image: "images/030A0258.png"
+    image: "images/030A0258.webp"
   },
   {
     id: 'item_4',
@@ -43,7 +43,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 25000,
     desc: "Yangi yosh karam, bodring, ko'k piyoz va ko'katlar aralashmasi",
-    image: "images/030A0264.png"
+    image: "images/030A0264.webp"
   },
   {
     id: 'item_5',
@@ -51,7 +51,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 22000,
     desc: "Kashnich, shivit, rayhon, ko'k piyoz, yashil qalampir va turp",
-    image: "images/030A0266.png"
+    image: "images/030A0266.webp"
   },
   {
     id: 'item_6',
@@ -59,7 +59,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 26000,
     desc: "Yupqa to'g'ralgan shirin pomidor, piyoz, achchiq qalampir va barra anor donalari",
-    image: "images/030A0270.png"
+    image: "images/030A0270.webp"
   },
   {
     id: 'item_7',
@@ -67,7 +67,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 25000,
     desc: "Dala pomidori, bodring va rayhon barglari",
-    image: "images/030A0272.png"
+    image: "images/030A0272.webp"
   },
   {
     id: 'item_8',
@@ -75,7 +75,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 75000,
     desc: "Mavsumiy yangi mevalar: olma, nok, uzum, apelsin, kivi va banan",
-    image: "images/030A0278.png"
+    image: "images/030A0278.webp"
   },
   {
     id: 'item_9',
@@ -83,7 +83,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 45000,
     desc: "Saralangan shirin va xushbo'y dala qulupnayi",
-    image: "images/030A0281.png"
+    image: "images/030A0281.webp"
   },
   {
     id: 'item_10',
@@ -91,7 +91,7 @@ const DEFAULT_ITEMS = [
     section: 'shorva',
     price: 48000,
     desc: "Qo'y go'shti boldiri, butun kartoshka, sabzi va shifobaxsh tog' ziravorlari",
-    image: "images/030A0283.png"
+    image: "images/030A0283.webp"
   },
   {
     id: 'item_11',
@@ -99,7 +99,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 18000,
     desc: "Qatiqdan tayyorlangan xushbo'y suzma, ko'katlar va sarimsoq bilan",
-    image: "images/030A0284.png"
+    image: "images/030A0284.webp"
   },
   {
     id: 'item_12',
@@ -107,7 +107,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Yalpizli va rayhonli tabiiy qatiq ayroni (1 litr)",
-    image: "images/030A0288.png"
+    image: "images/030A0288.webp"
   },
   {
     id: 'item_13',
@@ -115,7 +115,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 22000,
     desc: "Tabiiy mevalardan tayyorlangan muzdek uy kompoti (1 litr)",
-    image: "images/030A0291.png"
+    image: "images/030A0291.webp"
   },
   {
     id: 'item_14',
@@ -123,7 +123,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 32000,
     desc: "Shokoladli, vanilli va qulupnayli qaymoqli muzqaymoq sharlari",
-    image: "images/030A0293.png"
+    image: "images/030A0293.webp"
   },
   {
     id: 'item_15',
@@ -131,7 +131,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 28000,
     desc: "Klassik vanilli muzqaymoq shokolad siropi bilan",
-    image: "images/030A0294.png"
+    image: "images/030A0294.webp"
   },
   {
     id: 'item_16',
@@ -139,7 +139,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 18000,
     desc: "Salqin gazlangan ichimlik Pepsi 1.5 litr",
-    image: "images/030A0297.png"
+    image: "images/030A0297.webp"
   },
   {
     id: 'item_17',
@@ -147,7 +147,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 18000,
     desc: "Klassik salqin ichimlik Coca-Cola 1.5 litr",
-    image: "images/030A0298.png"
+    image: "images/030A0298.webp"
   },
   {
     id: 'item_18',
@@ -155,7 +155,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 18000,
     desc: "Apelsinli yorqin gazlangan ichimlik Fanta 1.5 litr",
-    image: "images/030A0299.png"
+    image: "images/030A0299.webp"
   },
   {
     id: 'item_19',
@@ -163,7 +163,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Tabiiy yashil olma sharbati (1 litr)",
-    image: "images/030A0301.png"
+    image: "images/030A0301.webp"
   },
   {
     id: 'item_20',
@@ -171,7 +171,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Xushbo'y quyuq shaftoli sharbati (1 litr)",
-    image: "images/030A0302.png"
+    image: "images/030A0302.webp"
   },
   {
     id: 'item_21',
@@ -179,7 +179,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 22000,
     desc: "Foydali va nordon-shirin tabiiy anor sharbati (1 litr)",
-    image: "images/030A0303.png"
+    image: "images/030A0303.webp"
   },
   {
     id: 'item_22',
@@ -187,7 +187,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Tetislashtiruvchi sarxush olcha sharbati (1 litr)",
-    image: "images/030A0304.png"
+    image: "images/030A0304.webp"
   },
   {
     id: 'item_23',
@@ -195,7 +195,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Tropik va mahalliy mevalar nektari (1 litr)",
-    image: "images/030A0305.png"
+    image: "images/030A0305.webp"
   },
   {
     id: 'item_24',
@@ -203,7 +203,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Vitaminlarga boy apelsin sharbati (1 litr)",
-    image: "images/030A0306.png"
+    image: "images/030A0306.webp"
   },
   {
     id: 'item_25',
@@ -211,7 +211,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Tabiiy quyuq pomidor sharbati tuz bilan (1 litr)",
-    image: "images/030A0307.png"
+    image: "images/030A0307.webp"
   },
   {
     id: 'item_26',
@@ -219,7 +219,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 20000,
     desc: "Shirin va quyuq mayin o'rik sharbati (1 litr)",
-    image: "images/030A0308.png"
+    image: "images/030A0308.webp"
   },
   {
     id: 'item_27',
@@ -227,7 +227,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 22000,
     desc: "Tabiiy qora smorodina sharbati (1 litr)",
-    image: "images/030A0309.png"
+    image: "images/030A0309.webp"
   },
   {
     id: 'item_28',
@@ -235,7 +235,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi klassik Coca-Cola (250 ml)",
-    image: "images/030A0312.png"
+    image: "images/030A0312.webp"
   },
   {
     id: 'item_29',
@@ -243,7 +243,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi apelsinli Fanta (250 ml)",
-    image: "images/030A0313.png"
+    image: "images/030A0313.webp"
   },
   {
     id: 'item_30',
@@ -251,7 +251,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi limon-laymli Sprite (250 ml)",
-    image: "images/030A0314.png"
+    image: "images/030A0314.webp"
   },
   {
     id: 'item_31',
@@ -259,7 +259,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi salqin Pepsi (330 ml)",
-    image: "images/030A0315.png"
+    image: "images/030A0315.webp"
   },
   {
     id: 'item_32',
@@ -267,7 +267,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi klassik Coca-Cola (330 ml)",
-    image: "images/030A0317.png"
+    image: "images/030A0317.webp"
   },
   {
     id: 'item_33',
@@ -275,7 +275,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi apelsinli Fanta (330 ml)",
-    image: "images/030A0318.png"
+    image: "images/030A0318.webp"
   },
   {
     id: 'item_34',
@@ -283,7 +283,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi limonli Sprite (330 ml)",
-    image: "images/030A0319.png"
+    image: "images/030A0319.webp"
   },
   {
     id: 'item_35',
@@ -291,7 +291,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 14000,
     desc: "Shakarsiz salqin ichimlik Coca-Cola Zero (330 ml)",
-    image: "images/030A0320.png"
+    image: "images/030A0320.webp"
   },
   {
     id: 'item_36',
@@ -299,7 +299,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 28000,
     desc: "Moviy Kyurasao, Sprite, limon sharbati va muz",
-    image: "images/030A0326.png"
+    image: "images/030A0326.webp"
   },
   {
     id: 'item_37',
@@ -307,7 +307,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 28000,
     desc: "Yangi yalpiz, kivi, yashil olma siropi, laym va gazlangan suv",
-    image: "images/030A0332.png"
+    image: "images/030A0332.webp"
   },
   {
     id: 'item_38',
@@ -315,7 +315,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Barra yalpiz barglari, laym bo'laklari, shakar qiyomi va muz",
-    image: "images/030A0335.png"
+    image: "images/030A0335.webp"
   },
   {
     id: 'item_39',
@@ -323,7 +323,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 28000,
     desc: "Apelsin, greyfrut, limon va yangi meva sharbatlari bilan",
-    image: "images/030A0337.png"
+    image: "images/030A0337.webp"
   },
   {
     id: 'item_40',
@@ -331,7 +331,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 28000,
     desc: "Qulupnay pyuresi, yalpiz, laym va muzdek gazlangan suv",
-    image: "images/030A0339.png"
+    image: "images/030A0339.webp"
   },
   {
     id: 'item_41',
@@ -339,7 +339,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 30000,
     desc: "Egzotik mango, marakuya mevalari va sitrus aralashmasi",
-    image: "images/030A0341.png"
+    image: "images/030A0341.webp"
   },
   {
     id: 'item_42',
@@ -347,7 +347,7 @@ const DEFAULT_ITEMS = [
     section: 'asosiy',
     price: 88000,
     desc: "Maxsus qozonda qizartirilgan barra qo'y go'shti, oltinrang kartoshka va piyoz",
-    image: "images/030A0348.png"
+    image: "images/030A0348.webp"
   },
   {
     id: 'item_43',
@@ -355,7 +355,7 @@ const DEFAULT_ITEMS = [
     section: 'asosiy',
     price: 52000,
     desc: "Qo'lda cho'zilgan xushbo'y xamir, yumshoq mol go'shti, sabzavotlar va qayla",
-    image: "images/030A0350.png"
+    image: "images/030A0350.webp"
   },
   {
     id: 'item_44',
@@ -363,7 +363,7 @@ const DEFAULT_ITEMS = [
     section: 'shorva',
     price: 42000,
     desc: "Bo'liq go'sht, no'xat, sabzi, xushbo'y kashnich va qalampir bilan",
-    image: "images/030A0353.png"
+    image: "images/030A0353.webp"
   },
   {
     id: 'item_45',
@@ -371,7 +371,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 30000,
     desc: "Bodring, pomidor, turp, qizil qalampir, rayhon, shivit va yashil piyoz",
-    image: "images/030A0358.png"
+    image: "images/030A0358.webp"
   },
   {
     id: 'item_46',
@@ -379,7 +379,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 24000,
     desc: "Dala pomidori va bodringi zaytun moyi bilan",
-    image: "images/030A0359.png"
+    image: "images/030A0359.webp"
   },
   {
     id: 'item_47',
@@ -387,7 +387,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 14000,
     desc: "Dumbul cho'g'da pishirilgan shirin va suvli pomidor shashligi",
-    image: "images/030A0360.png"
+    image: "images/030A0360.webp"
   },
   {
     id: 'item_48',
@@ -395,7 +395,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 24000,
     desc: "Bir six yumshoq qo'y go'shti va mayin dumba bo'laklari",
-    image: "images/030A0361.png"
+    image: "images/030A0361.webp"
   },
   {
     id: 'item_49',
@@ -403,7 +403,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 48000,
     desc: "Grafinda oilaviy salqin kokteyl: Moviy Kyurasao, laym, limon va muz",
-    image: "images/030A0365.png"
+    image: "images/030A0365.webp"
   },
   {
     id: 'item_50',
@@ -411,7 +411,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 48000,
     desc: "Grafinda tayyorlangan xushbo'y yashil moxito va kivi limonadi (1 litr)",
-    image: "images/030A0368.png"
+    image: "images/030A0368.webp"
   },
   {
     id: 'item_51',
@@ -419,7 +419,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 22000,
     desc: "Mayin qiyma, dumba yog'i va o'ziga xos ziravorlar bilan cho'g'da pishgan kabob",
-    image: "images/030A0371.png"
+    image: "images/030A0371.webp"
   },
   {
     id: 'item_52',
@@ -427,7 +427,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Tabiiy sut, qulupnayli muzqaymoq va meva siropi",
-    image: "images/030A0377.png"
+    image: "images/030A0377.webp"
   },
   {
     id: 'item_53',
@@ -435,7 +435,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 25000,
     desc: "Yangi qaymoq, sovuq sut va klassik vanil aralashmasi",
-    image: "images/030A0380.png"
+    image: "images/030A0380.webp"
   },
   {
     id: 'item_54',
@@ -443,7 +443,7 @@ const DEFAULT_ITEMS = [
     section: 'non',
     price: 12000,
     desc: "Issiq tandirda yopilgan sedana va kunjutli shirmoy patir non",
-    image: "images/030A0383.png"
+    image: "images/030A0383.webp"
   },
   {
     id: 'item_55',
@@ -451,7 +451,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Belgiya shokoladi, muzqaymoq, sut va shokolad qirindisi",
-    image: "images/030A0391.png"
+    image: "images/030A0391.webp"
   },
   {
     id: 'item_56',
@@ -459,7 +459,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 18000,
     desc: "Cho'g'da qizartirib pishirilgan shirin sutli makkajo'xori",
-    image: "images/030A0393.png"
+    image: "images/030A0393.webp"
   },
   {
     id: 'item_57',
@@ -467,7 +467,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 14000,
     desc: "Mangalda pishirilgan xushbo'y barra yashil bulg'or qalampiri",
-    image: "images/030A0395.png"
+    image: "images/030A0395.webp"
   },
   {
     id: 'item_58',
@@ -475,7 +475,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 35000,
     desc: "Pomidor, baqlajon, qalampir va qo'ziqorinli kaboblar to'plami",
-    image: "images/030A0397.png"
+    image: "images/030A0397.webp"
   },
   {
     id: 'item_59',
@@ -483,7 +483,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 18000,
     desc: "Mangalda dimlab pishirilgan mayin suvli pomidorlar",
-    image: "images/030A0399.png"
+    image: "images/030A0399.webp"
   },
   {
     id: 'item_60',
@@ -491,7 +491,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 32000,
     desc: "Cho'g'da qarsildoq pishirilgan qo'y go'shti qovurg'alari",
-    image: "images/030A0401.png"
+    image: "images/030A0401.webp"
   },
   {
     id: 'item_61',
@@ -499,7 +499,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 15000,
     desc: "Klassik quyuq italyancha espresso (30 ml)",
-    image: "images/030A4439.png"
+    image: "images/030A4439.webp"
   },
   {
     id: 'item_62',
@@ -507,7 +507,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 18000,
     desc: "Yangi tuyilgan qahva donachalaridan tayyorlangan xushbo'y Americano",
-    image: "images/030A4440.png"
+    image: "images/030A4440.webp"
   },
   {
     id: 'item_63',
@@ -515,7 +515,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 22000,
     desc: "Qalin sutli ko'pikka ega klassik kapuchino qahvasi",
-    image: "images/030A4442.png"
+    image: "images/030A4442.webp"
   },
   {
     id: 'item_64',
@@ -523,7 +523,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 20000,
     desc: "100% Arabika donachalaridan tayyorlangan xushbo'y qora qahva",
-    image: "images/030A4443.png"
+    image: "images/030A4443.webp"
   },
   {
     id: 'item_65',
@@ -531,7 +531,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 24000,
     desc: "Issiq sut, nozik ko'pik va xushbo'y espresso qatlamlari",
-    image: "images/030A4444.png"
+    image: "images/030A4444.webp"
   },
   {
     id: 'item_66',
@@ -539,7 +539,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 25000,
     desc: "Kakao, qaymoqli sut va mayin kofe uyg'unligi",
-    image: "images/030A4445.png"
+    image: "images/030A4445.webp"
   },
   {
     id: 'item_67',
@@ -547,7 +547,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 36000,
     desc: "Issiq qarsildoq vafli, to'g'ralgan banan va iliq Nutella shokoladi",
-    image: "images/030A5298.png"
+    image: "images/030A5298.webp"
   },
   {
     id: 'item_68',
@@ -555,7 +555,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 42000,
     desc: "Qulupnay, kivi, banan, vanilli muzqaymoq va karamel siropi",
-    image: "images/030A5302.png"
+    image: "images/030A5302.webp"
   },
   {
     id: 'item_69',
@@ -563,7 +563,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 38000,
     desc: "Yangi qulupnay mevalari, shokolad qoplamasi va qarsildoq vafli",
-    image: "images/030A5304.png"
+    image: "images/030A5304.webp"
   },
   {
     id: 'item_70',
@@ -571,7 +571,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 40000,
     desc: "Muzqaymoq shari, apelsin, kivi va rezavor mevalar bilan bezatilgan",
-    image: "images/030A5308.png"
+    image: "images/030A5308.webp"
   },
   {
     id: 'item_71',
@@ -579,7 +579,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 38000,
     desc: "Yong'oq bo'laklari, quyuq shokolad va yangi pishirilgan vafli",
-    image: "images/030A5313.png"
+    image: "images/030A5313.webp"
   },
   {
     id: 'item_72',
@@ -587,7 +587,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 38000,
     desc: "Barra qulupnay, yengil qaymoqli krem va shakar kukuni",
-    image: "images/030A5320.png"
+    image: "images/030A5320.webp"
   },
   {
     id: 'item_73',
@@ -595,7 +595,7 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 39000,
     desc: "Oltinrang vafli, sovuq qaymoqli muzqaymoq va erigan karamel",
-    image: "images/030A5323.png"
+    image: "images/030A5323.webp"
   },
   {
     id: 'item_74',
@@ -603,7 +603,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 22000,
     desc: "Mayin qo'y jigari va xushbo'y dumba bo'laklari cho'g'da",
-    image: "images/030A7617.png"
+    image: "images/030A7617.webp"
   },
   {
     id: 'item_75',
@@ -611,7 +611,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 25000,
     desc: "Maxsus charviga o'ralgan shirali qo'y go'shti va dumba shashlik",
-    image: "images/030A7624.png"
+    image: "images/030A7624.webp"
   },
   {
     id: 'item_76',
@@ -619,7 +619,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 22000,
     desc: "Pechda va mangalda marinadlangan yumshoq tovuq go'shti",
-    image: "images/030A7627.png"
+    image: "images/030A7627.webp"
   },
   {
     id: 'item_77',
@@ -627,7 +627,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 28000,
     desc: "Yupqa go'shtga o'ralgan maxsus ziravorli rulet kabob",
-    image: "images/030A7633.png"
+    image: "images/030A7633.webp"
   },
   {
     id: 'item_78',
@@ -635,7 +635,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Yangi qulupnay sharbati, qaymoq va muzdek shirinlik",
-    image: "images/030A7637.png"
+    image: "images/030A7637.webp"
   },
   {
     id: 'item_79',
@@ -643,7 +643,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Xushbo'y shaftoli mevalari va mayin vanil kremi",
-    image: "images/030A7649.png"
+    image: "images/030A7649.webp"
   },
   {
     id: 'item_80',
@@ -651,7 +651,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Pishgan banan, quyuq karamel va muzdek sut",
-    image: "images/030A7653.png"
+    image: "images/030A7653.webp"
   },
   {
     id: 'item_81',
@@ -659,7 +659,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 26000,
     desc: "Nordon-shirin kivi, laym sharbati va muz bo'laklari",
-    image: "images/030A7656.png"
+    image: "images/030A7656.webp"
   },
   {
     id: 'item_82',
@@ -667,7 +667,7 @@ const DEFAULT_ITEMS = [
     section: 'ichimliklar',
     price: 29000,
     desc: "Yeryong'oq, qaymoq, karamel va erigan shokolad aralashmasi",
-    image: "images/030A7661.png"
+    image: "images/030A7661.webp"
   },
   {
     id: 'item_83',
@@ -675,7 +675,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 28000,
     desc: "Anor donachalari, karkade, apelsin va dolchinli issiq choy",
-    image: "images/030A9434.png"
+    image: "images/030A9434.webp"
   },
   {
     id: 'item_84',
@@ -683,7 +683,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 28000,
     desc: "Barra anor sharbati, limon parraklari va tog' giyohlari",
-    image: "images/030A9440.png"
+    image: "images/030A9440.webp"
   },
   {
     id: 'item_85',
@@ -691,7 +691,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 26000,
     desc: "Yangi zanjabil ildizi, tabiiy asal, limon va ko'k choy",
-    image: "images/030A9442.png"
+    image: "images/030A9442.webp"
   },
   {
     id: 'item_86',
@@ -699,7 +699,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 30000,
     desc: "Foydali oblepixa mevalari, apelsin va yalpizli xushbo'y choy",
-    image: "images/030A9448.png"
+    image: "images/030A9448.webp"
   },
   {
     id: 'item_87',
@@ -707,7 +707,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 22000,
     desc: "Chotqol tog'larining shifobaxsh giyohlari, kiyiko't va yalpiz",
-    image: "images/030A9451.png"
+    image: "images/030A9451.webp"
   },
   {
     id: 'item_88',
@@ -715,7 +715,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 20000,
     desc: "Klassik 95-ko'k choy, yangi limon bo'laklari va yalpiz",
-    image: "images/030A9463.png"
+    image: "images/030A9463.webp"
   },
   {
     id: 'item_89',
@@ -723,7 +723,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 20000,
     desc: "Hindcha oliy nav qora choy, limon va oq shirin novvot",
-    image: "images/030A9466.png"
+    image: "images/030A9466.webp"
   },
   {
     id: 'item_90',
@@ -731,7 +731,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 28000,
     desc: "Limon, laym, apelsin va olma bo'laklari bilan damlangan choy",
-    image: "images/030A9468.png"
+    image: "images/030A9468.webp"
   },
   {
     id: 'item_91',
@@ -739,7 +739,7 @@ const DEFAULT_ITEMS = [
     section: 'choy_kofe',
     price: 28000,
     desc: "Haqiqiy qulupnay donalari, yalpiz va mayin ko'k choy",
-    image: "images/030A9469.png"
+    image: "images/030A9469.webp"
   },
   {
     id: 'item_92',
@@ -747,7 +747,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 42000,
     desc: "Grilda pishgan tovuq filesi, aysberg karami, cherri pomidor, suxarik va Parmezan",
-    image: "images/IMG_8064.png"
+    image: "images/IMG_8064.webp"
   },
   {
     id: 'item_93',
@@ -755,7 +755,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 40000,
     desc: "Qaynatilgan mol go'shti, pishgan tuxum, tuzlangan bodring va yengil mayonez",
-    image: "images/IMG_8072.png"
+    image: "images/IMG_8072.webp"
   },
   {
     id: 'item_94',
@@ -763,7 +763,7 @@ const DEFAULT_ITEMS = [
     section: 'salatlar',
     price: 44000,
     desc: "Dudlangan go'sht, sarxush til, qattiq pishloq, yong'oq va maxsus sous",
-    image: "images/IMG_8074.png"
+    image: "images/IMG_8074.webp"
   },
   {
     id: 'item_95',
@@ -771,15 +771,15 @@ const DEFAULT_ITEMS = [
     section: 'desert',
     price: 30000,
     desc: "Muzdek, sersuv va asaldek shirin dala tarvuzi tilimlari",
-    image: "images/IMG_8161.png"
+    image: "images/IMG_8161.webp"
   }
 ];
 
 // ================= LOCAL STORAGE VA HOLAT (STATE) =================
 const STORAGE_KEYS = {
-  ITEMS: 'choyxona_gallery_items_v5',
-  AUTH: 'choyxona_gallery_auth_v5',
-  SESSION: 'choyxona_gallery_session_v5'
+  ITEMS: 'choyxona_gallery_items_v6',
+  AUTH: 'choyxona_gallery_auth_v6',
+  SESSION: 'choyxona_gallery_session_v6'
 };
 
 let items = [];
@@ -832,7 +832,9 @@ function getItemPhotoSrc(item) {
   if (item.customImage) return item.customImage;
   if (item.image) return item.image;
   if (item.photoPath) return item.photoPath;
-  return 'images/030A0348.png';
+  let src = item.image || item.photoPath || 'images/030A0348.webp';
+  if (src.endsWith('.png')) src = src.replace(/\.png$/, '.webp');
+  return src;
 }
 
 // ================= UI RENDERING =================
@@ -898,7 +900,7 @@ function renderCardHtml(item) {
   return `
     <article class="gallery-card">
       <div class="gallery-photo-box" data-action="lightbox" data-id="${item.id}">
-        <img src="${imgSrc}" alt="${item.name}" loading="lazy" />
+        <img src="${imgSrc}" alt="${item.name}" loading="lazy" decoding="async" onload="this.classList.add('loaded')" />
       </div>
       <div class="gallery-info">
         <div class="gallery-text">
@@ -1186,3 +1188,4 @@ window.addEventListener('DOMContentLoaded', () => {
   renderGallery();
   setupEvents();
 });
+

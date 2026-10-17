@@ -271,10 +271,17 @@ body {
 .gallery-photo-box {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #141418;
+  background: linear-gradient(90deg, #131318 0%, #1c1c24 50%, #131318 100%);
+  background-size: 200% 100%;
+  animation: photoShimmer 1.8s infinite ease-in-out;
   position: relative;
   overflow: hidden;
   cursor: zoom-in;
+}
+
+@keyframes photoShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .gallery-photo-box img {
@@ -282,7 +289,12 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.gallery-photo-box img.loaded {
+  opacity: 1;
 }
 
 .gallery-card:hover .gallery-photo-box img {
