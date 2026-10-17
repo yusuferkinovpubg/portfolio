@@ -359,7 +359,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* ================= 6. HIRALASHGAN VA QORA SOYALI RASMLAR FONI ================= */
+/* ================= 6. RASMLAR FONI VA SOYA EFFEKTI (FAQAT FONGA TA'SIR QILADI) ================= */
 .gallery-photo-box {
   position: relative;
   width: 100%;
@@ -369,37 +369,25 @@ body {
   cursor: zoom-in;
 }
 
-/* Hiralashgan orqa fon qatlami (Blurred Background Layer) */
+/* Hiralashgan va qoraytirilgan orqa fon (Faqat fon qatlamiga ta'sir qiladi) */
 .gallery-photo-box::before {
   content: '';
   position: absolute;
-  inset: -12px;
+  inset: -14px;
   background-image: 
-    linear-gradient(rgba(10, 10, 14, 0.2), rgba(10, 10, 14, 0.2)),
-    url('images/full-background.webp'),
-    url('images/full-background.jpg');
-  background-size: cover;
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 15%, rgba(0, 0, 0, 0.70) 65%, rgba(0, 0, 0, 0.98) 100%),
+    linear-gradient(rgba(10, 10, 14, 0.3), rgba(10, 10, 14, 0.3)),
+    url('images/background.webp'),
+    url('images/background.jpg');
+  background-size: cover, cover, cover, cover;
   background-position: center;
-  filter: blur(7px) brightness(0.68) contrast(1.15);
+  filter: blur(6px) brightness(0.65) contrast(1.15);
   transform: scale(1.06);
   z-index: 1;
-}
-
-/* Atrofi qora soya (Deep Cinematic Black Vignette Shadow) */
-.gallery-photo-box::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.55) 72%, rgba(0, 0, 0, 0.94) 100%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 30%);
-  box-shadow: inset 0 0 50px 10px rgba(0, 0, 0, 0.85);
   pointer-events: none;
-  z-index: 3;
 }
 
-/* Tiniq taom fotosurati (Sharp crisp photo between blurred bg and shadow) */
+/* Tiniq taom fotosurati (Hech qanday qora soyasiz, original tiniq ranglarda) */
 .gallery-photo-box img {
   position: relative;
   z-index: 2;
@@ -671,23 +659,16 @@ body {
   position: absolute;
   inset: -15px;
   background-image: 
-    linear-gradient(rgba(10, 10, 14, 0.2), rgba(10, 10, 14, 0.2)),
-    url('images/full-background.webp'),
-    url('images/full-background.jpg');
-  background-size: cover;
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.25) 20%, rgba(0, 0, 0, 0.70) 65%, rgba(0, 0, 0, 0.98) 100%),
+    linear-gradient(rgba(10, 10, 14, 0.3), rgba(10, 10, 14, 0.3)),
+    url('images/background.webp'),
+    url('images/background.jpg');
+  background-size: cover, cover, cover, cover;
   background-position: center;
-  filter: blur(10px) brightness(0.65);
+  filter: blur(8px) brightness(0.65);
   transform: scale(1.06);
   z-index: 1;
-}
-
-.lightbox-photo-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 60px 15px rgba(0, 0, 0, 0.9);
   pointer-events: none;
-  z-index: 3;
 }
 
 .lightbox-box img {
