@@ -865,7 +865,9 @@ function renderSectionsBar() {
   bar.querySelectorAll('.sec-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       activeSection = btn.getAttribute('data-sec');
-      renderSectionsBar();
+      bar.querySelectorAll('.sec-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-sec') === activeSection);
+      });
       renderGallery();
     });
   });
@@ -1183,9 +1185,37 @@ function showToast(msg) {
 // ================= LIQUID GLASS EFFEKTI (TUGMALAR UCHUN MAXSUS OPTIMALLASHTIRILGAN) =================
 async function initLiquidGlass() {
   try {
-    // Og'ir to'liq ekranli WebGL render tsikllari o'rniga barcha tugmalarga (nav, header, action)
-    // yuqori tezlikdagi, silliq 60fps Liquid Glass shisha effekti ulandi
-    console.log("LiquidGlass kutubxonasi yuklandi, tugmalar uchun ultra-silliq shisha effekti faol.");
+    const bar = document.getElementById('sectionsBar');
+    if (bar && typeof LiquidGlass !== 'undefined') {
+      const secBtns = Array.from(bar.querySelectorAll('.sec-btn'));
+      if (secBtns.length > 0) {
+        secBtns.forEach(btn => {
+          btn.dataset.config = JSON.stringify({
+            button: true,
+            cornerRadius: 999,
+            refraction: 0.45,
+            chromAberration: 0.04,
+            blurAmount: 0.15,
+            specular: 0.3,
+            edgeHighlight: 0.18
+          });
+        });
+        const lg = await LiquidGlass.init({
+          root: bar,
+          glassElements: secBtns,
+          defaults: {
+            button: true,
+            cornerRadius: 999,
+            refraction: 0.45,
+            chromAberration: 0.04,
+            blurAmount: 0.15,
+            specular: 0.3,
+            edgeHighlight: 0.18
+          }
+        });
+        console.log("LiquidGlass kutubxonasi tugmalarda muvaffaqiyatli ishga tushdi:", lg);
+      }
+    }
   } catch (err) {
     console.warn("LiquidGlass xabari:", err);
   }
