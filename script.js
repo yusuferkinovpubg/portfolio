@@ -1,5 +1,3 @@
-import { LiquidGlass } from 'https://cdn.jsdelivr.net/npm/@ybouane/liquidglass/dist/index.js';
-
 // ================= BO'LIMLAR (SECTIONS) =================
 const SECTIONS = [
   { id: 'all', name: 'Barchasi' },
@@ -778,6 +776,9 @@ const DEFAULT_ITEMS = [
 ];
 
 // ================= LOCAL STORAGE VA HOLAT (STATE) =================
+// DIQQAT: Saytda server (backend) yo'q. Avtorizatsiya faqat brauzerning localStorage xotirasida ishlaydi
+// va mijozlar tasodifan admin tugmalarini bosib qo'ymasligi uchun qulaylik darajasida yaratilgan.
+// Haqiqiy to'liq himoya uchun alohida backend talab etiladi.
 const STORAGE_KEYS = {
   ITEMS: 'choyxona_gallery_items_v6',
   AUTH: 'choyxona_gallery_auth_v6',
@@ -788,6 +789,26 @@ let items = [];
 let credentials = { username: 'admin', password: '1234' };
 let currentUsername = null;
 let activeSection = 'all';
+
+// LiquidGlass sozlamalari va zaxira holati
+let liquidGlassInstance = null;
+
+const darkGlassDefaults = {
+  brightness: -0.3,
+  blurAmount: 0.25,
+  cornerRadius: 0,
+  refraction: 0.65,
+  chromAberration: 0.03,
+  specular: 0.1,
+  shadowOpacity: 0.4
+};
+
+// URL da ?glass=off bo'lsa yoki harakat cheklangan (reduced-motion) bo'lsa shisha o'chadi
+const ENABLE_GLASS = Boolean(
+  window.WebGLRenderingContext &&
+  new URLSearchParams(window.location.search).get('glass') !== 'off' &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+);
 
 function loadData() {
   try {
@@ -806,8 +827,11 @@ function loadData() {
 
   try {
     const savedSession = sessionStorage.getItem(STORAGE_KEYS.SESSION);
-    if (savedSession) {
+    if (savedSession && savedSession === credentials.username) {
       currentUsername = savedSession;
+    } else {
+      sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+      currentUsername = null;
     }
   } catch (e) {}
 }
@@ -815,8 +839,32 @@ function loadData() {
 function saveItems() {
   try {
     localStorage.setItem(STORAGE_KEYS.ITEMS, JSON.stringify(items));
+    return true;
   } catch (e) {
     showToast("Xotira to'ldi: yangi rasm hajmini kichikroq qilib yuklang.");
+    return false;
+  }
+}
+
+function commitItems(mutate, successMsg) {
+  const prevItems = JSON.parse(JSON.stringify(items));
+  try {
+    mutate();
+    const ok = saveItems();
+    if (ok) {
+      renderGallery();
+      if (successMsg) showToast(successMsg);
+      return true;
+    } else {
+      items = prevItems;
+      renderGallery();
+      return false;
+    }
+  } catch (err) {
+    items = prevItems;
+    renderGallery();
+    showToast("Amalni bajarishda xatolik yuz berdi.");
+    return false;
   }
 }
 
@@ -827,14 +875,21 @@ function saveCredentialsData() {
 }
 
 function formatSom(value) {
-  return Number(value || 0).toLocaleString('ru-RU').replace(/,/g, ' ') + " so'm";
+  return Number(value || 0).toLocaleString('ru-RU') + " so'm";
+}
+
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function getItemPhotoSrc(item) {
-  if (item.customImage) return item.customImage;
-  if (item.image) return item.image;
-  if (item.photoPath) return item.photoPath;
-  let src = item.image || item.photoPath || 'images/030A0348.webp';
+  let src = item.customImage || item.image || 'images/030A0348.webp';
   if (src.endsWith('.png')) src = src.replace(/\.png$/, '.webp');
   return src;
 }
@@ -883,7 +938,7 @@ function populateSectionSelect() {
 
 function populatePresetPhotoSelect() {
   const sel = document.getElementById('itemPresetPhoto');
-  sel.innerHTML = DEFAULT_ITEMS.map(i => `<option value="${i.image}">${i.name}</option>`).join('');
+  sel.innerHTML = DEFAULT_ITEMS.map(i => `<option value="${escapeHtml(i.image)}">${escapeHtml(i.name)}</option>`).join('');
 }
 
 function renderCardHtml(item) {
@@ -892,7 +947,7 @@ function renderCardHtml(item) {
     <div class="card-admin-bar">
       <div class="inline-price-form">
         <label for="price_${item.id}">Narx:</label>
-        <input type="number" class="inline-price-input" id="price_${item.id}" value="${item.price}" step="500" min="500" />
+        <input type="number" class="inline-price-input" id="price_${item.id}" value="${item.price}" step="100" min="100" />
         <button type="button" class="btn-save-price" data-action="save-price" data-id="${item.id}">Saqlash</button>
       </div>
       <div class="card-admin-actions">
@@ -905,12 +960,14 @@ function renderCardHtml(item) {
   return `
     <article class="gallery-card">
       <div class="gallery-photo-box" data-action="lightbox" data-id="${item.id}">
-        <img src="${imgSrc}" alt="${item.name}" loading="lazy" decoding="async" onload="this.classList.add('loaded')" />
+        <img src="${imgSrc}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async"
+          onload="this.classList.add('loaded')"
+          onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = 'images/030A0348.webp'; } else { this.classList.add('loaded'); }" />
       </div>
       <div class="gallery-info">
         <div class="gallery-text">
-          <h3 class="gallery-title">${item.name}</h3>
-          <p class="gallery-desc">${item.desc || ''}</p>
+          <h3 class="gallery-title">${escapeHtml(item.name)}</h3>
+          <p class="gallery-desc">${escapeHtml(item.desc || '')}</p>
         </div>
         <div class="gallery-price">${formatSom(item.price)}</div>
       </div>
@@ -989,19 +1046,25 @@ function setupEvents() {
   // Admin parol va sozlamalar modalini ochish
   document.getElementById('btnOpenCredModal').addEventListener('click', () => {
     document.getElementById('newAdminUser').value = credentials.username;
-    document.getElementById('newAdminPass').value = credentials.password;
+    document.getElementById('newAdminPass').value = '';
+    document.getElementById('newAdminPass').placeholder = 'Yangi parol';
     openModal('credModal');
   });
 
   // Standart holatga qaytarish (Reset)
   document.getElementById('btnResetGallery').addEventListener('click', () => {
     if (confirm("Haqiqatan ham barcha taomlar va rasmlarni boshlang'ich 95 ta holatiga qaytarmoqchimisiz?")) {
-      items = [...DEFAULT_ITEMS];
-      saveItems();
-      closeModal('credModal');
-      renderGallery();
-      showToast("Boshlang'ich 95 ta taom qayta tiklandi.");
+      const ok = commitItems(() => {
+        items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+      }, "Boshlang'ich 95 ta taom qayta tiklandi.");
+      if (ok) closeModal('credModal');
     }
+  });
+
+  // Preset rasm tanlanganda oldingi maxsus yuklangan rasm ma'lumotlarini tozalash
+  document.getElementById('itemPresetPhoto').addEventListener('change', () => {
+    document.getElementById('itemCustomImageData').value = '';
+    document.getElementById('itemFileInput').value = '';
   });
 
   // Modallarni yopish (X tugmasi va data-close)
@@ -1038,13 +1101,24 @@ function setupEvents() {
     }
   });
 
-  // Rasmni qurilmadan tanlaganda siqish (compress canvas)
+  // Rasmni qurilmadan tanlaganda siqish (compress canvas) va poyga holatidan himoya
   document.getElementById('itemFileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    const submitBtn = document.querySelector('#itemForm button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
     const reader = new FileReader();
+    reader.onerror = () => {
+      showToast("Faylni o'qishda xatolik yuz berdi.");
+      if (submitBtn) submitBtn.disabled = false;
+    };
     reader.onload = (ev) => {
       const img = new Image();
+      img.onerror = () => {
+        showToast("Rasm formatini yuklab bo'lmadi.");
+        if (submitBtn) submitBtn.disabled = false;
+      };
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const maxW = 960;
@@ -1054,13 +1128,14 @@ function setupEvents() {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         document.getElementById('itemCustomImageData').value = canvas.toDataURL('image/jpeg', 0.85);
+        if (submitBtn) submitBtn.disabled = false;
       };
       img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   });
 
-  // Yangi tovar / tahrirlash formasi yuborilganda
+  // Yangi tovar / tahrirlash formasi yuborilganda (commitItems orqali)
   document.getElementById('itemForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const id = document.getElementById('itemIdInput').value;
@@ -1074,18 +1149,16 @@ function setupEvents() {
       customImage: document.getElementById('itemCustomImageData').value || ''
     };
 
-    if (id) {
-      const idx = items.findIndex(x => x.id === id);
-      if (idx > -1) items[idx] = itemObj;
-      showToast("Mahsulot ma'lumotlari yangilandi.");
-    } else {
-      items.unshift(itemObj);
-      showToast("Yangi mahsulot galereyaga qo'shildi.");
-    }
+    const ok = commitItems(() => {
+      if (id) {
+        const idx = items.findIndex(x => x.id === id);
+        if (idx > -1) items[idx] = itemObj;
+      } else {
+        items.unshift(itemObj);
+      }
+    }, id ? "Mahsulot ma'lumotlari yangilandi." : "Yangi mahsulot galereyaga qo'shildi.");
 
-    saveItems();
-    closeModal('itemModal');
-    renderGallery();
+    if (ok) closeModal('itemModal');
   });
 
   // Yangi login/parol saqlash
@@ -1104,7 +1177,7 @@ function setupEvents() {
     showToast("Username va parol muvaffaqiyatli yangilandi.");
   });
 
-  // Galereya kartochkalari bo'yicha hodisalarni delegatsiya qilish
+  // Galereya kartochkalari bo'yicha hodisalarni delegatsiya qilish (commitItems orqali)
   document.getElementById('galleryContainer').addEventListener('click', (e) => {
     const target = e.target.closest('[data-action]');
     if (!target) return;
@@ -1123,19 +1196,17 @@ function setupEvents() {
       const inp = document.getElementById('price_' + id);
       const val = Number(inp ? inp.value : 0);
       if (val > 0) {
-        item.price = val;
-        saveItems();
-        renderGallery();
-        showToast(`"${item.name}" narxi yangilandi: ${formatSom(val)}`);
+        commitItems(() => {
+          item.price = val;
+        }, `"${item.name}" narxi yangilandi: ${formatSom(val)}`);
       }
     } else if (action === 'edit') {
       openItemModal(item);
     } else if (action === 'delete') {
       if (confirm(`"${item.name}" taomini o'chirmoqchimisiz?`)) {
-        items = items.filter(x => x.id !== id);
-        saveItems();
-        renderGallery();
-        showToast(`"${item.name}" o'chirildi.`);
+        commitItems(() => {
+          items = items.filter(x => x.id !== id);
+        }, `"${item.name}" o'chirildi.`);
       }
     }
   });
@@ -1192,26 +1263,28 @@ function showToast(msg) {
 }
 
 // ================= LIQUID GLASS EFFEKTI (DARK GLASS MODE) =================
-let liquidGlassInstance = null;
-
 async function initLiquidGlass() {
+  if (!ENABLE_GLASS) return;
   try {
-    if (typeof LiquidGlass !== 'undefined') {
-      if (document.fonts && document.fonts.ready) {
-        await document.fonts.ready;
-      }
-      console.log("LiquidGlass moduli yuklandi va tayyor:", LiquidGlass);
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    const { LiquidGlass } = await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass@1.0.3/dist/index.js');
+    const root = document.getElementById('glassTop');
+    const header = document.querySelector('.site-header');
+    const nav = document.querySelector('.sections-nav');
+
+    if (root && header && nav) {
+      liquidGlassInstance = await LiquidGlass.init({
+        root: root,
+        glassElements: [header, nav],
+        defaults: darkGlassDefaults
+      });
+      document.documentElement.classList.add('glass-on');
     }
   } catch (err) {
-    console.warn("LiquidGlass xabari:", err);
-  }
-}
-
-function markGlassChanged(el) {
-  if (liquidGlassInstance && typeof liquidGlassInstance.markChanged === 'function') {
-    try {
-      liquidGlassInstance.markChanged(el);
-    } catch (e) {}
+    console.warn("LiquidGlass zaxira rejimiga o'tdi (CSS fallback):", err);
+    document.documentElement.classList.remove('glass-on');
   }
 }
 

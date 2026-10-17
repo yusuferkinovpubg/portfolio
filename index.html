@@ -3,43 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Choyxona Menyusi — Milliy taomlar, kaboblar, salatlar va shirinliklar rasmlar galereyasi." />
   <title>Choyxona Menyusi — Rasmlar Galereyasi</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <noscript>
+    <div style="text-align:center; padding:20px; background:#1a1112; color:#ff8589; font-weight:600;">
+      Menyuni ko'rish uchun brauzeringizda JavaScript yoqilgan bo'lishi kerak.
+    </div>
+  </noscript>
 
-  <!-- ================= SINGLE MINIMALIST HEADER ================= -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand" id="brandLogo">
-        <span class="brand-dot"></span>
-        <span class="brand-name">Choyxona Menyusi</span>
-      </div>
+  <!-- ================= LIQUIDGLASS TOP ROOT (FAQAT HEADER VA NAV) ================= -->
+  <div id="glassTop">
+    <!-- Orqa fon qatlami (Kutubxona shisha ostidagi elementlarni suratga olishi uchun) -->
+    <div class="glass-canvas-bg" aria-hidden="true"></div>
 
-      <div class="header-right">
-        <!-- Visible when logged out -->
-        <button class="btn" id="btnOpenLogin" type="button">
-          <span class="label">👤 Kirish</span>
-        </button>
+    <!-- 1-shisha: Asosiy Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand" id="brandLogo">
+          <span class="brand-dot"></span>
+          <span class="brand-name">Choyxona Menyusi</span>
+        </div>
 
-        <!-- Visible when logged in with Username -->
-        <div class="admin-controls-group" id="adminHeaderGroup">
-          <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
-          <button class="btn btn-gold" id="btnOpenAddModal" type="button"><span class="label">+ Tovar qo'shish</span></button>
-          <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish"><span class="label">⚙️ Parol</span></button>
-          <button class="btn btn-danger" id="btnLogout" type="button"><span class="label">Chiqish</span></button>
+        <div class="header-right">
+          <!-- Visible when logged out -->
+          <button class="btn" id="btnOpenLogin" type="button">
+            <span class="label">👤 Kirish</span>
+          </button>
+
+          <!-- Visible when logged in with Username -->
+          <div class="admin-controls-group" id="adminHeaderGroup">
+            <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
+            <button class="btn btn-gold" id="btnOpenAddModal" type="button"><span class="label">+ Tovar qo'shish</span></button>
+            <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish"><span class="label">⚙️ Parol</span></button>
+            <button class="btn btn-danger" id="btnLogout" type="button"><span class="label">Chiqish</span></button>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- ================= BO'LIMLAR (SECTIONS) ================= -->
-  <nav class="sections-nav">
-    <div class="sections-scroll" id="sectionsBar"></div>
-  </nav>
+    <!-- 2-shisha: Bo'limlar Navigatsiyasi -->
+    <nav class="sections-nav">
+      <div class="sections-scroll" id="sectionsBar"></div>
+    </nav>
+  </div>
 
-  <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY ================= -->
+  <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY (ROOT'DAN TASHQARIDA) ================= -->
   <main class="gallery-wrapper" id="galleryContainer"></main>
 
   <!-- ================= SITE FOOTER ================= -->
@@ -49,11 +61,11 @@
   </footer>
 
   <!-- ================= 1. LOGIN MODAL (USERNAME & PASSWORD) ================= -->
-  <div class="modal-backdrop" id="loginModal">
+  <div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
     <div class="modal-box" style="max-width: 380px;">
       <div class="modal-top">
-        <h3>Admin kirish</h3>
-        <button class="btn-close" type="button" data-close="loginModal">×</button>
+        <h3 id="loginTitle">Admin kirish</h3>
+        <button class="btn-close" type="button" data-close="loginModal" aria-label="Yopish">×</button>
       </div>
       <form id="loginForm">
         <div class="modal-body">
@@ -78,11 +90,11 @@
   </div>
 
   <!-- ================= 2. ADD / EDIT ITEM MODAL ================= -->
-  <div class="modal-backdrop" id="itemModal">
+  <div class="modal-backdrop" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
     <div class="modal-box">
       <div class="modal-top">
         <h3 id="itemModalTitle">Yangi tovar qo'shish</h3>
-        <button class="btn-close" type="button" data-close="itemModal">×</button>
+        <button class="btn-close" type="button" data-close="itemModal" aria-label="Yopish">×</button>
       </div>
       <form id="itemForm">
         <input type="hidden" id="itemIdInput" />
@@ -99,7 +111,7 @@
 
           <div class="field">
             <label for="itemPriceInput">Narxi (so'm) *</label>
-            <input type="number" id="itemPriceInput" placeholder="55000" min="500" step="500" required />
+            <input type="number" id="itemPriceInput" placeholder="55000" min="100" step="100" required />
           </div>
 
           <div class="field">
@@ -127,11 +139,11 @@
   </div>
 
   <!-- ================= 3. CREDENTIALS & RESET MODAL ================= -->
-  <div class="modal-backdrop" id="credModal">
+  <div class="modal-backdrop" id="credModal" role="dialog" aria-modal="true" aria-labelledby="credModalTitle">
     <div class="modal-box" style="max-width: 400px;">
       <div class="modal-top">
-        <h3>Admin sozlamalari</h3>
-        <button class="btn-close" type="button" data-close="credModal">×</button>
+        <h3 id="credModalTitle">Admin sozlamalari</h3>
+        <button class="btn-close" type="button" data-close="credModal" aria-label="Yopish">×</button>
       </div>
       <form id="credForm">
         <div class="modal-body">
@@ -157,11 +169,11 @@
   </div>
 
   <!-- ================= 4. PHOTO LIGHTBOX MODAL ================= -->
-  <div class="modal-backdrop" id="lightboxModal">
+  <div class="modal-backdrop" id="lightboxModal" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
     <div class="lightbox-box">
       <div class="modal-top">
         <h3 id="lightboxTitle">Taom rasmi</h3>
-        <button class="btn-close" type="button" data-close="lightboxModal">×</button>
+        <button class="btn-close" type="button" data-close="lightboxModal" aria-label="Yopish">×</button>
       </div>
       <div class="lightbox-photo-wrap">
         <img id="lightboxImage" alt="Taom rasmi" />

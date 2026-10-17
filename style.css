@@ -48,11 +48,34 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   -webkit-user-select: text !important;
 }
 
-/* ================= 2. SITE HEADER ================= */
-.site-header {
+/* ================= 2. LIQUIDGLASS ROOT VA SITE HEADER ================= */
+#glassTop {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 50;
+  width: 100%;
+}
+
+.glass-canvas-bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-black);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 55%),
+    linear-gradient(rgba(7, 7, 10, 0.78), rgba(7, 7, 10, 0.88)),
+    url('images/full-background.webp'),
+    url('images/background.webp');
+  background-size: cover, cover, cover, cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
   background: rgba(12, 12, 16, 0.75);
   backdrop-filter: blur(22px) saturate(170%);
   -webkit-backdrop-filter: blur(22px) saturate(170%);
@@ -240,14 +263,22 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 
 /* ================= 4. SECTIONS BAR ================= */
 .sections-nav {
-  position: sticky;
-  top: 57px;
-  z-index: 35;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
   background: rgba(10, 10, 14, 0.65);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Shisha yoqilganda (LiquidGlass faol) — CSS fon va blur shaffof qilinadi */
+html.glass-on .site-header,
+html.glass-on .sections-nav {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .sections-scroll {
