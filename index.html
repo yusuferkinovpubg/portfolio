@@ -19,15 +19,15 @@
       <div class="header-right">
         <!-- Visible when logged out -->
         <button class="btn" id="btnOpenLogin" type="button">
-          👤 Kirish
+          <span class="label">👤 Kirish</span>
         </button>
 
         <!-- Visible when logged in with Username -->
         <div class="admin-controls-group" id="adminHeaderGroup">
           <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
-          <button class="btn btn-gold" id="btnOpenAddModal" type="button">+ Tovar qo'shish</button>
-          <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish">⚙️ Parol</button>
-          <button class="btn btn-danger" id="btnLogout" type="button">Chiqish</button>
+          <button class="btn btn-gold" id="btnOpenAddModal" type="button"><span class="label">+ Tovar qo'shish</span></button>
+          <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish"><span class="label">⚙️ Parol</span></button>
+          <button class="btn btn-danger" id="btnLogout" type="button"><span class="label">Chiqish</span></button>
         </div>
       </div>
     </div>
@@ -39,16 +39,16 @@
   </nav>
 
   <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY ================= -->
-  <main class="gallery-wrapper" id="galleryContainer" data-dynamic></main>
+  <main class="gallery-wrapper" id="galleryContainer"></main>
 
   <!-- ================= SITE FOOTER ================= -->
-  <footer class="site-footer" data-dynamic>
+  <footer class="site-footer">
     <p><strong>Choyxona Menyusi</strong> &copy; 2026. Barcha huquqlar himoyalangan.</p>
     <p>Milliy taomlar, xushbo'y shashliklar, salqin ichimliklar va shirinliklar.</p>
   </footer>
 
   <!-- ================= 1. LOGIN MODAL (USERNAME & PASSWORD) ================= -->
-  <div class="modal-backdrop" id="loginModal" data-dynamic>
+  <div class="modal-backdrop" id="loginModal">
     <div class="modal-box" style="max-width: 380px;">
       <div class="modal-top">
         <h3>Admin kirish</h3>
@@ -80,7 +80,7 @@
   </div>
 
   <!-- ================= 2. ADD / EDIT ITEM MODAL ================= -->
-  <div class="modal-backdrop" id="itemModal" data-dynamic>
+  <div class="modal-backdrop" id="itemModal">
     <div class="modal-box">
       <div class="modal-top">
         <h3 id="itemModalTitle">Yangi tovar qo'shish</h3>
@@ -129,7 +129,7 @@
   </div>
 
   <!-- ================= 3. CREDENTIALS & RESET MODAL ================= -->
-  <div class="modal-backdrop" id="credModal" data-dynamic>
+  <div class="modal-backdrop" id="credModal">
     <div class="modal-box" style="max-width: 400px;">
       <div class="modal-top">
         <h3>Admin sozlamalari</h3>
@@ -159,7 +159,7 @@
   </div>
 
   <!-- ================= 4. PHOTO LIGHTBOX MODAL ================= -->
-  <div class="modal-backdrop" id="lightboxModal" data-dynamic>
+  <div class="modal-backdrop" id="lightboxModal">
     <div class="lightbox-box">
       <div class="modal-top">
         <h3 id="lightboxTitle">Taom rasmi</h3>
@@ -176,7 +176,7 @@
   </div>
 
   <!-- Toast xabarnomalar -->
-  <div class="toast-wrap" id="toastWrap" data-dynamic></div>
+  <div class="toast-wrap" id="toastWrap"></div>
 
   <!-- Asosiy JavaScript kodi (ES Module LiquidGlass bilan) -->
   <script type="module" src="script.js"></script>

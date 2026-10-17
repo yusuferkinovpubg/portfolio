@@ -857,10 +857,12 @@ function renderHeaderAuth() {
 
 function renderSectionsBar() {
   const bar = document.getElementById('sectionsBar');
-  bar.innerHTML = SECTIONS.map(sec => {
+  const bgImg = `<img class="sections-bg-layer" src="images/full-background.webp" alt="" />`;
+  const btns = SECTIONS.map(sec => {
     const isActive = sec.id === activeSection ? 'active' : '';
-    return `<button class="sec-btn ${isActive}" type="button" data-sec="${sec.id}">${sec.name}</button>`;
+    return `<button class="sec-btn ${isActive}" type="button" data-sec="${sec.id}"><span class="label">${sec.name}</span></button>`;
   }).join('');
+  bar.innerHTML = bgImg + btns;
 
   bar.querySelectorAll('.sec-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1182,36 +1184,41 @@ function showToast(msg) {
   setTimeout(() => el.remove(), 2800);
 }
 
-// ================= LIQUID GLASS EFFEKTI (TUGMALAR UCHUN MAXSUS OPTIMALLASHTIRILGAN) =================
+// ================= LIQUID GLASS EFFEKTI (TUGMALAR UCHUN REAL WEBGL REFRAKSIYA) =================
 async function initLiquidGlass() {
   try {
     const bar = document.getElementById('sectionsBar');
     if (bar && typeof LiquidGlass !== 'undefined') {
       const secBtns = Array.from(bar.querySelectorAll('.sec-btn'));
       if (secBtns.length > 0) {
+        const glassConfig = {
+          button: true,
+          cornerRadius: 24,
+          zRadius: 24,
+          refraction: 0.9,
+          chromAberration: 0.12,
+          blurAmount: 0.15,
+          specular: 0.8,
+          edgeHighlight: 0.45,
+          fresnel: 1.5,
+          brightness: 0.12,
+          shadowOpacity: 0.4
+        };
+
         secBtns.forEach(btn => {
-          btn.dataset.config = JSON.stringify({
-            button: true,
-            cornerRadius: 999,
-            refraction: 0.45,
-            chromAberration: 0.04,
-            blurAmount: 0.15,
-            specular: 0.3,
-            edgeHighlight: 0.18
-          });
+          btn.dataset.config = JSON.stringify(glassConfig);
         });
+
+        // Fon rasmi yuklanishini kutamiz (WebGL texture upload uchun)
+        const bgImg = bar.querySelector('.sections-bg-layer');
+        if (bgImg && !bgImg.complete) {
+          await new Promise(r => { bgImg.onload = r; bgImg.onerror = r; });
+        }
+
         const lg = await LiquidGlass.init({
           root: bar,
           glassElements: secBtns,
-          defaults: {
-            button: true,
-            cornerRadius: 999,
-            refraction: 0.45,
-            chromAberration: 0.04,
-            blurAmount: 0.15,
-            specular: 0.3,
-            edgeHighlight: 0.18
-          }
+          defaults: glassConfig
         });
         console.log("LiquidGlass kutubxonasi tugmalarda muvaffaqiyatli ishga tushdi:", lg);
       }
