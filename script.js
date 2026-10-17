@@ -956,6 +956,14 @@ function renderGallery() {
 
 // ================= HODISALAR (EVENTS) =================
 function setupEvents() {
+  // Logotip bosilganda sahifani tepaga silliq ko'chirish
+  const brandLogo = document.getElementById('brandLogo');
+  if (brandLogo) {
+    brandLogo.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // Login tugmasi
   document.getElementById('btnOpenLogin').addEventListener('click', () => {
     document.getElementById('loginError').style.display = 'none';
@@ -1184,13 +1192,26 @@ function showToast(msg) {
 }
 
 // ================= LIQUID GLASS EFFEKTI (DARK GLASS MODE) =================
+let liquidGlassInstance = null;
+
 async function initLiquidGlass() {
   try {
     if (typeof LiquidGlass !== 'undefined') {
-      console.log("LiquidGlass moduli yuklandi:", LiquidGlass);
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+      console.log("LiquidGlass moduli yuklandi va tayyor:", LiquidGlass);
     }
   } catch (err) {
     console.warn("LiquidGlass xabari:", err);
+  }
+}
+
+function markGlassChanged(el) {
+  if (liquidGlassInstance && typeof liquidGlassInstance.markChanged === 'function') {
+    try {
+      liquidGlassInstance.markChanged(el);
+    } catch (e) {}
   }
 }
 
