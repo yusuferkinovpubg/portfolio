@@ -1184,29 +1184,30 @@ function showToast(msg) {
   setTimeout(() => el.remove(), 2800);
 }
 
-// ================= LIQUID GLASS EFFEKTI (TUGMALAR UCHUN REAL WEBGL REFRAKSIYA) =================
+// ================= LIQUID GLASS EFFEKTI (DARK GLASS MODE) =================
 async function initLiquidGlass() {
   try {
     const bar = document.getElementById('sectionsBar');
     if (bar && typeof LiquidGlass !== 'undefined') {
       const secBtns = Array.from(bar.querySelectorAll('.sec-btn'));
       if (secBtns.length > 0) {
-        const glassConfig = {
+        // liquid-glass.ybouane.com rasmiy Dark Glass parametrlari
+        const darkGlassConfig = {
           button: true,
-          cornerRadius: 24,
+          cornerRadius: 999,
           zRadius: 24,
-          refraction: 0.9,
-          chromAberration: 0.12,
-          blurAmount: 0.15,
-          specular: 0.8,
-          edgeHighlight: 0.45,
-          fresnel: 1.5,
-          brightness: 0.12,
-          shadowOpacity: 0.4
+          brightness: -0.25,        // Namoyish saytidan Dark Glass: to'q tusli qoraytirilgan shisha
+          blurAmount: 0.25,         // Xiralashtirilgan refraksiya
+          refraction: 0.75,         // Sinish ko'rsatkichi
+          chromAberration: 0.04,    // Chetlardagi nozik prizma
+          edgeHighlight: 0.06,      // Oq yaltiroq chegara o'rniga minimal xira hoshiya
+          specular: 0.1,            // Oq nurli shisha chaqnashi o'rniga yumshoq aks
+          shadowOpacity: 0.6,       // To'q qora soya (Dark shadow)
+          shadowSpread: 12
         };
 
         secBtns.forEach(btn => {
-          btn.dataset.config = JSON.stringify(glassConfig);
+          btn.dataset.config = JSON.stringify(darkGlassConfig);
         });
 
         // Fon rasmi yuklanishini kutamiz (WebGL texture upload uchun)
@@ -1218,9 +1219,9 @@ async function initLiquidGlass() {
         const lg = await LiquidGlass.init({
           root: bar,
           glassElements: secBtns,
-          defaults: glassConfig
+          defaults: darkGlassConfig
         });
-        console.log("LiquidGlass kutubxonasi tugmalarda muvaffaqiyatli ishga tushdi:", lg);
+        console.log("LiquidGlass (Dark Glass) tugmalarda muvaffaqiyatli ishga tushdi:", lg);
       }
     }
   } catch (err) {

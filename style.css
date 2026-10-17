@@ -104,16 +104,17 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   flex-wrap: wrap;
 }
 
-/* ================= 3. LIQUID GLASS TUGMALAR (KRISTALL SHISHA VA REFRAKSIYA) ================= */
+/* ================= 3. LIQUID GLASS TUGMALAR (DARK GLASS EFFEKTI) ================= */
 .btn {
   position: relative;
   z-index: 2;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-top-color: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(20px) saturate(190%);
-  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  background: rgba(16, 16, 22, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   color: var(--text-white);
   padding: 8px 18px;
   border-radius: 12px;
@@ -124,9 +125,10 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   align-items: center;
   gap: 6px;
   box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.45),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    0 6px 20px rgba(0, 0, 0, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
@@ -138,50 +140,53 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 
-/* Kristall shisha linza yaltirashi */
+/* Dark shisha yaltirashi */
 .btn::before {
   content: '';
   position: absolute;
   top: 1px;
   left: 4px;
   right: 4px;
-  height: 42%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: inherit;
   pointer-events: none;
 }
 
 .btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.55);
-  border-top-color: #FFFFFF;
+  background: rgba(26, 26, 36, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+  border-bottom-color: rgba(0, 0, 0, 0.8);
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.55),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.7);
+    0 8px 24px rgba(0, 0, 0, 0.8),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.7);
   transform: translateY(-1.5px);
 }
 
 .btn:active {
   transform: translateY(0.5px) scale(0.985);
   box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(0, 0, 0, 0.3);
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 .btn-gold {
-  background: rgba(212, 175, 55, 0.22);
-  border-color: rgba(255, 255, 255, 0.45);
-  border-top-color: rgba(255, 255, 255, 0.85);
-  color: #FFF;
-  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  background: rgba(45, 36, 12, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-top: 1px solid rgba(212, 175, 55, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  color: #FFE680;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 14px rgba(212, 175, 55, 0.2), inset 0 1px 1px rgba(212, 175, 55, 0.3);
 }
 
 .btn-gold:hover {
-  background: rgba(212, 175, 55, 0.35);
-  border-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.8);
+  background: rgba(58, 46, 16, 0.85);
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.35);
 }
 
 .btn-danger {
@@ -274,7 +279,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   opacity: 0.15;
 }
 
-/* Authentic Liquid Glass Capsule Buttons */
+/* Authentic Dark Liquid Glass Capsule Buttons */
 .sec-btn {
   position: relative;
   z-index: 2;
@@ -282,14 +287,15 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 20px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-top-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px) saturate(190%);
-  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  padding: 10px 22px;
+  background: rgba(14, 14, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-radius: 999px;
-  color: #FFFFFF;
+  color: #F5F5F7;
   font-family: inherit;
   font-size: 13.5px;
   font-weight: 600;
@@ -297,9 +303,10 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   white-space: nowrap;
   user-select: none;
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.45),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.35);
+    0 6px 20px rgba(0, 0, 0, 0.75),
+    0 2px 6px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.65);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -310,6 +317,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
 }
 
 .sec-btn::before {
@@ -318,19 +326,20 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   top: 1px;
   left: 6px;
   right: 6px;
-  height: 42%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: 999px;
   pointer-events: none;
 }
 
 .sec-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.55);
-  border-top-color: #FFFFFF;
+  background: rgba(24, 24, 32, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+  border-bottom-color: rgba(0, 0, 0, 0.8);
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.45),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.65);
+    0 8px 24px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.75);
   transform: translateY(-1.5px);
 }
 
@@ -339,12 +348,15 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .sec-btn.active {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: rgba(255, 255, 255, 0.55);
-  border-top-color: #FFFFFF;
+  background: rgba(45, 36, 12, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-top: 1px solid rgba(212, 175, 55, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
   box-shadow: 
-    0 6px 24px rgba(212, 175, 55, 0.4),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.8);
+    0 6px 24px rgba(0, 0, 0, 0.8),
+    0 0 16px rgba(212, 175, 55, 0.25),
+    inset 0 1px 1px rgba(212, 175, 55, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .sec-btn.active .label {
@@ -509,28 +521,29 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   line-height: 1.5;
 }
 
-/* Authentic Liquid Glass Price Badge */
+/* Authentic Dark Liquid Glass Price Badge */
 .gallery-price {
   position: relative;
   overflow: hidden;
   font-size: 17.5px;
   font-weight: 800;
   color: #FFE680;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-top-color: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
-  -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
+  background: rgba(16, 16, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(212, 175, 55, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   padding: 8px 18px;
   border-radius: 999px;
   white-space: nowrap;
   flex-shrink: 0;
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.45),
-    0 0 20px rgba(212, 175, 55, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.65),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 14px rgba(212, 175, 55, 0.6);
+    0 8px 24px rgba(0, 0, 0, 0.75),
+    0 0 16px rgba(212, 175, 55, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.65);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 14px rgba(212, 175, 55, 0.5);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -540,20 +553,19 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   top: 1px;
   left: 8px;
   right: 8px;
-  height: 44%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%);
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: 999px;
   pointer-events: none;
 }
 
 .gallery-card:hover .gallery-price {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.65);
-  border-top-color: #FFFFFF;
+  background: rgba(24, 24, 30, 0.85);
+  border-color: rgba(212, 175, 55, 0.55);
   box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.55),
-    0 0 28px rgba(212, 175, 55, 0.45),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+    0 10px 30px rgba(0, 0, 0, 0.85),
+    0 0 24px rgba(212, 175, 55, 0.35),
+    inset 0 1px 1px rgba(212, 175, 55, 0.2);
   transform: translateY(-1.5px) scale(1.03);
 }
 
