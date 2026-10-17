@@ -1,13 +1,12 @@
 :root {
-  --bg-black: #070709;
+  --bg-black: #07070A;
   --bg-surface: rgba(18, 18, 24, 0.65);
   --bg-elevated: rgba(26, 26, 34, 0.75);
-  --border-dark: rgba(255, 255, 255, 0.08);
   --border-glass: rgba(255, 255, 255, 0.12);
   --text-white: #F5F5F7;
-  --text-muted: #9E9EA8;
+  --text-muted: #A0A0AC;
   --gold: #D4AF37;
-  --gold-soft: rgba(212, 175, 55, 0.14);
+  --gold-soft: rgba(212, 175, 55, 0.15);
   --danger: #E5484D;
   --success: #30A46C;
   --radius: 18px;
@@ -24,16 +23,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ================= 1. SAYTNING UMUMIY FONI ================= */
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--bg-black);
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.09), transparent 50%),
-    linear-gradient(rgba(7, 7, 9, 0.82), rgba(7, 7, 9, 0.90)),
-    url('images/background.webp'),
-    url('images/background.jpg');
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 55%),
+    linear-gradient(rgba(7, 7, 10, 0.78), rgba(7, 7, 10, 0.88)),
+    url('images/full-background.webp'),
+    url('images/background.webp');
   background-attachment: fixed;
-  background-size: cover;
+  background-size: cover, cover, cover, cover;
   background-position: center;
   background-repeat: no-repeat;
   color: var(--text-white);
@@ -42,16 +42,19 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= 1. LIQUID GLASS HEADER ================= */
+/* ================= 2. LIQUID GLASS HEADER ================= */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(12, 12, 16, 0.62);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border-glass);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: rgba(12, 12, 16, 0.60);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
   transition: background 0.3s ease;
 }
 
@@ -88,6 +91,7 @@ body {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--text-white);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .header-right {
@@ -97,59 +101,78 @@ body {
   flex-wrap: wrap;
 }
 
-/* Liquid Glass Buttons */
+/* ================= 3. LIQUID GLASS TUGMALAR (ODDIY BORDERSIZ) ================= */
 .btn {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 26, 0.6) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(212, 175, 55, 0.25) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   color: var(--text-white);
-  border: 1px solid var(--border-glass);
-  padding: 8px 14px;
-  border-radius: 11px;
+  padding: 8px 15px;
+  border-radius: 12px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
 
 .btn:hover {
-  border-color: rgba(212, 175, 55, 0.45);
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(32, 32, 42, 0.7) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(212, 175, 55, 0.45) 50%, rgba(255, 255, 255, 0.12) 100%) border-box;
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 14px rgba(212, 175, 55, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
 }
 
 .btn-gold {
-  background: linear-gradient(135deg, #D4AF37, #BA9423);
   color: #08080A;
-  border-color: rgba(255, 255, 255, 0.35);
+  background: 
+    linear-gradient(135deg, #D4AF37, #BA9423) padding-box,
+    linear-gradient(135deg, #FFF 0%, rgba(255, 255, 255, 0.65) 45%, rgba(212, 175, 55, 0.8) 100%) border-box;
   font-weight: 700;
-  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 4px 18px rgba(212, 175, 55, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.55);
 }
 
 .btn-gold:hover {
-  background: linear-gradient(135deg, #E2BE46, #C5A132);
-  color: #08080A;
-  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.5);
+  background: 
+    linear-gradient(135deg, #E2BE46, #C5A132) padding-box,
+    linear-gradient(135deg, #FFF 0%, rgba(255, 255, 255, 0.85) 50%, rgba(212, 175, 55, 0.9) 100%) border-box;
+  box-shadow: 
+    0 6px 24px rgba(212, 175, 55, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
   transform: translateY(-1px);
 }
 
 .btn-danger {
   color: #FF8589;
-  border-color: rgba(229, 72, 77, 0.35);
-  background: rgba(229, 72, 77, 0.12);
+  background: 
+    linear-gradient(135deg, rgba(229, 72, 77, 0.16) 0%, rgba(30, 16, 18, 0.6) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 133, 137, 0.45) 0%, rgba(229, 72, 77, 0.2) 100%) border-box;
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 133, 137, 0.2);
 }
 
 .btn-danger:hover {
-  background: var(--danger);
+  background: 
+    linear-gradient(135deg, var(--danger), #C23035) padding-box,
+    linear-gradient(135deg, #FFF 0%, rgba(255, 255, 255, 0.5) 50%, var(--danger) 100%) border-box;
   color: #FFF;
-  border-color: var(--danger);
-  box-shadow: 0 4px 16px rgba(229, 72, 77, 0.4);
+  box-shadow: 0 6px 20px rgba(229, 72, 77, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
 }
 
 .admin-controls-group {
@@ -167,15 +190,18 @@ body {
   font-size: 12.5px;
   font-weight: 700;
   color: var(--gold);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  padding: 6px 12px;
+  background: 
+    linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(20, 18, 10, 0.55) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(212, 175, 55, 0.35) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 13px;
   border-radius: 999px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-/* ================= 2. LIQUID GLASS SECTIONS BAR ================= */
+/* ================= 4. LIQUID GLASS SECTIONS BAR ================= */
 .sections-nav {
   position: sticky;
   top: 57px;
@@ -183,7 +209,7 @@ body {
   background: rgba(10, 10, 14, 0.55);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sections-scroll {
@@ -203,44 +229,56 @@ body {
 }
 
 .sections-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
 
 /* Liquid Glass Capsule Buttons */
 .sec-btn {
-  background: rgba(25, 25, 32, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 26, 0.55) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.06) 45%, rgba(212, 175, 55, 0.28) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  padding: 8px 17px;
+  padding: 8px 18px;
   border-radius: 999px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sec-btn:hover {
   color: var(--text-white);
-  background: rgba(38, 38, 48, 0.6);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(30, 30, 40, 0.65) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(212, 175, 55, 0.4) 50%, rgba(255, 255, 255, 0.15) 100%) border-box;
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 0 15px rgba(212, 175, 55, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
 }
 
 .sec-btn.active {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.95), rgba(186, 148, 35, 0.92));
   color: #08080A;
-  border-color: rgba(255, 255, 255, 0.35);
+  background: 
+    linear-gradient(135deg, rgba(212, 175, 55, 0.96), rgba(180, 145, 28, 0.94)) padding-box,
+    linear-gradient(135deg, #FFFFFF 0%, rgba(255, 255, 255, 0.7) 40%, rgba(212, 175, 55, 0.8) 100%) border-box;
   font-weight: 700;
-  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 6px 22px rgba(212, 175, 55, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
-/* ================= 3. VERTICAL 1-COLUMN PHOTO GALLERY ================= */
+/* ================= 5. VERTICAL 1-COLUMN PHOTO GALLERY ================= */
 .gallery-wrapper {
   max-width: 720px;
   margin: 0 auto;
@@ -270,19 +308,21 @@ body {
   letter-spacing: 0.4px;
   color: var(--gold);
   text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
 }
 
 .section-heading span {
   font-size: 12px;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(20, 20, 26, 0.5)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05)) border-box;
+  border: 1px solid transparent;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 3px 12px;
   border-radius: 999px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Single Column Vertical Gallery Stack */
@@ -294,46 +334,81 @@ body {
 
 /* Liquid Glass Cards */
 .gallery-card {
-  background: linear-gradient(145deg, rgba(22, 22, 28, 0.65) 0%, rgba(14, 14, 18, 0.75) 100%);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: 
+    linear-gradient(145deg, rgba(24, 24, 30, 0.65) 0%, rgba(14, 14, 18, 0.78) 100%) padding-box,
+    linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(212, 175, 55, 0.15) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .gallery-card:hover {
-  border-color: rgba(212, 175, 55, 0.35);
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(212, 175, 55, 0.25);
+  background: 
+    linear-gradient(145deg, rgba(28, 28, 36, 0.72) 0%, rgba(16, 16, 22, 0.82) 100%) padding-box,
+    linear-gradient(145deg, rgba(255, 255, 255, 0.3) 0%, rgba(212, 175, 55, 0.45) 50%, rgba(255, 255, 255, 0.1) 100%) border-box;
+  box-shadow: 
+    0 18px 48px rgba(0, 0, 0, 0.68),
+    0 0 20px rgba(212, 175, 55, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
-/* Rasm foni (Rustic Wood / Stone Table Texture) */
+/* ================= 6. HIRALASHGAN VA QORA SOYALI RASMLAR FONI ================= */
 .gallery-photo-box {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: #121217;
-  background-image: 
-    linear-gradient(rgba(10, 10, 14, 0.25), rgba(10, 10, 14, 0.25)),
-    url('images/full-background.webp'),
-    url('images/full-background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+  background-color: #0B0B0E;
   overflow: hidden;
   cursor: zoom-in;
 }
 
+/* Hiralashgan orqa fon qatlami (Blurred Background Layer) */
+.gallery-photo-box::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  background-image: 
+    linear-gradient(rgba(10, 10, 14, 0.2), rgba(10, 10, 14, 0.2)),
+    url('images/full-background.webp'),
+    url('images/full-background.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(7px) brightness(0.68) contrast(1.15);
+  transform: scale(1.06);
+  z-index: 1;
+}
+
+/* Atrofi qora soya (Deep Cinematic Black Vignette Shadow) */
+.gallery-photo-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.55) 72%, rgba(0, 0, 0, 0.94) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 30%);
+  box-shadow: inset 0 0 50px 10px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Tiniq taom fotosurati (Sharp crisp photo between blurred bg and shadow) */
 .gallery-photo-box img {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   opacity: 0;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gallery-photo-box img.loaded {
@@ -341,7 +416,7 @@ body {
 }
 
 .gallery-card:hover .gallery-photo-box img {
-  transform: scale(1.025);
+  transform: scale(1.035);
 }
 
 .gallery-info {
@@ -376,15 +451,20 @@ body {
   font-size: 17.5px;
   font-weight: 800;
   color: var(--gold);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.06) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: 
+    linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(24, 20, 10, 0.6) 100%) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, rgba(212, 175, 55, 0.5) 50%, rgba(255, 255, 255, 0.08) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 7px 15px;
-  border-radius: 12px;
+  border-radius: 13px;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.4);
 }
 
 /* Admin Quick-Edit Row inside Card */
@@ -417,7 +497,7 @@ body {
   color: var(--text-white);
   border: 1px solid var(--border-glass);
   padding: 7px 10px;
-  border-radius: 8px;
+  border-radius: 9px;
   font-size: 13.5px;
   font-weight: 700;
   outline: none;
@@ -429,20 +509,24 @@ body {
 }
 
 .btn-save-price {
-  background: rgba(48, 164, 108, 0.18);
+  background: 
+    linear-gradient(135deg, rgba(48, 164, 108, 0.22) 0%, rgba(14, 28, 20, 0.65) 100%) padding-box,
+    linear-gradient(135deg, rgba(85, 212, 146, 0.5) 0%, rgba(48, 164, 108, 0.25) 100%) border-box;
+  border: 1px solid transparent;
   color: #55D492;
-  border: 1px solid rgba(48, 164, 108, 0.45);
-  padding: 7px 12px;
-  border-radius: 8px;
+  padding: 7px 13px;
+  border-radius: 9px;
   font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(85, 212, 146, 0.3);
   transition: all 0.18s ease;
 }
 
 .btn-save-price:hover {
   background: var(--success);
   color: #FFF;
+  box-shadow: 0 4px 16px rgba(48, 164, 108, 0.45);
 }
 
 .card-admin-actions {
@@ -451,13 +535,13 @@ body {
   gap: 8px;
 }
 
-/* ================= 4. LIQUID GLASS MODALS ================= */
+/* ================= 7. LIQUID GLASS MODALS ================= */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.84);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -470,16 +554,18 @@ body {
 }
 
 .modal-box {
-  background: rgba(18, 18, 24, 0.82);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--border-glass);
+  background: 
+    linear-gradient(145deg, rgba(20, 20, 28, 0.85) 0%, rgba(12, 12, 16, 0.92) 100%) padding-box,
+    linear-gradient(145deg, rgba(255, 255, 255, 0.22) 0%, rgba(212, 175, 55, 0.2) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-radius: 20px;
   width: 100%;
   max-width: 480px;
   max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .modal-top {
@@ -504,6 +590,7 @@ body {
   cursor: pointer;
   line-height: 1;
   padding: 2px 6px;
+  transition: color 0.18s;
 }
 
 .btn-close:hover {
@@ -562,30 +649,57 @@ body {
 .lightbox-box {
   max-width: 960px;
   width: 100%;
-  background: rgba(14, 14, 18, 0.88);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--border-glass);
+  background: 
+    linear-gradient(145deg, rgba(20, 20, 26, 0.88) 0%, rgba(10, 10, 14, 0.94) 100%) padding-box,
+    linear-gradient(145deg, rgba(255, 255, 255, 0.25) 0%, rgba(212, 175, 55, 0.2) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.92), inset 0 1px 1px rgba(255, 255, 255, 0.22);
 }
 
-.lightbox-box img {
-  width: 100%;
-  max-height: 75vh;
-  object-fit: contain;
+.lightbox-photo-wrap {
+  position: relative;
+  overflow: hidden;
   background-color: #08080C;
+}
+
+.lightbox-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -15px;
   background-image: 
-    linear-gradient(rgba(10, 10, 14, 0.45), rgba(10, 10, 14, 0.45)),
+    linear-gradient(rgba(10, 10, 14, 0.2), rgba(10, 10, 14, 0.2)),
     url('images/full-background.webp'),
     url('images/full-background.jpg');
   background-size: cover;
   background-position: center;
+  filter: blur(10px) brightness(0.65);
+  transform: scale(1.06);
+  z-index: 1;
+}
+
+.lightbox-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px 15px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.lightbox-box img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
   display: block;
 }
 
-/* ================= 5. LIQUID GLASS TOAST ================= */
+/* ================= 8. LIQUID GLASS TOAST ================= */
 .toast-wrap {
   position: fixed;
   bottom: 24px;
@@ -598,16 +712,18 @@ body {
 }
 
 .toast {
-  background: rgba(22, 22, 30, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: 
+    linear-gradient(135deg, rgba(24, 24, 32, 0.88), rgba(16, 16, 22, 0.92)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(212, 175, 55, 0.5) 100%) border-box;
+  border: 1px solid transparent;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   color: var(--text-white);
-  border: 1px solid rgba(212, 175, 55, 0.45);
   padding: 12px 20px;
   border-radius: 14px;
   font-size: 13.5px;
   font-weight: 600;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   animation: toastFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -622,7 +738,7 @@ body {
   }
 }
 
-/* ================= 6. SITE FOOTER ================= */
+/* ================= 9. SITE FOOTER ================= */
 .site-footer {
   text-align: center;
   padding: 36px 20px 48px;
@@ -647,7 +763,7 @@ body {
   text-decoration: underline;
 }
 
-/* ================= 7. RESPONSIVE ================= */
+/* ================= 10. RESPONSIVE ================= */
 @media (max-width: 560px) {
   .header-inner {
     padding: 11px 14px;
