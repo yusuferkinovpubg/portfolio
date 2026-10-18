@@ -315,6 +315,8 @@ html.glass-on .sections-nav {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  flex: 0 0 auto;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
