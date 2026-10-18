@@ -42,14 +42,19 @@
       </div>
     </header>
 
-    <!-- 2-shisha: Bo'limlar Navigatsiyasi -->
-    <nav class="sections-nav">
-      <div class="sections-scroll" id="sectionsBar"></div>
+    <!-- 2-shisha: Bo'limlar Navigatsiyasi (faqat bo'lim tanlanganda faol) -->
+    <nav class="sections-nav" id="sectionsNav" style="display: none;">
+      <div class="sections-nav-inner" id="sectionsBar"></div>
     </nav>
   </div>
 
+  <!-- ================= BOSH EKRAN: BO'LIMLAR KATAGI ================= -->
+  <section class="home-menu-wrap" id="homeMenuWrap">
+    <div class="home-menu-grid" id="homeMenu"></div>
+  </section>
+
   <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY (ROOT'DAN TASHQARIDA) ================= -->
-  <main class="gallery-wrapper" id="galleryContainer"></main>
+  <main class="gallery-wrapper" id="galleryContainer" style="display: none;"></main>
 
   <!-- ================= SITE FOOTER ================= -->
   <footer class="site-footer">

@@ -1,6 +1,5 @@
 // ================= BO'LIMLAR (SECTIONS) =================
 const SECTIONS = [
-  { id: 'all', name: 'Barchasi' },
   { id: 'asosiy', name: 'Milliy Taomlar' },
   { id: 'kabob', name: 'Kaboblar va Shashlik' },
   { id: 'shorva', name: "Sho'rvalar" },
@@ -788,7 +787,10 @@ const STORAGE_KEYS = {
 let items = [];
 let credentials = { username: 'admin', password: '1234' };
 let currentUsername = null;
-let activeSection = 'all';
+let activeSection = null;
+let cardObserver = null;
+let currentRenderedCount = 0;
+const CHUNK_SIZE = 12;
 
 
 
@@ -835,17 +837,21 @@ function commitItems(mutate, successMsg) {
     mutate();
     const ok = saveItems();
     if (ok) {
-      renderGallery();
+      if (activeSection) {
+        renderGallery();
+      } else {
+        renderHomeMenu();
+      }
       if (successMsg) showToast(successMsg);
       return true;
     } else {
       items = prevItems;
-      renderGallery();
+      if (activeSection) renderGallery(); else renderHomeMenu();
       return false;
     }
   } catch (err) {
     items = prevItems;
-    renderGallery();
+    if (activeSection) renderGallery(); else renderHomeMenu();
     showToast("Amalni bajarishda xatolik yuz berdi.");
     return false;
   }
@@ -893,30 +899,87 @@ function renderHeaderAuth() {
   }
 }
 
-function renderSectionsBar() {
-  const bar = document.getElementById('sectionsBar');
-  const btns = SECTIONS.map(sec => {
-    const isActive = sec.id === activeSection ? 'active' : '';
-    return `<button class="sec-btn ${isActive}" type="button" data-sec="${sec.id}"><span class="label">${sec.name}</span></button>`;
-  }).join('');
-  bar.innerHTML = btns;
+function renderHomeMenu() {
+  const container = document.getElementById('homeMenu');
+  if (!container) return;
 
-  bar.querySelectorAll('.sec-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeSection = btn.getAttribute('data-sec');
-      bar.querySelectorAll('.sec-btn').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-sec') === activeSection);
-      });
-      renderGallery();
-    });
-  });
+  const tilesHtml = SECTIONS.map(sec => {
+    const count = items.filter(i => i.section === sec.id).length;
+    if (count === 0) return '';
+    return `
+      <div class="home-tile" data-sec="${sec.id}" role="button" tabindex="0">
+        <span class="home-tile-title">${escapeHtml(sec.name)}</span>
+        <span class="home-tile-count">${count} ta taom</span>
+      </div>
+    `;
+  }).filter(Boolean).join('');
+
+  container.innerHTML = tilesHtml;
+}
+
+function renderSectionsBar() {
+  const nav = document.getElementById('sectionsNav');
+  const bar = document.getElementById('sectionsBar');
+  if (!nav || !bar) return;
+
+  if (!activeSection) {
+    nav.style.display = 'none';
+    bar.innerHTML = '';
+    return;
+  }
+
+  nav.style.display = 'block';
+  const sec = SECTIONS.find(s => s.id === activeSection);
+  const secName = sec ? escapeHtml(sec.name) : '';
+
+  bar.innerHTML = `
+    <button class="btn-back-home" id="btnBackHome" type="button" aria-label="Bosh ekranga qaytish">
+      <span>←</span> Bo'limlar
+    </button>
+    <span class="active-sec-badge">${secName}</span>
+  `;
+}
+
+function navigateToSection(secId, pushHistory = true) {
+  activeSection = secId;
+  currentRenderedCount = CHUNK_SIZE;
+  if (pushHistory) {
+    history.pushState({ sec: secId }, '');
+  }
+  const homeWrap = document.getElementById('homeMenuWrap');
+  const gallery = document.getElementById('galleryContainer');
+  if (homeWrap) homeWrap.style.display = 'none';
+  if (gallery) gallery.style.display = 'flex';
+  renderSectionsBar();
+  renderGallery();
+  window.scrollTo(0, 0);
+}
+
+function navigateToHome(pushHistory = false) {
+  activeSection = null;
+  if (cardObserver) {
+    cardObserver.disconnect();
+    cardObserver = null;
+  }
+  currentRenderedCount = 0;
+  if (pushHistory) {
+    history.pushState(null, '');
+  }
+  const homeWrap = document.getElementById('homeMenuWrap');
+  const gallery = document.getElementById('galleryContainer');
+  if (homeWrap) homeWrap.style.display = 'flex';
+  if (gallery) {
+    gallery.style.display = 'none';
+    gallery.innerHTML = '';
+  }
+  renderSectionsBar();
+  renderHomeMenu();
+  window.scrollTo(0, 0);
 }
 
 function populateSectionSelect() {
   const sel = document.getElementById('itemSectionInput');
-  sel.innerHTML = SECTIONS.filter(s => s.id !== 'all')
-    .map(s => `<option value="${s.id}">${s.name}</option>`)
-    .join('');
+  sel.innerHTML = SECTIONS.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
 }
 
 function populatePresetPhotoSelect() {
@@ -961,46 +1024,101 @@ function renderCardHtml(item) {
 
 function renderGallery() {
   const container = document.getElementById('galleryContainer');
-  const sectionsToRender = activeSection === 'all'
-    ? SECTIONS.filter(s => s.id !== 'all')
-    : SECTIONS.filter(s => s.id === activeSection);
+  if (!container) return;
 
-  let html = '';
-  sectionsToRender.forEach(sec => {
-    const secItems = items.filter(i => i.section === sec.id);
-    if (secItems.length === 0) return;
+  if (cardObserver) {
+    cardObserver.disconnect();
+    cardObserver = null;
+  }
 
-    html += `
+  if (!activeSection) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+
+  container.style.display = 'flex';
+  const sec = SECTIONS.find(s => s.id === activeSection);
+  const secName = sec ? escapeHtml(sec.name) : '';
+  const secItems = items.filter(i => i.section === activeSection);
+
+  if (secItems.length === 0) {
+    container.innerHTML = `
       <section class="section-group">
-        <div class="section-heading">
-          <h2>${sec.name}</h2>
-          <span>${secItems.length} ta taom</span>
-        </div>
-        <div class="single-column-list">
-          ${secItems.map(item => renderCardHtml(item)).join('')}
+        <div class="empty-section-msg">
+          Bu bo'limda hozircha mahsulotlar yo'q.
         </div>
       </section>
     `;
-  });
-
-  if (!html) {
-    html = `
-      <div style="text-align:center; padding:60px 20px; color:var(--text-muted); border:1px dashed var(--border-dark); border-radius:16px;">
-        Bu bo'limda hozircha mahsulotlar yo'q.
-      </div>
-    `;
+    return;
   }
 
-  container.innerHTML = html;
+  currentRenderedCount = Math.min(Math.max(CHUNK_SIZE, currentRenderedCount || CHUNK_SIZE), secItems.length);
+  const initialCards = secItems.slice(0, currentRenderedCount).map(item => renderCardHtml(item)).join('');
+  const hasMore = currentRenderedCount < secItems.length;
+
+  container.innerHTML = `
+    <section class="section-group">
+      <div class="section-heading">
+        <h2>${secName}</h2>
+        <span>${secItems.length} ta taom</span>
+      </div>
+      <div class="single-column-list" id="cardList">
+        ${initialCards}
+      </div>
+      ${hasMore ? '<div id="sentinel" class="gallery-sentinel"></div>' : ''}
+    </section>
+  `;
+
+  if (hasMore) {
+    const sentinel = document.getElementById('sentinel');
+    if (sentinel && 'IntersectionObserver' in window) {
+      cardObserver = new IntersectionObserver((entries) => {
+        if (entries[0] && entries[0].isIntersecting) {
+          loadMoreCards(secItems);
+        }
+      }, { rootMargin: '400px' });
+      cardObserver.observe(sentinel);
+    }
+  }
+}
+
+function loadMoreCards(secItems) {
+  const list = document.getElementById('cardList');
+  if (!list) return;
+
+  const nextCount = Math.min(currentRenderedCount + CHUNK_SIZE, secItems.length);
+  const nextSlice = secItems.slice(currentRenderedCount, nextCount);
+  nextSlice.forEach(item => {
+    list.insertAdjacentHTML('beforeend', renderCardHtml(item));
+  });
+  currentRenderedCount = nextCount;
+
+  if (currentRenderedCount >= secItems.length) {
+    const sentinel = document.getElementById('sentinel');
+    if (sentinel) sentinel.remove();
+    if (cardObserver) {
+      cardObserver.disconnect();
+      cardObserver = null;
+    }
+  }
 }
 
 // ================= HODISALAR (EVENTS) =================
 function setupEvents() {
-  // Logotip bosilganda sahifani tepaga silliq ko'chirish
+  // Logotip bosilganda (bo'limda bo'lsa bosh ekranga, aks holda tepaga)
   const brandLogo = document.getElementById('brandLogo');
   if (brandLogo) {
     brandLogo.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (activeSection) {
+        if (history.state && history.state.sec) {
+          history.back();
+        } else {
+          navigateToHome(false);
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
 
@@ -1017,7 +1135,7 @@ function setupEvents() {
     currentUsername = null;
     try { sessionStorage.removeItem(STORAGE_KEYS.SESSION); } catch (e) {}
     renderHeaderAuth();
-    renderGallery();
+    if (activeSection) renderGallery(); else renderHomeMenu();
     showToast("Admin rejimidan chiqildi.");
   });
 
@@ -1077,7 +1195,7 @@ function setupEvents() {
       try { sessionStorage.setItem(STORAGE_KEYS.SESSION, currentUsername); } catch (err) {}
       closeModal('loginModal');
       renderHeaderAuth();
-      renderGallery();
+      if (activeSection) renderGallery(); else renderHomeMenu();
       showToast(`Xush kelibsiz, @${currentUsername}`);
     } else {
       document.getElementById('loginError').style.display = 'block';
@@ -1188,6 +1306,43 @@ function setupEvents() {
     }
   });
 
+  // Bosh ekrandagi bo'lim katakchasi bosilganda bo'limga o'tish
+  const homeMenu = document.getElementById('homeMenu');
+  if (homeMenu) {
+    homeMenu.addEventListener('click', (e) => {
+      const tile = e.target.closest('.home-tile');
+      if (!tile) return;
+      const secId = tile.getAttribute('data-sec');
+      if (secId) {
+        navigateToSection(secId, true);
+      }
+    });
+  }
+
+  // Bo'lim ichida "← Bo'limlar" tugmasi bosilganda bosh ekranga qaytish
+  const sectionsBar = document.getElementById('sectionsBar');
+  if (sectionsBar) {
+    sectionsBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('#btnBackHome');
+      if (btn) {
+        if (history.state && history.state.sec) {
+          history.back();
+        } else {
+          navigateToHome(false);
+        }
+      }
+    });
+  }
+
+  // Planshet va brauzer orqaga (back) jestini qo'llab-quvvatlash
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.sec) {
+      navigateToSection(e.state.sec, false);
+    } else {
+      navigateToHome(false);
+    }
+  });
+
   // Klaviaturada Escape bosilganda ochiq modallarni yopish
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -1211,7 +1366,7 @@ function openItemModal(item) {
     document.getElementById('itemModalTitle').textContent = "Yangi tovar qo'shish";
     document.getElementById('itemIdInput').value = '';
     document.getElementById('itemNameInput').value = '';
-    document.getElementById('itemSectionInput').value = activeSection !== 'all' ? activeSection : 'asosiy';
+    document.getElementById('itemSectionInput').value = activeSection ? activeSection : (SECTIONS[0] ? SECTIONS[0].id : 'asosiy');
     document.getElementById('itemPriceInput').value = '';
     document.getElementById('itemDescInput').value = '';
     document.getElementById('itemPresetPhoto').value = DEFAULT_ITEMS[0] ? DEFAULT_ITEMS[0].image : '';
@@ -1241,10 +1396,16 @@ function showToast(msg) {
 
 // Boshlang'ich yuklanish
 function startApp() {
+  if (history.state && history.state.sec) {
+    history.replaceState(null, '');
+  }
+  activeSection = null;
+
   loadData();
   populateSectionSelect();
   populatePresetPhotoSelect();
   renderHeaderAuth();
+  renderHomeMenu();
   renderSectionsBar();
   renderGallery();
   setupEvents();
