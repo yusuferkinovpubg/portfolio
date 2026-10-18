@@ -1771,3 +1771,11 @@ if (document.readyState === 'loading') {
   document.addEventListener(ev, e => e.preventDefault(), { passive: false })
 );
 
+// Android Chrome (Galaxy Tab) va iOS da uzoq bosganda tizim menyusi (Save image, etc.) ochilib ketishini bloklash
+document.addEventListener('contextmenu', (e) => {
+  if (!e.target.closest('input, textarea')) {
+    e.preventDefault();
+    return false;
+  }
+}, { passive: false });
+

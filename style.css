@@ -548,6 +548,10 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   padding: 12px 16px 44px;
   display: block;
   opacity: 0;
+  pointer-events: none; /* Galaxy Tab va Chrome uzoq bosganda rasmni saqlash menyusini chiqarmaydi */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1170,6 +1174,15 @@ html, body {
   overflow-x: hidden;
   overscroll-behavior-x: none;
   touch-action: pan-x pan-y;   /* pinch va double-tap zoom o'chadi */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+img, .gallery-card, .reorder-card, .home-tile {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
 }
 
 #glassTop, .sections-nav, .site-header {
