@@ -790,35 +790,7 @@ let credentials = { username: 'admin', password: '1234' };
 let currentUsername = null;
 let activeSection = 'all';
 
-// LiquidGlass sozlamalari va zaxira holati
-let liquidGlassInstance = null;
 
-const darkGlassDefaults = {
-  brightness: -0.3,
-  blurAmount: 0.25,
-  cornerRadius: 0,
-  refraction: 0.65,
-  chromAberration: 0.03,
-  specular: 0.1,
-  shadowOpacity: 0.4
-};
-
-// URL da ?glass=off bo'lsa yoki harakat cheklangan (reduced-motion) bo'lsa shisha o'chadi
-const ENABLE_GLASS = Boolean(
-  window.WebGLRenderingContext &&
-  new URLSearchParams(window.location.search).get('glass') !== 'off' &&
-  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-);
-
-(function () {
-  const params = new URLSearchParams(location.search);
-  const chromium = !!(navigator.userAgentData &&
-    navigator.userAgentData.brands.some(b => /Chromium/i.test(b.brand)));
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (chromium && finePointer && params.get('glass') !== 'off') {
-    document.documentElement.classList.add('glass-distort');
-  }
-})();
 
 
 function loadData() {
@@ -1278,32 +1250,6 @@ function showToast(msg) {
   setTimeout(() => el.remove(), 2800);
 }
 
-// ================= LIQUID GLASS EFFEKTI (DARK GLASS MODE) =================
-async function initLiquidGlass() {
-  if (!ENABLE_GLASS) return;
-  try {
-    if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
-    }
-    const { LiquidGlass } = await import('https://cdn.jsdelivr.net/npm/@ybouane/liquidglass@1.0.3/dist/index.js');
-    const root = document.getElementById('glassTop');
-    const header = document.querySelector('.site-header');
-    const nav = document.querySelector('.sections-nav');
-
-    if (root && header && nav) {
-      liquidGlassInstance = await LiquidGlass.init({
-        root: root,
-        glassElements: [header, nav],
-        defaults: darkGlassDefaults
-      });
-      document.documentElement.classList.add('glass-on');
-    }
-  } catch (err) {
-    console.warn("LiquidGlass zaxira rejimiga o'tdi (CSS fallback):", err);
-    document.documentElement.classList.remove('glass-on');
-  }
-}
-
 // Boshlang'ich yuklanish
 function startApp() {
   loadData();
@@ -1313,7 +1259,6 @@ function startApp() {
   renderSectionsBar();
   renderGallery();
   setupEvents();
-  initLiquidGlass();
 }
 
 if (document.readyState === 'loading') {

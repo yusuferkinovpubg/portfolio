@@ -107,9 +107,7 @@ Loyiha Vercel platformasida avtomatik CI/CD bilan ishlaydi. Repozitoriyangizni V
 
 ## 💻 Mahalliy kompyuterda ishga tushirish
 
-Loyihada ES Module (`type="module"`) va zamonaviy `@ybouane/liquidglass` kutubxonasi qo'llanilganligi sababli, brauzerlar xavfsizlik (CORS) qoidalariga binoan faylni to'g'ridan-to'g'ri `file://` orqali ochishga ruxsat bermaydi. 
-
-Mahalliy kompyuterda saytni ochish uchun quyidagi qulay server usullaridan birini ishlating:
+Loyiha `file://` orqali to'g'ridan-to'g'ri ochilishi mumkin, lekin mahalliy server orqali to'g'riroq ishlaydi:
 
 - **VS Code:** `Live Server` kengaytmasini o'rnating va `index.html` fayli ustida sichqonchaning o'ng tugmasini bosib **Open with Live Server** ni tanlang.
 - **Node.js (npx):** Loyiha papkasida terminalni ochib, `npx serve .` buyrug'ini kiriting.
