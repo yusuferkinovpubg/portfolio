@@ -982,3 +982,44 @@ html.glass-on .sections-nav {
 html.glass-distort .gallery-info {
   backdrop-filter: url(#glassDistort) blur(6px) saturate(170%);
 }
+
+/* ===== LIGHTBOX: to'liq ekranli rasm ko'rinishi ===== */
+#lightboxModal {
+  padding: 0;
+  background: rgba(0, 0, 0, 0.92);
+  cursor: pointer;
+}
+
+#lightboxModal .lightbox-box {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+  max-width: none;
+  width: auto;
+  overflow: visible;
+}
+
+#lightboxModal .lightbox-photo-wrap::before {
+  display: none;
+}
+
+#lightboxModal .lightbox-box img {
+  width: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
+  margin: 0 auto;
+  object-fit: contain;
+  display: block;
+}
+
+#lightboxModal .btn-close {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 120;
+}
+

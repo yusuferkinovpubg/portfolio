@@ -1094,6 +1094,14 @@ function setupEvents() {
     });
   });
 
+  // Lightbox bosilganda (rasm yoki fon) yopish
+  const lightboxModal = document.getElementById('lightboxModal');
+  if (lightboxModal) {
+    lightboxModal.addEventListener('click', () => {
+      closeModal('lightboxModal');
+    });
+  }
+
   // Login form yuborilganda
   document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1198,10 +1206,7 @@ function setupEvents() {
     if (!item) return;
 
     if (action === 'lightbox') {
-      document.getElementById('lightboxTitle').textContent = item.name;
       document.getElementById('lightboxImage').src = getItemPhotoSrc(item);
-      document.getElementById('lightboxDesc').textContent = item.desc || '';
-      document.getElementById('lightboxPrice').textContent = formatSom(item.price);
       openModal('lightboxModal');
     } else if (action === 'save-price') {
       const inp = document.getElementById('price_' + id);
