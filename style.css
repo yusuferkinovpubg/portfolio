@@ -1279,10 +1279,6 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 html, body {
   max-width: 100%;
   overflow-x: hidden;
-  overscroll-behavior: none !important;
-  overscroll-behavior-y: none !important;
-  overscroll-behavior-x: none !important;
-  touch-action: pan-x pan-y;   /* pinch va double-tap zoom o'chadi */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
@@ -1297,19 +1293,15 @@ html, body {
   overscroll-behavior-x: contain !important;
 }
 
-/* Drag & Drop faol vaqtda butun sahifa skrolli va browser pull-to-refresh to'liq muzlatiladi */
+/* Drag & Drop faol vaqtda faqat modal grididagi harakatlar boshqariladi */
 body.is-reordering-active {
-  overscroll-behavior: none !important;
-  touch-action: none !important;
-  overflow: hidden !important;
   user-select: none !important;
   -webkit-user-select: none !important;
 }
 
-body.is-reordering-active * {
+body.is-reordering-active .reorder-modal-body,
+body.is-reordering-active .reorder-grid {
   touch-action: none !important;
-  -webkit-user-select: none !important;
-  user-select: none !important;
 }
 
 img, .gallery-card, .reorder-card, .home-tile {

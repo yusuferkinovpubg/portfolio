@@ -1348,8 +1348,6 @@ function setupDashboardDragAndDrop() {
     cancelLongPress();
     document.body.classList.remove('is-reordering-active');
 
-    if (!dragSourceEl && !isDraggingActive && !floatingClone) return;
-
     const didDrag = isDraggingActive;
     const sourceEl = dragSourceEl;
     const sourceId = dragSourceId;
@@ -1360,21 +1358,29 @@ function setupDashboardDragAndDrop() {
       c.classList.remove('is-placeholder', 'is-dragging', 'is-drag-over', 'is-pressing');
     });
 
-    if (didDrag && sourceEl) {
-      const under = document.elementFromPoint(e.clientX, e.clientY);
-      const targetCard = under ? under.closest('.reorder-card:not(.is-floating-ghost)') : null;
-
-      if (targetCard && targetCard !== sourceEl) {
-        const targetPos = parseInt(targetCard.getAttribute('data-pos'), 10);
-        if (targetPos) {
-          moveItemToPosition(sourceId, targetPos);
-        }
-      }
-    }
-
     isDraggingActive = false;
     dragSourceId = null;
     dragSourceEl = null;
+
+    if (didDrag && sourceEl) {
+      let clientX = e ? e.clientX : 0;
+      let clientY = e ? e.clientY : 0;
+      if ((!clientX || !clientY) && e && e.changedTouches && e.changedTouches[0]) {
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+      }
+      if (clientX && clientY) {
+        const under = document.elementFromPoint(clientX, clientY);
+        const targetCard = under ? under.closest('.reorder-card:not(.is-floating-ghost)') : null;
+
+        if (targetCard && targetCard !== sourceEl) {
+          const targetPos = parseInt(targetCard.getAttribute('data-pos'), 10);
+          if (targetPos) {
+            moveItemToPosition(sourceId, targetPos);
+          }
+        }
+      }
+    }
 
     if (didDrag) {
       wasDragging = true;
@@ -1404,6 +1410,12 @@ function setupDashboardDragAndDrop() {
   });
   window.addEventListener('pointercancel', (e) => {
     if (isDraggingActive || dragSourceEl) finishDrag(e);
+  });
+  window.addEventListener('touchend', (e) => {
+    if (isDraggingActive || dragSourceEl || longPressTimer) finishDrag(e);
+  });
+  window.addEventListener('touchcancel', (e) => {
+    if (isDraggingActive || dragSourceEl || longPressTimer) finishDrag(e);
   });
 
   // Tanlab almashtirish (Tap-to-swap: masalan, 4-ni bir marta bosib, keyin 1-ni bossa ham o'rni almashadi)
@@ -1986,6 +1998,10 @@ function closeModal(id) {
   if (m) m.classList.remove('open');
   if (id === 'reorderModal') {
     removeFloatingClone();
+    isDraggingActive = false;
+    dragSourceId = null;
+    dragSourceEl = null;
+    document.body.classList.remove('is-reordering-active');
   }
 }
 
@@ -2000,6 +2016,8 @@ function showToast(msg) {
 
 // Boshlang'ich yuklanish
 function startApp() {
+  document.body.classList.remove('is-reordering-active');
+  isDraggingActive = false;
   if (history.state && history.state.sec) {
     history.replaceState(null, '');
   }
