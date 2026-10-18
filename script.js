@@ -942,7 +942,7 @@ function renderCardHtml(item) {
 
   return `
     <article class="gallery-card">
-      <div class="gallery-photo-box" data-action="lightbox" data-id="${item.id}">
+      <div class="gallery-photo-box">
         <img src="${imgSrc}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async"
           onload="this.classList.add('loaded')"
           onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = 'images/030A0348.webp'; } else { this.classList.add('loaded'); }" />
@@ -1066,14 +1066,6 @@ function setupEvents() {
     });
   });
 
-  // Lightbox bosilganda (rasm yoki fon) yopish
-  const lightboxModal = document.getElementById('lightboxModal');
-  if (lightboxModal) {
-    lightboxModal.addEventListener('click', () => {
-      closeModal('lightboxModal');
-    });
-  }
-
   // Login form yuborilganda
   document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1177,10 +1169,7 @@ function setupEvents() {
     const item = items.find(x => x.id === id);
     if (!item) return;
 
-    if (action === 'lightbox') {
-      document.getElementById('lightboxImage').src = getItemPhotoSrc(item);
-      openModal('lightboxModal');
-    } else if (action === 'save-price') {
+    if (action === 'save-price') {
       const inp = document.getElementById('price_' + id);
       const val = Number(inp ? inp.value : 0);
       if (val > 0) {
