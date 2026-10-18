@@ -1,14 +1,9 @@
 :root {
   --bg-black: #07070A;
-  --bg-surface: rgba(18, 18, 24, 0.65);
-  --bg-elevated: rgba(26, 26, 34, 0.75);
   --border-glass: rgba(255, 255, 255, 0.12);
   --text-white: #F5F5F7;
   --text-muted: #A0A0AC;
   --gold: #D4AF37;
-  --gold-soft: rgba(212, 175, 55, 0.15);
-  --danger: #E5484D;
-  --success: #30A46C;
   --radius: 18px;
 }
 
@@ -303,12 +298,6 @@ html.glass-on .sections-nav {
   border-radius: 4px;
 }
 
-/* Canvas oq xatolik bermasligi uchun */
-.sec-btn canvas,
-.btn canvas,
-.gallery-price canvas {
-  display: none !important;
-}
 
 /* Authentic Dark Liquid Glass Capsule Buttons */
 .sec-btn {
@@ -452,26 +441,30 @@ html.glass-on .sections-nav {
   gap: 26px;
 }
 
-/* Liquid Glass Cards */
+/* ===== Qora Liquid Glass Kartochka ===== */
 .gallery-card {
-  background: 
-    linear-gradient(145deg, rgba(24, 24, 30, 0.65) 0%, rgba(14, 14, 18, 0.78) 100%) padding-box,
-    linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(212, 175, 55, 0.15) 100%) border-box;
-  border: 1px solid transparent;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  position: relative;
+  background: linear-gradient(135deg,
+    rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.38) 100%);
+  border: 1px solid rgba(0,0,0,0.55);
+  border-top-color: rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
+  -webkit-backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
   border-radius: var(--radius);
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 
-    0 12px 36px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(0,0,0,0.60),
+    inset 0 -1px 1px rgba(0,0,0,0.50),
+    inset 0 0 28px rgba(0,0,0,0.35);
 }
 
 .gallery-card:hover {
-  background: 
-    linear-gradient(145deg, rgba(28, 28, 36, 0.72) 0%, rgba(16, 16, 22, 0.82) 100%) padding-box,
-    linear-gradient(145deg, rgba(255, 255, 255, 0.3) 0%, rgba(212, 175, 55, 0.45) 50%, rgba(255, 255, 255, 0.1) 100%) border-box;
+  background: linear-gradient(135deg,
+    rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.44) 100%);
+  border-color: rgba(212,175,55,0.40);
+  border-top-color: rgba(255,255,255,0.14);
   box-shadow: 
     0 18px 48px rgba(0, 0, 0, 0.68),
     0 0 20px rgba(212, 175, 55, 0.15),
@@ -479,36 +472,42 @@ html.glass-on .sections-nav {
   transform: translateY(-2px);
 }
 
-/* ================= 6. RASMLAR FONI (SHAFFOF LIQUID GLASS — ASL SAYT FONI KO'RINIB TURADI) ================= */
+/* Yaltirash (qora soya) */
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 4;
+  background:
+    linear-gradient(115deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%),
+    radial-gradient(120% 60% at 50% 0%, rgba(0,0,0,0.18), transparent 60%);
+  mix-blend-mode: normal;
+}
+
+/* ================= 6. RASMLAR FONI ================= */
 .gallery-photo-box {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   background-color: transparent;
   overflow: hidden;
   cursor: zoom-in;
 }
 
-/* Shaffof Liquid Glass: Saytning asl foni xiralashib ko'rinadi, atrofi qora gradient bilan hoshiyalanadi */
 .gallery-photo-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.02) 20%, rgba(0, 0, 0, 0.45) 70%, rgba(0, 0, 0, 0.92) 100%);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  z-index: 1;
-  pointer-events: none;
+  display: none;
 }
 
-/* Tiniq taom fotosurati (Original tiniq ranglarda, soya va filtirsiz) */
+/* Tiniq taom fotosurati */
 .gallery-photo-box img {
   position: relative;
   z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 10px 14px;
+  padding: 12px 16px 44px;
   display: block;
   opacity: 0;
   transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -522,12 +521,27 @@ html.glass-on .sections-nav {
   transform: scale(1.035);
 }
 
+/* Ma'lumot paneli (Qora shisha) */
 .gallery-info {
-  padding: 18px 20px;
+  position: relative;
+  z-index: 3;
+  margin: -68px 12px 12px;
+  padding: 16px 18px;
+  border-radius: 22px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+  background: linear-gradient(135deg,
+    rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.40) 100%);
+  border: 1px solid rgba(0,0,0,0.55);
+  border-top-color: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(0,0,0,0.60),
+    inset 0 -12px 24px rgba(0,0,0,0.25);
 }
 
 .gallery-text {
@@ -541,12 +555,14 @@ html.glass-on .sections-nav {
   color: var(--text-white);
   margin-bottom: 6px;
   line-height: 1.35;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
 }
 
 .gallery-desc {
   font-size: 13.5px;
-  color: var(--text-muted);
+  color: #C8C8D0;
   line-height: 1.5;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
 }
 
 /* Authentic Dark Liquid Glass Price Badge */
@@ -560,8 +576,8 @@ html.glass-on .sections-nav {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-top: 1px solid rgba(212, 175, 55, 0.4);
   border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   padding: 8px 18px;
   border-radius: 999px;
   white-space: nowrap;
@@ -944,36 +960,13 @@ html.glass-on .sections-nav {
     text-align: center;
   }
 }
-
-/* ===== KARTOCHKA: shisha panel rasm ustida ===== */
-.gallery-photo-box { aspect-ratio: 3 / 2; }
-.gallery-photo-box img { padding: 12px 16px 44px; }
-
-.gallery-info {
-  position: relative;
-  z-index: 3;
-  margin: -68px 12px 12px;
-  padding: 16px 18px;
-  border-radius: 22px;
-  background: linear-gradient(135deg,
-    rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.10) 100%);
-  border: 1px solid rgba(255,255,255,0.20);
-  border-top-color: rgba(255,255,255,0.40);
-  border-bottom-color: rgba(255,255,255,0.08);
+/* Desktop Chromium: sinish (distortion) effekti */
+html.glass-distort .gallery-card {
+  backdrop-filter: url(#glassDistort) blur(4px) saturate(150%) brightness(0.65);
+}
+html.glass-distort .gallery-info {
   backdrop-filter: blur(14px) saturate(170%);
-  -webkit-backdrop-filter: blur(14px) saturate(170%);
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.45),
-    inset 0 1px 1px rgba(255,255,255,0.35),
-    inset 0 -12px 24px rgba(255,255,255,0.04);
 }
-.gallery-title, .gallery-desc { text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
-.gallery-desc { color: #D6D6DE; }
-.gallery-price {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
 
 /* ===== LIGHTBOX: to'liq ekranli rasm ko'rinishi ===== */
 #lightboxModal {
@@ -1015,63 +1008,5 @@ html.glass-on .sections-nav {
   z-index: 120;
 }
 
-/* ===== KARTOCHKA: Qora Liquid Glass (oq effekt o'rniga) ===== */
-.gallery-card {
-  position: relative;
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.38) 100%);
-  border: 1px solid rgba(0,0,0,0.55);
-  border-top-color: rgba(255,255,255,0.10);   /* ingichka chet chizig'i, shisha shaklini ko'rsatadi */
-  backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
-  -webkit-backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
-  box-shadow:
-    0 14px 36px rgba(0,0,0,0.55),
-    inset 0 1px 1px rgba(0,0,0,0.60),
-    inset 0 -1px 1px rgba(0,0,0,0.50),
-    inset 0 0 28px rgba(0,0,0,0.35);
-}
-.gallery-card:hover {
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.44) 100%);
-  border-color: rgba(212,175,55,0.40);
-  border-top-color: rgba(255,255,255,0.14);
-}
-
-/* Yaltirash qora soya bilan almashtirildi */
-.gallery-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 4;
-  background:
-    linear-gradient(115deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%),
-    radial-gradient(120% 60% at 50% 0%, rgba(0,0,0,0.18), transparent 60%);
-  mix-blend-mode: normal;
-}
-
-/* Ma'lumot paneli ham qora shisha */
-.gallery-info {
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.40) 100%);
-  border: 1px solid rgba(0,0,0,0.55);
-  border-top-color: rgba(255,255,255,0.12);
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.55),
-    inset 0 1px 1px rgba(0,0,0,0.60),
-    inset 0 -12px 24px rgba(0,0,0,0.25);
-}
-.gallery-desc { color: #C8C8D0; }
-
-html.glass-distort .gallery-card {
-  backdrop-filter: url(#glassDistort) blur(4px) saturate(150%) brightness(0.65);
-}
-html.glass-distort .gallery-info {
-  backdrop-filter: blur(14px) saturate(170%);
-}
-
-/* Rasm atrofidagi qora hoshiya va xiralashtirish olib tashlandi */
-.gallery-photo-box::before { display: none; }
 
 
