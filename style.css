@@ -976,5 +976,18 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   z-index: 120;
 }
 
-
-
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  touch-action: pan-x pan-y;   /* pinch va double-tap zoom o'chadi */
+}
+.sections-scroll {
+  overscroll-behavior-x: contain;   /* surish oxiriga yetganda sahifaga o'tib ketmasin */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+#glassTop, .sections-nav, .site-header {
+  max-width: 100%;
+  overflow-x: clip;   /* gorizontal chiqib ketishni kesadi, sticky buzilmaydi */
+}

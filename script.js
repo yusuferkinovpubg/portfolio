@@ -1267,3 +1267,7 @@ if (document.readyState === 'loading') {
   startApp();
 }
 
+['gesturestart', 'gesturechange', 'gestureend'].forEach(ev =>
+  document.addEventListener(ev, e => e.preventDefault(), { passive: false })
+);
+
