@@ -1028,24 +1028,145 @@ function populatePresetPhotoSelect() {
   sel.innerHTML = DEFAULT_ITEMS.map(i => `<option value="${escapeHtml(i.image)}">${escapeHtml(i.name)}</option>`).join('');
 }
 
-function renderCardHtml(item) {
+function reorderItem(itemId, targetPos1Based) {
+  const item = items.find(x => x.id === itemId);
+  if (!item) return false;
+
+  const sectionId = item.section;
+  const secItems = items.filter(x => x.section === sectionId);
+  const total = secItems.length;
+  if (total <= 1) return false;
+
+  const currentSecIndex = secItems.findIndex(x => x.id === itemId);
+  if (currentSecIndex === -1) return false;
+
+  const targetIndex = Math.max(0, Math.min(total - 1, targetPos1Based - 1));
+  if (currentSecIndex === targetIndex) return false;
+
+  const oldPos = currentSecIndex + 1;
+  const newPos = targetIndex + 1;
+
+  const [moved] = secItems.splice(currentSecIndex, 1);
+  secItems.splice(targetIndex, 0, moved);
+
+  let cursor = 0;
+  items = items.map(x => {
+    if (x.section === sectionId) {
+      return secItems[cursor++];
+    }
+    return x;
+  });
+
+  if (targetIndex >= currentRenderedCount) {
+    currentRenderedCount = Math.min(secItems.length, targetIndex + 1);
+  }
+
+  commitItems(() => {}, `«${item.name}» ${newPos}-o'ringa ko'chirildi (#${oldPos} ➔ #${newPos})`);
+
+  // Agar tartiblash modali ochiq bo'lsa, uni yangilaymiz
+  const reorderModal = document.getElementById('reorderModal');
+  if (reorderModal && reorderModal.classList.contains('open')) {
+    renderReorderModalItems();
+  }
+
+  // Galereyada ko'chirilgan kartochkaga skroll va vizual urg'u
+  setTimeout(() => {
+    const cardEl = document.querySelector(`[data-card-id="${itemId}"]`);
+    if (cardEl) {
+      cardEl.classList.add('card-just-moved');
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => cardEl.classList.remove('card-just-moved'), 2000);
+    }
+  }, 80);
+
+  return true;
+}
+
+function openReorderModal() {
+  if (!activeSection) return;
+  const sec = SECTIONS.find(s => s.id === activeSection);
+  const title = document.getElementById('reorderModalTitle');
+  if (title) {
+    title.textContent = `«${sec ? sec.name : ''}» taomlari tartibi`;
+  }
+  renderReorderModalItems();
+  openModal('reorderModal');
+}
+
+function renderReorderModalItems() {
+  const container = document.getElementById('reorderItemsList');
+  if (!container || !activeSection) return;
+
+  const secItems = items.filter(x => x.section === activeSection);
+  if (secItems.length === 0) {
+    container.innerHTML = '<div class="empty-section-msg">Bu bo\'limda taomlar yo\'q.</div>';
+    return;
+  }
+
+  container.innerHTML = secItems.map((item, idx) => {
+    const pos = idx + 1;
+    const total = secItems.length;
+    return `
+      <div class="reorder-item-row" data-id="${item.id}">
+        <span class="reorder-item-num" id="modalBadge_${item.id}">#${pos}</span>
+        <img src="${getItemPhotoSrc(item)}" class="reorder-thumb" alt="" loading="lazy" />
+        <div class="reorder-item-info">
+          <div class="reorder-item-title">${escapeHtml(item.name)}</div>
+          <div class="reorder-slider-wrap">
+            <span class="order-num-tip">1</span>
+            <input type="range" class="order-slider modal-order-slider" id="modalSlider_${item.id}"
+              data-id="${item.id}" data-initial-pos="${pos}" min="1" max="${total}" value="${pos}" step="1"
+              ${total <= 1 ? 'disabled' : ''} />
+            <span class="order-num-tip">${total}</span>
+          </div>
+        </div>
+        <div class="reorder-step-btns">
+          <button type="button" class="order-step-btn" data-action="modal-step-up" data-id="${item.id}" data-pos="${pos}" ${pos <= 1 ? 'disabled' : ''} title="Yuqoriga">▲</button>
+          <button type="button" class="order-step-btn" data-action="modal-step-down" data-id="${item.id}" data-pos="${pos}" ${pos >= total ? 'disabled' : ''} title="Pastga">▼</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderCardHtml(item, pos = 1, total = 1) {
   const imgSrc = getItemPhotoSrc(item);
   const adminBarHtml = currentUsername ? `
     <div class="card-admin-bar">
-      <div class="inline-price-form">
-        <label for="price_${item.id}">Narx:</label>
-        <input type="number" class="inline-price-input" id="price_${item.id}" value="${item.price}" step="100" min="100" />
-        <button type="button" class="btn-save-price" data-action="save-price" data-id="${item.id}">Saqlash</button>
+      <div class="admin-bar-row">
+        <div class="inline-price-form">
+          <label for="price_${item.id}">Narx:</label>
+          <input type="number" class="inline-price-input" id="price_${item.id}" value="${item.price}" step="100" min="100" />
+          <button type="button" class="btn-save-price" data-action="save-price" data-id="${item.id}">Saqlash</button>
+        </div>
+        <div class="card-admin-actions">
+          <button type="button" class="btn" data-action="edit" data-id="${item.id}">Tahrirlash</button>
+          <button type="button" class="btn btn-danger" data-action="delete" data-id="${item.id}">O'chirish</button>
+        </div>
       </div>
-      <div class="card-admin-actions">
-        <button type="button" class="btn" data-action="edit" data-id="${item.id}">Tahrirlash</button>
-        <button type="button" class="btn btn-danger" data-action="delete" data-id="${item.id}">O'chirish</button>
+      <div class="inline-order-form">
+        <div class="order-slider-meta">
+          <span class="order-label">
+            Tartib raqami: <strong class="order-badge" id="orderBadge_${item.id}">#${pos}</strong>
+          </span>
+          <span class="order-total">${total} ta taom ichida</span>
+        </div>
+        <div class="order-slider-controls">
+          <button type="button" class="order-step-btn" data-action="step-up" data-id="${item.id}" data-pos="${pos}" ${pos <= 1 ? 'disabled' : ''} title="1 pog'ona yuqoriga">▲</button>
+          <span class="order-num-tip">1</span>
+          <input type="range" class="order-slider" id="orderSlider_${item.id}"
+            data-id="${item.id}" data-initial-pos="${pos}" min="1" max="${total}" value="${pos}" step="1"
+            ${total <= 1 ? 'disabled' : ''} aria-label="Taom o'rnini o'zgartirish slideri" />
+          <span class="order-num-tip">${total}</span>
+          <button type="button" class="order-step-btn" data-action="step-down" data-id="${item.id}" data-pos="${pos}" ${pos >= total ? 'disabled' : ''} title="1 pog'ona pastga">▼</button>
+          <button type="button" class="btn-save-order" data-action="save-order" data-id="${item.id}" ${total <= 1 ? 'disabled' : ''}>Ko'chirish</button>
+        </div>
       </div>
     </div>
   ` : '';
 
   return `
-    <article class="gallery-card">
+    <article class="gallery-card" data-card-id="${item.id}">
       <div class="gallery-photo-box">
         <img src="${imgSrc}" alt="${escapeHtml(item.name)}" loading="lazy" decoding="async"
           onload="this.classList.add('loaded')"
@@ -1095,14 +1216,17 @@ function renderGallery() {
   }
 
   currentRenderedCount = Math.min(Math.max(CHUNK_SIZE, currentRenderedCount || CHUNK_SIZE), secItems.length);
-  const initialCards = secItems.slice(0, currentRenderedCount).map(item => renderCardHtml(item)).join('');
+  const initialCards = secItems.slice(0, currentRenderedCount).map((item, idx) => renderCardHtml(item, idx + 1, secItems.length)).join('');
   const hasMore = currentRenderedCount < secItems.length;
 
   container.innerHTML = `
     <section class="section-group">
       <div class="section-heading">
         <h2>${secName}</h2>
-        <span>${secItems.length} ta taom</span>
+        <div class="section-heading-right">
+          <span>${secItems.length} ta taom</span>
+          ${currentUsername ? `<button type="button" class="btn-sec-reorder" id="btnOpenReorderModal" title="Bo'lim taomlari tartibini o'zgartirish">⇄ Tartiblash</button>` : ''}
+        </div>
       </div>
       <div class="single-column-list" id="cardList">
         ${initialCards}
@@ -1130,8 +1254,9 @@ function loadMoreCards(secItems) {
 
   const nextCount = Math.min(currentRenderedCount + CHUNK_SIZE, secItems.length);
   const nextSlice = secItems.slice(currentRenderedCount, nextCount);
-  nextSlice.forEach(item => {
-    list.insertAdjacentHTML('beforeend', renderCardHtml(item));
+  nextSlice.forEach((item, sliceIdx) => {
+    const pos = currentRenderedCount + sliceIdx + 1;
+    list.insertAdjacentHTML('beforeend', renderCardHtml(item, pos, secItems.length));
   });
   currentRenderedCount = nextCount;
 
@@ -1321,6 +1446,12 @@ function setupEvents() {
 
   // Galereya kartochkalari bo'yicha hodisalarni delegatsiya qilish (commitItems orqali)
   document.getElementById('galleryContainer').addEventListener('click', (e) => {
+    const reorderBtn = e.target.closest('#btnOpenReorderModal');
+    if (reorderBtn) {
+      openReorderModal();
+      return;
+    }
+
     const target = e.target.closest('[data-action]');
     if (!target) return;
     const action = target.getAttribute('data-action');
@@ -1344,8 +1475,104 @@ function setupEvents() {
           items = items.filter(x => x.id !== id);
         }, `"${item.name}" o'chirildi.`);
       }
+    } else if (action === 'save-order') {
+      const slider = document.getElementById('orderSlider_' + id);
+      if (slider) {
+        const newPos = parseInt(slider.value, 10);
+        reorderItem(id, newPos);
+      }
+    } else if (action === 'step-up') {
+      const pos = parseInt(target.getAttribute('data-pos'), 10);
+      if (pos > 1) {
+        reorderItem(id, pos - 1);
+      }
+    } else if (action === 'step-down') {
+      const pos = parseInt(target.getAttribute('data-pos'), 10);
+      reorderItem(id, pos + 1);
     }
   });
+
+  // Galereyadagi slider tortilganda real vaqtda indikatorni yangilash
+  document.getElementById('galleryContainer').addEventListener('input', (e) => {
+    const slider = e.target.closest('.order-slider');
+    if (!slider) return;
+    const id = slider.getAttribute('data-id');
+    const newPos = parseInt(slider.value, 10);
+    const initialPos = parseInt(slider.getAttribute('data-initial-pos'), 10);
+    const badge = document.getElementById('orderBadge_' + id);
+    const btn = document.querySelector(`.btn-save-order[data-id="${id}"]`);
+
+    if (badge) {
+      if (newPos === initialPos) {
+        badge.textContent = `#${initialPos}`;
+        badge.classList.remove('badge-changed');
+      } else {
+        badge.textContent = `#${initialPos} ➔ #${newPos}`;
+        badge.classList.add('badge-changed');
+      }
+    }
+    if (btn) {
+      if (newPos !== initialPos) {
+        btn.textContent = `${newPos}-o'ringa`;
+        btn.classList.add('btn-active-move');
+      } else {
+        btn.textContent = "Ko'chirish";
+        btn.classList.remove('btn-active-move');
+      }
+    }
+  });
+
+  // Slider qo'yib yuborilganda avtomatik ko'chirish
+  document.getElementById('galleryContainer').addEventListener('change', (e) => {
+    const slider = e.target.closest('.order-slider');
+    if (!slider) return;
+    const id = slider.getAttribute('data-id');
+    const newPos = parseInt(slider.value, 10);
+    const initialPos = parseInt(slider.getAttribute('data-initial-pos'), 10);
+    if (newPos !== initialPos) {
+      reorderItem(id, newPos);
+    }
+  });
+
+  // Tartiblash modalidagi hodisalar
+  const reorderList = document.getElementById('reorderItemsList');
+  if (reorderList) {
+    reorderList.addEventListener('input', (e) => {
+      const slider = e.target.closest('.modal-order-slider');
+      if (!slider) return;
+      const id = slider.getAttribute('data-id');
+      const newPos = parseInt(slider.value, 10);
+      const initialPos = parseInt(slider.getAttribute('data-initial-pos'), 10);
+      const badge = document.getElementById('modalBadge_' + id);
+      if (badge) {
+        badge.textContent = newPos === initialPos ? `#${initialPos}` : `#${initialPos}➔#${newPos}`;
+      }
+    });
+
+    reorderList.addEventListener('change', (e) => {
+      const slider = e.target.closest('.modal-order-slider');
+      if (!slider) return;
+      const id = slider.getAttribute('data-id');
+      const newPos = parseInt(slider.value, 10);
+      const initialPos = parseInt(slider.getAttribute('data-initial-pos'), 10);
+      if (newPos !== initialPos) {
+        reorderItem(id, newPos);
+      }
+    });
+
+    reorderList.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-action]');
+      if (!target) return;
+      const action = target.getAttribute('data-action');
+      const id = target.getAttribute('data-id');
+      const pos = parseInt(target.getAttribute('data-pos'), 10);
+      if (action === 'modal-step-up' && pos > 1) {
+        reorderItem(id, pos - 1);
+      } else if (action === 'modal-step-down') {
+        reorderItem(id, pos + 1);
+      }
+    });
+  }
 
   // Bosh ekrandagi bo'lim katakchasi bosilganda bo'limga o'tish
   const homeMenu = document.getElementById('homeMenu');

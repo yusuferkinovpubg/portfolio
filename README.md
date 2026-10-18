@@ -42,6 +42,7 @@ Zamonaviy, minimalist va to'liq moslashuvchan (responsive) restoran va choyxona 
 4. **Admin Tizimi va Narxlarni Joyida O'zgartirish**:
    - **Kirish**: Admin boshqaruv paneli orqali avtorizatsiyadan o'tish imkoniyati.
    - **Narxlarni tezkor tahrirlash**: Har bir taom kartochkasi ostida narxni to'g'ridan-to'g'ri o'zgartirib "Saqlash" tugmasini bosish mumkin.
+   - **Taomlar tartibini slider bilan o'zgartirish**: Kartochkadagi yoki "⇄ Tartiblash" oynasidagi slider orqali taomni istalgan o'ringa (masalan, 4-o'rindan 1-o'ringa yoki teskarisi) ko'chirish.
    - **Yangi tovar qo'shish va tahrirlash**: Taom nomi, bo'limi, narxi, tavsifi va rasmini tanlash.
    - **Rasm yuklash**: Qurilmadan yangi rasm yuklanganda avtomatik ravishda optimallashtiriladi va siqiladi.
    - **Parolni yangilash**: Admin username va parolini o'zgartirish imkoniyati.
