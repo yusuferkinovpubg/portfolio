@@ -856,6 +856,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   border-color: rgba(212, 175, 55, 0.75);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   transition: transform 0.1s ease;
+  touch-action: none !important;
 }
 
 /* Original kartochka o'rnida qoladigan shaffof joy (placeholder) */
@@ -1278,11 +1279,37 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 html, body {
   max-width: 100%;
   overflow-x: hidden;
-  overscroll-behavior-x: none;
+  overscroll-behavior: none !important;
+  overscroll-behavior-y: none !important;
+  overscroll-behavior-x: none !important;
   touch-action: pan-x pan-y;   /* pinch va double-tap zoom o'chadi */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.modal-backdrop,
+.modal-box,
+.reorder-modal-body,
+.sections-modal-body {
+  overscroll-behavior: contain !important;
+  overscroll-behavior-y: contain !important;
+  overscroll-behavior-x: contain !important;
+}
+
+/* Drag & Drop faol vaqtda butun sahifa skrolli va browser pull-to-refresh to'liq muzlatiladi */
+body.is-reordering-active {
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+  overflow: hidden !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+body.is-reordering-active * {
+  touch-action: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
 }
 
 img, .gallery-card, .reorder-card, .home-tile {

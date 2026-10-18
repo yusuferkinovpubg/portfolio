@@ -1236,6 +1236,9 @@ function setupDashboardDragAndDrop() {
     if (dragSourceEl && !isDraggingActive) {
       dragSourceEl.classList.remove('is-pressing');
     }
+    if (!isDraggingActive) {
+      document.body.classList.remove('is-reordering-active');
+    }
   };
 
   // Bosib turganda: 300ms turgandan keyinoq tartiblash (drag) faollashadi
@@ -1266,6 +1269,7 @@ function setupDashboardDragAndDrop() {
     // 300ms bosib turganda barmoqqa ergashuvchi klon hosil qilinadi
     longPressTimer = setTimeout(() => {
       isDraggingActive = true;
+      document.body.classList.add('is-reordering-active');
       card.classList.remove('is-pressing');
       card.classList.add('is-placeholder');
 
@@ -1316,14 +1320,14 @@ function setupDashboardDragAndDrop() {
       floatingClone.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(1.08)`;
     }
 
-    // Modal ichida bo'lsa, chekkaga borganda avtomatik yumshoq skroll
+    // Modal ichida bo'lsa: faqat haqiqiy scroll mavjud bo'lganda (kontent ekrandan katta bo'lsa) va chekkaga yaqinlashganda asta siljitish
     const modalBody = grid.closest('.reorder-modal-body') || grid.closest('.modal-box');
-    if (modalBody) {
+    if (modalBody && modalBody.scrollHeight > modalBody.clientHeight + 40) {
       const mRect = modalBody.getBoundingClientRect();
-      if (e.clientY < mRect.top + 45) {
-        modalBody.scrollTop -= 8;
-      } else if (e.clientY > mRect.bottom - 45) {
-        modalBody.scrollTop += 8;
+      if (e.clientY < mRect.top + 24 && modalBody.scrollTop > 0) {
+        modalBody.scrollTop -= 5;
+      } else if (e.clientY > mRect.bottom - 24 && modalBody.scrollTop < (modalBody.scrollHeight - modalBody.clientHeight - 2)) {
+        modalBody.scrollTop += 5;
       }
     }
 
@@ -1342,6 +1346,7 @@ function setupDashboardDragAndDrop() {
 
   const finishDrag = (e) => {
     cancelLongPress();
+    document.body.classList.remove('is-reordering-active');
 
     if (!dragSourceEl && !isDraggingActive && !floatingClone) return;
 
@@ -1381,6 +1386,15 @@ function setupDashboardDragAndDrop() {
   grid.addEventListener('pointermove', onPointerMove, { passive: false });
   window.addEventListener('pointermove', (e) => {
     if (isDraggingActive) onPointerMove(e);
+  }, { passive: false });
+
+  // Touch qurilmalarda (Galaxy Tab / Android Chrome) drag vaqtida browser pull-to-refresh va sahifa skrollini to'liq bloklash
+  window.addEventListener('touchmove', (e) => {
+    if (isDraggingActive) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    }
   }, { passive: false });
 
   grid.addEventListener('pointerup', finishDrag);
