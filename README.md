@@ -25,8 +25,11 @@ Zamonaviy, minimalist va to'liq moslashuvchan (responsive) restoran va choyxona 
    - **Kaboblar va Shashlik**: G'ijduvoncha qiyma, Qo'y go'shti va dumba, Charvi, Jigar, Uchpanja, Tovuq, Sabzavotli kaboblar.
    - **Sho'rvalar**: Xushbo'y qo'y go'shtli sho'rva, Uycha uslubidagi sho'rva.
    - **Salatlar va Gazaklar**: Achichuk, Sezar, Fransuzcha, Mujskoy kapriz, Vinegret, Gozho, Suzma, Yangi ko'katlar.
-   - **Tandir Non**: Samarqand tandir patir noni.
-   - **Salqin Ichimliklar**: Pepsi, Coca-Cola, Fanta, Sprite, 9 xil tabiiy Dena sharbatlari, Moxito, Moviy Laguna, Milkshakelar.
+   - **Tandir Non va Somsa**: Samarqand tandir patir noni.
+   - **Gazlangan Ichimliklar**: Pepsi, Coca-Cola, Fanta, Sprite, energetik va yaxna choylar.
+   - **Sharbat, Ayron va Kompot**: Tabiiy Dena sharbatlari, xonaki kompot va yaxna ayron.
+   - **Moxito va Limonadlar**: Klassik, mevali moxitolar va xushbo'y limonadlar.
+   - **Milkshake va Kokteyllar**: Moviy Laguna, shokoladli va mevali milkshakelar.
    - **Choy va Qahva**: Frensh-pressda anorli, limonli, zanjabilli, tog' giyohlari choylari, Espresso, Kapuchino, Latte.
    - **Shirinliklar va Mevalar**: Belgiya vaflilari (mevali, shokoladli, muzqaymoqli), Muzqaymoqlar, Yangi qulupnay va tarvuz.
 
