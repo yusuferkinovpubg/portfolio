@@ -1117,25 +1117,67 @@ function renderReorderModalItems() {
 let dragSourceId = null;
 let dragSourceEl = null;
 let selectedForSwapId = null;
+let longPressTimer = null;
+let isDraggingActive = false;
+let startX = 0;
+let startY = 0;
 
 function setupDashboardDragAndDrop() {
   const grid = document.getElementById('reorderItemsGrid');
   if (!grid) return;
 
-  // Bosib turib surish (Touch + Pointer)
+  const cancelLongPress = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+    if (dragSourceEl && !isDraggingActive) {
+      dragSourceEl.classList.remove('is-pressing');
+    }
+  };
+
+  // Bosib turganda: 1-2 soniya (850ms) turgandan keyingina tartiblash (drag) faollashadi
   grid.addEventListener('pointerdown', (e) => {
     const card = e.target.closest('.reorder-card');
     if (!card) return;
     if (e.button !== undefined && e.button !== 0) return;
 
+    cancelLongPress();
+    isDraggingActive = false;
     dragSourceId = card.getAttribute('data-id');
     dragSourceEl = card;
-    card.classList.add('is-dragging');
-    try { card.setPointerCapture(e.pointerId); } catch (err) {}
+    startX = e.clientX;
+    startY = e.clientY;
+
+    card.classList.add('is-pressing');
+
+    longPressTimer = setTimeout(() => {
+      isDraggingActive = true;
+      card.classList.remove('is-pressing');
+      card.classList.add('is-dragging');
+      if (navigator.vibrate) {
+        try { navigator.vibrate(60); } catch (err) {}
+      }
+      try { card.setPointerCapture(e.pointerId); } catch (err) {}
+    }, 850);
   });
 
   grid.addEventListener('pointermove', (e) => {
-    if (!dragSourceId || !dragSourceEl) return;
+    if (!dragSourceEl) return;
+
+    // Agar hali 1 soniya to'lmagan bo'lsa va barmoq 9px dan ko'proq siljisa -> bu tabiiy skroll!
+    if (!isDraggingActive) {
+      const dist = Math.hypot(e.clientX - startX, e.clientY - startY);
+      if (dist > 9) {
+        cancelLongPress();
+        dragSourceId = null;
+        dragSourceEl = null;
+      }
+      return;
+    }
+
+    // 1 soniya to'lgach surish boshlangan: sahifa skrollini to'xtatamiz
+    e.preventDefault();
 
     dragSourceEl.style.visibility = 'hidden';
     const under = document.elementFromPoint(e.clientX, e.clientY);
@@ -1153,27 +1195,33 @@ function setupDashboardDragAndDrop() {
   });
 
   const finishDrag = (e) => {
-    if (!dragSourceId || !dragSourceEl) return;
+    cancelLongPress();
 
-    try { dragSourceEl.releasePointerCapture(e.pointerId); } catch (err) {}
+    if (dragSourceEl) {
+      try { dragSourceEl.releasePointerCapture(e.pointerId); } catch (err) {}
+      dragSourceEl.classList.remove('is-pressing');
+    }
 
-    dragSourceEl.style.visibility = 'hidden';
-    const under = document.elementFromPoint(e.clientX, e.clientY);
-    dragSourceEl.style.visibility = '';
+    if (isDraggingActive && dragSourceEl) {
+      dragSourceEl.style.visibility = 'hidden';
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      dragSourceEl.style.visibility = '';
 
-    const targetCard = under ? under.closest('.reorder-card') : null;
+      const targetCard = under ? under.closest('.reorder-card') : null;
 
-    grid.querySelectorAll('.reorder-card').forEach(c => {
-      c.classList.remove('is-dragging', 'is-drag-over');
-    });
+      grid.querySelectorAll('.reorder-card').forEach(c => {
+        c.classList.remove('is-dragging', 'is-drag-over', 'is-pressing');
+      });
 
-    if (targetCard && targetCard !== dragSourceEl) {
-      const targetPos = parseInt(targetCard.getAttribute('data-pos'), 10);
-      if (targetPos) {
-        moveItemToPosition(dragSourceId, targetPos);
+      if (targetCard && targetCard !== dragSourceEl) {
+        const targetPos = parseInt(targetCard.getAttribute('data-pos'), 10);
+        if (targetPos) {
+          moveItemToPosition(dragSourceId, targetPos);
+        }
       }
     }
 
+    isDraggingActive = false;
     dragSourceId = null;
     dragSourceEl = null;
   };
@@ -1181,8 +1229,9 @@ function setupDashboardDragAndDrop() {
   grid.addEventListener('pointerup', finishDrag);
   grid.addEventListener('pointercancel', finishDrag);
 
-  // Tanlab almashtirish (Tap-to-swap: masalan, 4-ni bosib, keyin 1-ni bossa ham joylashuvi o'zgaradi)
+  // Tanlab almashtirish (Tap-to-swap: masalan, 4-ni bir marta bosib, keyin 1-ni bossa ham o'rni almashadi)
   grid.addEventListener('click', (e) => {
+    if (isDraggingActive) return;
     const card = e.target.closest('.reorder-card');
     if (!card) return;
     const clickedId = card.getAttribute('data-id');
@@ -1201,6 +1250,62 @@ function setupDashboardDragAndDrop() {
       moveItemToPosition(sourceId, clickedPos);
     }
   });
+}
+
+function setupGalleryLongPress() {
+  const container = document.getElementById('galleryContainer');
+  if (!container) return;
+
+  let galleryLongPressTimer = null;
+  let gStartX = 0;
+  let gStartY = 0;
+  let pressedCard = null;
+
+  const cancelGalleryLongPress = () => {
+    if (galleryLongPressTimer) {
+      clearTimeout(galleryLongPressTimer);
+      galleryLongPressTimer = null;
+    }
+    if (pressedCard) {
+      pressedCard.classList.remove('is-pressing');
+      pressedCard = null;
+    }
+  };
+
+  container.addEventListener('pointerdown', (e) => {
+    if (!currentUsername) return;
+    const card = e.target.closest('.gallery-card');
+    if (!card) return;
+    if (e.target.closest('input, button, textarea, select')) return;
+
+    cancelGalleryLongPress();
+    pressedCard = card;
+    gStartX = e.clientX;
+    gStartY = e.clientY;
+
+    card.classList.add('is-pressing');
+
+    // 1-2 soniya (900ms) bosib turgandan keyin tartiblash dashboardi ochiladi
+    galleryLongPressTimer = setTimeout(() => {
+      cancelGalleryLongPress();
+      if (navigator.vibrate) {
+        try { navigator.vibrate(80); } catch (err) {}
+      }
+      openReorderModal(activeSection);
+      showToast("Taomlar tartibi dashboardi ochildi.");
+    }, 900);
+  });
+
+  container.addEventListener('pointermove', (e) => {
+    if (!galleryLongPressTimer) return;
+    const dist = Math.hypot(e.clientX - gStartX, e.clientY - gStartY);
+    if (dist > 10) {
+      cancelGalleryLongPress();
+    }
+  });
+
+  container.addEventListener('pointerup', cancelGalleryLongPress);
+  container.addEventListener('pointercancel', cancelGalleryLongPress);
 }
 
 function renderCardHtml(item) {
@@ -1549,6 +1654,7 @@ function setupEvents() {
 
   // Dashboard drag & drop hodisalarini ishga tushirish
   setupDashboardDragAndDrop();
+  setupGalleryLongPress();
 
   // Bosh ekrandagi bo'lim katakchasi bosilganda bo'limga o'tish
   const homeMenu = document.getElementById('homeMenu');
