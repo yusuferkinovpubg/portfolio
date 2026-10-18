@@ -946,10 +946,6 @@ html.glass-on .sections-nav {
 }
 
 /* ===== KARTOCHKA: shisha panel rasm ustida ===== */
-.gallery-card {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
 .gallery-photo-box { aspect-ratio: 3 / 2; }
 .gallery-photo-box img { padding: 12px 16px 44px; }
 
@@ -978,10 +974,6 @@ html.glass-on .sections-nav {
   -webkit-backdrop-filter: none;
 }
 
-/* Faqat desktop Chromium: sinish (distortion) effekti */
-html.glass-distort .gallery-info {
-  backdrop-filter: url(#glassDistort) blur(6px) saturate(170%);
-}
 
 /* ===== LIGHTBOX: to'liq ekranli rasm ko'rinishi ===== */
 #lightboxModal {
@@ -1023,17 +1015,50 @@ html.glass-distort .gallery-info {
   z-index: 120;
 }
 
-/* ===== KARTOCHKA: shaffof, sayt foni ko'rinib tursin ===== */
+/* ===== KARTOCHKA: Liquid Glass ===== */
 .gallery-card {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-top-color: rgba(255, 255, 255, 0.30);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  position: relative;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.06) 100%);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-top-color: rgba(255,255,255,0.38);
+  border-left-color: rgba(255,255,255,0.26);
+  border-bottom-color: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px) saturate(170%) brightness(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(170%) brightness(1.08);
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.38),
+    inset 0 1px 1px rgba(255,255,255,0.45),
+    inset 0 -1px 1px rgba(255,255,255,0.10),
+    inset 0 0 28px rgba(255,255,255,0.05);
 }
 .gallery-card:hover {
-  background: transparent;
-  border-color: rgba(212, 175, 55, 0.45);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 18px rgba(212, 175, 55, 0.12);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.09) 100%);
+  border-color: rgba(212,175,55,0.45);
+  border-top-color: rgba(255,255,255,0.5);
+}
+
+/* Yorug' chiziq (shisha yaltirashi) */
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 4;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 28%),
+    radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.08), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+/* Desktop Chromium: orqa fon sinadi. Ichki panel esa oddiy blur */
+html.glass-distort .gallery-card {
+  backdrop-filter: url(#glassDistort) blur(4px) saturate(170%) brightness(1.08);
+}
+html.glass-distort .gallery-info {
+  backdrop-filter: blur(14px) saturate(170%);
 }
 
 /* Rasm atrofidagi qora hoshiya va xiralashtirish olib tashlandi */
