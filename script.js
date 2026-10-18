@@ -810,6 +810,17 @@ const ENABLE_GLASS = Boolean(
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 );
 
+(function () {
+  const params = new URLSearchParams(location.search);
+  const chromium = !!(navigator.userAgentData &&
+    navigator.userAgentData.brands.some(b => /Chromium/i.test(b.brand)));
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (chromium && finePointer && params.get('glass') !== 'off') {
+    document.documentElement.classList.add('glass-distort');
+  }
+})();
+
+
 function loadData() {
   try {
     const rawItems = localStorage.getItem(STORAGE_KEYS.ITEMS);

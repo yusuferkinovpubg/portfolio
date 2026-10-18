@@ -944,3 +944,41 @@ html.glass-on .sections-nav {
     text-align: center;
   }
 }
+
+/* ===== KARTOCHKA: shisha panel rasm ustida ===== */
+.gallery-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.gallery-photo-box { aspect-ratio: 3 / 2; }
+.gallery-photo-box img { padding: 12px 16px 44px; }
+
+.gallery-info {
+  position: relative;
+  z-index: 3;
+  margin: -68px 12px 12px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.10) 100%);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-top-color: rgba(255,255,255,0.40);
+  border-bottom-color: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45),
+    inset 0 1px 1px rgba(255,255,255,0.35),
+    inset 0 -12px 24px rgba(255,255,255,0.04);
+}
+.gallery-title, .gallery-desc { text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
+.gallery-desc { color: #D6D6DE; }
+.gallery-price {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Faqat desktop Chromium: sinish (distortion) effekti */
+html.glass-distort .gallery-info {
+  backdrop-filter: url(#glassDistort) blur(6px) saturate(170%);
+}
