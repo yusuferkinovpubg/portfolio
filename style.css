@@ -848,37 +848,48 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   cursor: grabbing;
 }
 
-/* 1 soniyacha bosib turilganda dastlabki belgi */
+/* Bosib turganda (300ms) dastlabki belgi */
 .reorder-card.is-pressing {
-  transform: scale(0.96);
-  border-color: rgba(212, 175, 55, 0.5);
+  transform: scale(0.95);
+  border-color: rgba(212, 175, 55, 0.75);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-  transition: transform 0.12s ease;
+  transition: transform 0.1s ease;
 }
 
-/* 1 soniya to'lgandan keyin (Tartiblash rejimi faol) */
-@keyframes reorderJiggle {
-  0% { transform: scale(1.08) rotate(0deg); }
-  25% { transform: scale(1.08) rotate(-1.5deg); }
-  75% { transform: scale(1.08) rotate(1.5deg); }
-  100% { transform: scale(1.08) rotate(0deg); }
+/* Original kartochka o'rnida qoladigan shaffof joy (placeholder) */
+.reorder-card.is-placeholder {
+  opacity: 0.32 !important;
+  border: 2px dashed rgba(212, 175, 55, 0.7) !important;
+  background: rgba(212, 175, 55, 0.06) !important;
+  transform: scale(0.95) !important;
+  box-shadow: none !important;
+  pointer-events: none;
 }
 
-.reorder-card.is-dragging {
-  touch-action: none;   /* Endi surish vaqtida sahifa skroll bo'lmaydi */
-  opacity: 0.92;
-  border-color: #FFE680 !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 24px rgba(212, 175, 55, 0.7) !important;
-  z-index: 100;
-  animation: reorderJiggle 0.4s ease-in-out infinite alternate;
+/* Barmoq/kursiv bilan birga ekranda suzib harakatlanadigan kartochka (floating ghost) */
+.is-floating-ghost {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 999999 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  opacity: 0.96;
+  border-radius: 14px;
+  border: 2px solid #FFE680 !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.88), 0 0 30px rgba(212, 175, 55, 0.8) !important;
+  background: linear-gradient(135deg, rgba(28, 28, 36, 0.98) 0%, rgba(14, 14, 20, 0.98) 100%) !important;
+  will-change: transform;
+  transform-origin: center center;
+  box-sizing: border-box;
 }
 
 /* Ustiga keltirilganda (dragover nishon) */
 .reorder-card.is-drag-over {
   border-color: #55D492 !important;
-  background: rgba(85, 212, 146, 0.16) !important;
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(85, 212, 146, 0.5) !important;
+  background: rgba(85, 212, 146, 0.18) !important;
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(85, 212, 146, 0.6) !important;
 }
 
 /* Tanlangan holat (tap-to-swap uchun) */
