@@ -1015,31 +1015,29 @@ html.glass-on .sections-nav {
   z-index: 120;
 }
 
-/* ===== KARTOCHKA: Liquid Glass ===== */
+/* ===== KARTOCHKA: Qora Liquid Glass (oq effekt o'rniga) ===== */
 .gallery-card {
   position: relative;
   background: linear-gradient(135deg,
-    rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.06) 100%);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-top-color: rgba(255,255,255,0.38);
-  border-left-color: rgba(255,255,255,0.26);
-  border-bottom-color: rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px) saturate(170%) brightness(1.08);
-  -webkit-backdrop-filter: blur(10px) saturate(170%) brightness(1.08);
+    rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.38) 100%);
+  border: 1px solid rgba(0,0,0,0.55);
+  border-top-color: rgba(255,255,255,0.10);   /* ingichka chet chizig'i, shisha shaklini ko'rsatadi */
+  backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
+  -webkit-backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
   box-shadow:
-    0 14px 36px rgba(0,0,0,0.38),
-    inset 0 1px 1px rgba(255,255,255,0.45),
-    inset 0 -1px 1px rgba(255,255,255,0.10),
-    inset 0 0 28px rgba(255,255,255,0.05);
+    0 14px 36px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(0,0,0,0.60),
+    inset 0 -1px 1px rgba(0,0,0,0.50),
+    inset 0 0 28px rgba(0,0,0,0.35);
 }
 .gallery-card:hover {
   background: linear-gradient(135deg,
-    rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0.09) 100%);
-  border-color: rgba(212,175,55,0.45);
-  border-top-color: rgba(255,255,255,0.5);
+    rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.44) 100%);
+  border-color: rgba(212,175,55,0.40);
+  border-top-color: rgba(255,255,255,0.14);
 }
 
-/* Yorug' chiziq (shisha yaltirashi) */
+/* Yaltirash qora soya bilan almashtirildi */
 .gallery-card::after {
   content: '';
   position: absolute;
@@ -1048,14 +1046,26 @@ html.glass-on .sections-nav {
   pointer-events: none;
   z-index: 4;
   background:
-    linear-gradient(115deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 28%),
-    radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,0.08), transparent 60%);
-  mix-blend-mode: screen;
+    linear-gradient(115deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%),
+    radial-gradient(120% 60% at 50% 0%, rgba(0,0,0,0.18), transparent 60%);
+  mix-blend-mode: normal;
 }
 
-/* Desktop Chromium: orqa fon sinadi. Ichki panel esa oddiy blur */
+/* Ma'lumot paneli ham qora shisha */
+.gallery-info {
+  background: linear-gradient(135deg,
+    rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.40) 100%);
+  border: 1px solid rgba(0,0,0,0.55);
+  border-top-color: rgba(255,255,255,0.12);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(0,0,0,0.60),
+    inset 0 -12px 24px rgba(0,0,0,0.25);
+}
+.gallery-desc { color: #C8C8D0; }
+
 html.glass-distort .gallery-card {
-  backdrop-filter: url(#glassDistort) blur(4px) saturate(170%) brightness(1.08);
+  backdrop-filter: url(#glassDistort) blur(4px) saturate(150%) brightness(0.65);
 }
 html.glass-distort .gallery-info {
   backdrop-filter: blur(14px) saturate(170%);
