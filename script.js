@@ -1,5 +1,5 @@
 // ================= BO'LIMLAR (SECTIONS) =================
-const SECTIONS = [
+const DEFAULT_SECTIONS = [
   { id: 'asosiy',    name: 'Milliy Taomlar',             cover: 'images/030A0348.webp' },
   { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/030A0361.webp' },
   { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/030A0283.webp' },
@@ -12,6 +12,8 @@ const SECTIONS = [
   { id: 'choy_kofe', name: 'Choy va Qahva',              cover: 'images/030A9434.webp' },
   { id: 'desert',    name: 'Shirinliklar va Mevalar',    cover: 'images/030A0293.webp' }
 ];
+
+let SECTIONS = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
 
 // ================= 95 TA SARALANGAN MAHSULOTLAR VA TAOMLAR =================
 const DEFAULT_ITEMS = [
@@ -784,7 +786,8 @@ const DEFAULT_ITEMS = [
 const STORAGE_KEYS = {
   ITEMS: 'choyxona_gallery_items_v6',
   AUTH: 'choyxona_gallery_auth_v6',
-  SESSION: 'choyxona_gallery_session_v6'
+  SESSION: 'choyxona_gallery_session_v6',
+  SECTIONS: 'choyxona_gallery_sections_v6'
 };
 
 let items = [];
@@ -827,6 +830,21 @@ function migrateOldSections() {
 }
 
 function loadData() {
+  try {
+    const rawSections = localStorage.getItem(STORAGE_KEYS.SECTIONS);
+    if (rawSections) {
+      const savedSecs = JSON.parse(rawSections);
+      if (Array.isArray(savedSecs)) {
+        savedSecs.forEach(s => {
+          const target = SECTIONS.find(x => x.id === s.id);
+          if (target && s.name && s.name.trim()) {
+            target.name = s.name.trim();
+          }
+        });
+      }
+    }
+  } catch (e) {}
+
   try {
     const rawItems = localStorage.getItem(STORAGE_KEYS.ITEMS);
     items = rawItems ? JSON.parse(rawItems) : [...DEFAULT_ITEMS];
@@ -894,6 +912,77 @@ function saveCredentialsData() {
   try {
     localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(credentials));
   } catch (e) {}
+}
+
+function saveSectionsData() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.SECTIONS, JSON.stringify(SECTIONS.map(s => ({ id: s.id, name: s.name }))));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function refreshAllSectionsUI() {
+  populateSectionSelect();
+  renderHomeMenu();
+  renderSectionsBar();
+  if (activeSection) {
+    renderGallery();
+  }
+  const reorderModal = document.getElementById('reorderModal');
+  if (reorderModal && reorderModal.classList.contains('open')) {
+    const dashSecSelect = document.getElementById('dashboardSecSelect');
+    const currentVal = dashSecSelect ? dashSecSelect.value : null;
+    if (dashSecSelect) {
+      dashSecSelect.innerHTML = SECTIONS.map(s => {
+        const cnt = items.filter(i => i.section === s.id).length;
+        return `<option value="${s.id}" ${s.id === currentVal ? 'selected' : ''}>${escapeHtml(s.name)} (${cnt} ta taom)</option>`;
+      }).join('');
+    }
+    const sec = SECTIONS.find(s => s.id === currentVal);
+    const title = document.getElementById('reorderModalTitle');
+    if (title && sec) {
+      title.textContent = `«${sec.name}» — Taomlar tartibi`;
+    }
+  }
+}
+
+function renderSectionsEditList() {
+  const container = document.getElementById('sectionsListContainer');
+  if (!container) return;
+
+  container.innerHTML = SECTIONS.map(s => {
+    const count = items.filter(i => i.section === s.id).length;
+    return `
+      <div class="sec-edit-row" data-sec-row="${s.id}">
+        <img src="${s.cover || 'images/030A0348.webp'}" alt="" class="sec-edit-cover" onerror="this.src='images/030A0348.webp'" />
+        <div class="sec-edit-fields">
+          <div class="sec-edit-header">
+            <span class="sec-edit-badge">${escapeHtml(s.id)}</span>
+            <span class="sec-edit-count">${count} ta taom</span>
+          </div>
+          <input type="text" class="sec-name-input" data-sec-id="${s.id}" value="${escapeHtml(s.name)}" placeholder="Bo'lim nomi" required maxlength="60" />
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openSectionsModal(preferredSecId) {
+  renderSectionsEditList();
+  openModal('sectionsModal');
+  if (preferredSecId) {
+    setTimeout(() => {
+      const inp = document.querySelector(`.sec-name-input[data-sec-id="${preferredSecId}"]`);
+      if (inp) {
+        inp.focus();
+        inp.select();
+        const row = inp.closest('.sec-edit-row');
+        if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 120);
+  }
 }
 
 function formatSom(value) {
@@ -1458,7 +1547,10 @@ function renderGallery() {
         <h2>${secName}</h2>
         <div class="section-heading-right">
           <span>${secItems.length} ta taom</span>
-          ${currentUsername ? `<button type="button" class="btn-sec-reorder" id="btnOpenReorderModal" title="Taomlar tartibini o'zgartirish dashboardi">⊞ Tartiblash</button>` : ''}
+          ${currentUsername ? `
+            <button type="button" class="btn-sec-reorder" id="btnEditCurrentSec" data-sec-id="${sec ? sec.id : ''}" title="Bo'lim nomini o'zgartirish">✏️ Nomini tahrirlash</button>
+            <button type="button" class="btn-sec-reorder" id="btnOpenReorderModal" title="Taomlar tartibini o'zgartirish dashboardi">⊞ Tartiblash</button>
+          ` : ''}
         </div>
       </div>
       <div class="single-column-list" id="cardList">
@@ -1684,6 +1776,13 @@ function setupEvents() {
       return;
     }
 
+    const editSecBtn = e.target.closest('#btnEditCurrentSec');
+    if (editSecBtn) {
+      const secId = editSecBtn.getAttribute('data-sec-id') || activeSection;
+      openSectionsModal(secId);
+      return;
+    }
+
     const target = e.target.closest('[data-action]');
     if (!target) return;
     const action = target.getAttribute('data-action');
@@ -1723,6 +1822,70 @@ function setupEvents() {
   if (dashSecSelect) {
     dashSecSelect.addEventListener('change', () => {
       renderReorderModalItems();
+    });
+  }
+
+  // Headerdagi "📁 Bo'limlar" tugmasi bosilganda
+  const btnOpenSectionsModal = document.getElementById('btnOpenSectionsModal');
+  if (btnOpenSectionsModal) {
+    btnOpenSectionsModal.addEventListener('click', () => {
+      openSectionsModal(activeSection);
+    });
+  }
+
+  // Dashboard ichidagi "✏️ Nomini o'zgartirish" tugmasi bosilganda
+  const btnEditSecFromDashboard = document.getElementById('btnEditSecFromDashboard');
+  if (btnEditSecFromDashboard) {
+    btnEditSecFromDashboard.addEventListener('click', () => {
+      const secSel = document.getElementById('dashboardSecSelect');
+      openSectionsModal(secSel ? secSel.value : activeSection);
+    });
+  }
+
+  // Bo'limlar nomlarini saqlash formasi yuborilganda
+  const sectionsForm = document.getElementById('sectionsForm');
+  if (sectionsForm) {
+    sectionsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inputs = document.querySelectorAll('.sec-name-input');
+      let hasEmpty = false;
+      inputs.forEach(inp => {
+        const secId = inp.getAttribute('data-sec-id');
+        const val = inp.value.trim();
+        if (!val) {
+          hasEmpty = true;
+          inp.focus();
+          return;
+        }
+        const target = SECTIONS.find(s => s.id === secId);
+        if (target) {
+          target.name = val;
+        }
+      });
+
+      if (hasEmpty) {
+        showToast("Bo'lim nomi bo'sh bo'lishi mumkin emas.");
+        return;
+      }
+
+      saveSectionsData();
+      refreshAllSectionsUI();
+      closeModal('sectionsModal');
+      showToast("Bo'limlar nomlari muvaffaqiyatli saqlandi!");
+    });
+  }
+
+  // Bo'lim nomlarini standart holatiga qaytarish
+  const btnResetSectionNames = document.getElementById('btnResetSectionNames');
+  if (btnResetSectionNames) {
+    btnResetSectionNames.addEventListener('click', () => {
+      if (confirm("Haqiqatan ham barcha bo'lim nomlarini standart holatiga qaytarmoqchimisiz?")) {
+        SECTIONS = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
+        try { localStorage.removeItem(STORAGE_KEYS.SECTIONS); } catch (err) {}
+        renderSectionsEditList();
+        refreshAllSectionsUI();
+        showToast("Bo'lim nomlari standart holatiga qaytarildi.");
+      }
     });
   }
 

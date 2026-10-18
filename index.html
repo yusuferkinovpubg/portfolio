@@ -35,6 +35,7 @@
           <div class="admin-controls-group" id="adminHeaderGroup">
             <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
             <button class="btn btn-outline" id="btnOpenDashboard" type="button" title="Taomlar tartibi dashboardi"><span class="label">⊞ Dashboard</span></button>
+            <button class="btn btn-outline" id="btnOpenSectionsModal" type="button" title="Bo'limlar nomlarini o'zgartirish"><span class="label">📁 Bo'limlar</span></button>
             <button class="btn btn-gold" id="btnOpenAddModal" type="button"><span class="label">+ Tovar qo'shish</span></button>
             <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish"><span class="label">⚙️ Parol</span></button>
             <button class="btn btn-danger" id="btnLogout" type="button"><span class="label">Chiqish</span></button>
@@ -185,6 +186,7 @@
         <div class="reorder-section-select-wrap" id="reorderSectionSelectWrap">
           <label for="dashboardSecSelect">Bo'lim:</label>
           <select id="dashboardSecSelect"></select>
+          <button class="btn btn-outline" id="btnEditSecFromDashboard" type="button" title="Ushbu bo'lim nomini tahrirlash" style="font-size:12px; padding:6px 12px; white-space:nowrap;">✏️ Nomini o'zgartirish</button>
         </div>
         <div class="reorder-grid" id="reorderItemsGrid"></div>
       </div>
@@ -192,6 +194,31 @@
         <span class="reorder-foot-tip">Avtomatik saqlanadi</span>
         <button class="btn btn-gold" type="button" data-close="reorderModal">Tayyor</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= 5. SECTIONS MANAGEMENT MODAL ================= -->
+  <div class="modal-backdrop" id="sectionsModal" role="dialog" aria-modal="true" aria-labelledby="sectionsModalTitle">
+    <div class="modal-box sections-modal-box">
+      <div class="modal-top">
+        <div>
+          <h3 id="sectionsModalTitle">Bo'limlar nomlarini tahrirlash</h3>
+          <p class="reorder-subtitle">Bo'lim nomlarini o'zgartiring va saqlang</p>
+        </div>
+        <button class="btn-close" type="button" data-close="sectionsModal" aria-label="Yopish">×</button>
+      </div>
+      <form id="sectionsForm">
+        <div class="modal-body sections-modal-body" id="sectionsListContainer">
+          <!-- Dinamik ravishda chiziladi -->
+        </div>
+        <div class="modal-foot sections-modal-foot">
+          <button class="btn btn-danger" type="button" id="btnResetSectionNames" style="font-size:12px; padding:7px 12px;">Standart nomlarga qaytarish</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" type="button" data-close="sectionsModal">Bekor qilish</button>
+            <button class="btn btn-gold" type="submit">Saqlash</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 

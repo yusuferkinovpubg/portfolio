@@ -45,6 +45,7 @@ Zamonaviy, minimalist va to'liq moslashuvchan (responsive) restoran va choyxona 
    - **Taomlar tartibini Drag & Drop (Dashboard) orqali o'zgartirish**: Dashboardda barcha taomlar qulay ixcham ikonka shaklida ko'rinadi; rasmni bosib turib (drag & drop) istalgan o'ringa (masalan, 4-o'rindan 1-o'ringa yoki teskarisiga) osongina surish mumkin.
    - **Yangi tovar qo'shish va tahrirlash**: Taom nomi, bo'limi, narxi, tavsifi va rasmini tanlash.
    - **Rasm yuklash**: Qurilmadan yangi rasm yuklanganda avtomatik ravishda optimallashtiriladi va siqiladi.
+   - **Bo'limlar nomlarini tahrirlash**: Admin paneldagi "📁 Bo'limlar" tugmasi yoki har bir bo'lim ichidagi "✏️ Nomini tahrirlash" orqali istalgan bo'lim nomini o'zgartirish va saqlash imkoniyati (xotirada saqlanadi, istalgan paytda boshlang'ich holatiga qaytarish mumkin).
    - **Parolni yangilash**: Admin username va parolini o'zgartirish imkoniyati.
    - **Boshlang'ich holatga qaytarish (Reset)**: Xohlagan paytda 95 ta standart taomlar holatiga qaytarish mumkin.
 
