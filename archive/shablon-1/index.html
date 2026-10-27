@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Choyxona Menyusi — Milliy taomlar, kaboblar, salatlar va shirinliklar rasmlar galereyasi." />
+  <title>Choyxona Menyusi — Rasmlar Galereyasi</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ================= BG SCENE ================= -->
+  <div class="bg-scene" aria-hidden="true">
+    <div class="corner tl">
+      <img class="mandala outer" src="images/mandala.webp" alt="">
+      <img class="mandala inner" src="images/mandala.webp" alt="">
+    </div>
+    <div class="corner tr">
+      <img class="mandala outer" src="images/mandala.webp" alt="">
+      <img class="mandala inner" src="images/mandala.webp" alt="">
+    </div>
+    <div class="corner bl">
+      <img class="mandala outer" src="images/mandala.webp" alt="">
+      <img class="mandala inner" src="images/mandala.webp" alt="">
+    </div>
+    <div class="corner br">
+      <img class="mandala outer" src="images/mandala.webp" alt="">
+      <img class="mandala inner" src="images/mandala.webp" alt="">
+    </div>
+    <div class="bg-frame"></div>
+  </div>
+
+  <noscript>
+    <div style="text-align:center; padding:20px; background:#1a1112; color:#ff8589; font-weight:600;">
+      Menyuni ko'rish uchun brauzeringizda JavaScript yoqilgan bo'lishi kerak.
+    </div>
+  </noscript>
+
+  <!-- ================= STICKY HEADER VA NAV ================= -->
+  <div id="glassTop">
+
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand" id="brandLogo">
+          <span class="brand-dot"></span>
+          <span class="brand-name">Choyxona Menyusi</span>
+        </div>
+
+        <div class="header-right">
+          <!-- Visible when logged out -->
+          <button class="btn" id="btnOpenLogin" type="button">
+            <span class="label">👤 Kirish</span>
+          </button>
+
+          <!-- Visible when logged in with Username -->
+          <div class="admin-controls-group" id="adminHeaderGroup">
+            <span class="user-badge">@<span id="activeUsernameLabel">admin</span></span>
+            <button class="btn btn-outline" id="btnOpenDashboard" type="button" title="Taomlar tartibi dashboardi"><span class="label">⊞ Dashboard</span></button>
+            <button class="btn btn-outline" id="btnOpenSectionsModal" type="button" title="Bo'limlar nomlarini o'zgartirish"><span class="label">📁 Bo'limlar</span></button>
+            <button class="btn btn-gold" id="btnOpenAddModal" type="button"><span class="label">+ Tovar qo'shish</span></button>
+            <button class="btn" id="btnOpenCredModal" type="button" title="Username va parolni o'zgartirish"><span class="label">⚙️ Parol</span></button>
+            <button class="btn btn-danger" id="btnLogout" type="button"><span class="label">Chiqish</span></button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2-shisha: Bo'limlar Navigatsiyasi (faqat bo'lim tanlanganda faol) -->
+    <nav class="sections-nav" id="sectionsNav" style="display: none;">
+      <div class="sections-nav-inner" id="sectionsBar"></div>
+    </nav>
+  </div>
+
+  <!-- ================= BOSH EKRAN: BO'LIMLAR KATAGI ================= -->
+  <section class="home-menu-wrap" id="homeMenuWrap">
+    <div class="home-menu-grid" id="homeMenu"></div>
+  </section>
+
+  <!-- ================= VERTICAL 1-COLUMN PHOTO GALLERY (ROOT'DAN TASHQARIDA) ================= -->
+  <main class="gallery-wrapper" id="galleryContainer" style="display: none;"></main>
+
+  <!-- ================= SITE FOOTER ================= -->
+  <footer class="site-footer">
+    <p><strong>Choyxona Menyusi</strong> &copy; 2026. Barcha huquqlar himoyalangan.</p>
+    <p>Milliy taomlar, xushbo'y shashliklar, salqin ichimliklar va shirinliklar.</p>
+  </footer>
+
+  <!-- ================= 1. LOGIN MODAL (USERNAME & PASSWORD) ================= -->
+  <div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-box" style="max-width: 380px;">
+      <div class="modal-top">
+        <h3 id="loginTitle">Admin kirish</h3>
+        <button class="btn-close" type="button" data-close="loginModal" aria-label="Yopish">×</button>
+      </div>
+      <form id="loginForm">
+        <div class="modal-body">
+          <div class="field">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="admin" required autocomplete="username" />
+          </div>
+          <div class="field">
+            <label for="loginPassword">Parol</label>
+            <input type="password" id="loginPassword" placeholder="••••" required autocomplete="current-password" />
+          </div>
+          <div id="loginError" style="display:none; color:#FF8589; font-size:12.5px; font-weight:600;">
+            Username yoki parol noto'g'ri.
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="loginModal">Bekor qilish</button>
+          <button class="btn btn-gold" type="submit">Kirish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 2. ADD / EDIT ITEM MODAL ================= -->
+  <div class="modal-backdrop" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
+    <div class="modal-box">
+      <div class="modal-top">
+        <h3 id="itemModalTitle">Yangi tovar qo'shish</h3>
+        <button class="btn-close" type="button" data-close="itemModal" aria-label="Yopish">×</button>
+      </div>
+      <form id="itemForm">
+        <input type="hidden" id="itemIdInput" />
+        <div class="modal-body">
+          <div class="field">
+            <label for="itemNameInput">Taom / Mahsulot nomi *</label>
+            <input type="text" id="itemNameInput" placeholder="Masalan: Samarqand Zig'ir Oshi" required />
+          </div>
+
+          <div class="field">
+            <label for="itemSectionInput">Bo'lim *</label>
+            <select id="itemSectionInput" required></select>
+          </div>
+
+          <div class="field">
+            <label for="itemPriceInput">Narxi (so'm) *</label>
+            <input type="number" id="itemPriceInput" placeholder="55000" min="100" step="100" required />
+          </div>
+
+          <div class="field">
+            <label for="itemDescInput">Qisqacha ma'lumot / Tarkibi</label>
+            <textarea id="itemDescInput" rows="2" placeholder="Tarkibi, porsiya va tayyorlanish usuli..."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="itemPresetPhoto">Galereyadagi rasmlardan tanlash</label>
+            <select id="itemPresetPhoto"></select>
+          </div>
+
+          <div class="field">
+            <label for="itemFileInput">Yoki qurilmadan yangi rasm yuklash</label>
+            <input type="file" id="itemFileInput" accept="image/*" />
+            <input type="hidden" id="itemCustomImageData" />
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="itemModal">Bekor qilish</button>
+          <button class="btn btn-gold" type="submit">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 3. CREDENTIALS & RESET MODAL ================= -->
+  <div class="modal-backdrop" id="credModal" role="dialog" aria-modal="true" aria-labelledby="credModalTitle">
+    <div class="modal-box" style="max-width: 400px;">
+      <div class="modal-top">
+        <h3 id="credModalTitle">Admin sozlamalari</h3>
+        <button class="btn-close" type="button" data-close="credModal" aria-label="Yopish">×</button>
+      </div>
+      <form id="credForm">
+        <div class="modal-body">
+          <div class="field">
+            <label for="newAdminUser">Yangi Username</label>
+            <input type="text" id="newAdminUser" required />
+          </div>
+          <div class="field">
+            <label for="newAdminPass">Yangi Parol</label>
+            <input type="password" id="newAdminPass" required autocomplete="new-password" />
+          </div>
+          <div style="border-top:1px solid var(--border-dark); padding-top:12px; margin-top:4px; display:flex; justify-content:space-between; align-items:center; gap: 8px;">
+            <span style="font-size:12.5px; color:var(--text-muted);">Standart rasmlarni tiklash:</span>
+            <button class="btn btn-danger" type="button" id="btnResetGallery">Boshlang'ich holat</button>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn" type="button" data-close="credModal">Yopish</button>
+          <button class="btn btn-gold" type="submit">Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 4. DASHBOARD / REORDER ITEMS MODAL ================= -->
+  <div class="modal-backdrop" id="reorderModal" role="dialog" aria-modal="true" aria-labelledby="reorderModalTitle">
+    <div class="modal-box reorder-modal-box">
+      <div class="modal-top">
+        <div>
+          <h3 id="reorderModalTitle">Taomlar tartibi (Dashboard)</h3>
+          <p class="reorder-subtitle">Rasmni bosib turib (drag & drop) kerakli o'ringa suring</p>
+        </div>
+        <button class="btn-close" type="button" data-close="reorderModal" aria-label="Yopish">×</button>
+      </div>
+      <div class="modal-body reorder-modal-body">
+        <div class="reorder-section-select-wrap" id="reorderSectionSelectWrap">
+          <label for="dashboardSecSelect">Bo'lim:</label>
+          <select id="dashboardSecSelect"></select>
+          <button class="btn btn-outline" id="btnEditSecFromDashboard" type="button" title="Ushbu bo'lim nomini tahrirlash" style="font-size:12px; padding:6px 12px; white-space:nowrap;">✏️ Nomini o'zgartirish</button>
+        </div>
+        <div class="reorder-grid" id="reorderItemsGrid"></div>
+      </div>
+      <div class="modal-foot">
+        <span class="reorder-foot-tip">Avtomatik saqlanadi</span>
+        <button class="btn btn-gold" type="button" data-close="reorderModal">Tayyor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 5. SECTIONS MANAGEMENT MODAL ================= -->
+  <div class="modal-backdrop" id="sectionsModal" role="dialog" aria-modal="true" aria-labelledby="sectionsModalTitle">
+    <div class="modal-box sections-modal-box">
+      <div class="modal-top">
+        <div>
+          <h3 id="sectionsModalTitle">Bo'limlar nomlarini tahrirlash</h3>
+          <p class="reorder-subtitle">Bo'lim nomlarini o'zgartiring va saqlang</p>
+        </div>
+        <button class="btn-close" type="button" data-close="sectionsModal" aria-label="Yopish">×</button>
+      </div>
+      <form id="sectionsForm">
+        <div class="modal-body sections-modal-body" id="sectionsListContainer">
+          <!-- Dinamik ravishda chiziladi -->
+        </div>
+        <div class="modal-foot sections-modal-foot">
+          <button class="btn btn-danger" type="button" id="btnResetSectionNames" style="font-size:12px; padding:7px 12px;">Standart nomlarga qaytarish</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn" type="button" data-close="sectionsModal">Bekor qilish</button>
+            <button class="btn btn-gold" type="submit">Saqlash</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Toast xabarnomalar -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- Asosiy JavaScript kodi -->
+  <script src="script.js"></script>
+  <!-- Mandala aylanishi skripti (Feruza fon + ko'k mandala) -->
+  <script src="bg-rotate.js" defer></script>
+</body>
+</html>

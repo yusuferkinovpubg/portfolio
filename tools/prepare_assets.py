@@ -1,5 +1,6 @@
 import os
 import sys
+import argparse
 import cv2
 import numpy as np
 from PIL import Image
@@ -54,52 +55,47 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
     img_hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)
     H, S, V = img_hsv[:, :, 0], img_hsv[:, :, 1], img_hsv[:, :, 2]
 
-    # OpenCV HSV: H in [0, 180] (180 = 360 deg), 300 deg = 150. Tol +-20 deg => +-10 in opencv (140..160).
-    # Saturation > 0.4 => 0.4 * 255 = 102
-    # Value > 40
-    # Kengroq qamrab olish uchun H: 135 dan 165 gacha, S >= 95
+    # OpenCV HSV: 300 deg = 150. Tol +-20 deg => 140..160, sat > 0.4 => > 102
     magenta_candidates = (H >= 135) & (H <= 165) & (S >= 95) & (V >= 40)
     magenta_mask = magenta_candidates.astype(np.uint8) * 255
 
-    # Tashqi chegaradan bog'langan qismni aniqlash (Flood Fill / Connected Components)
-    # 1 px qalinlikdagi ramka qo'shamiz va (0,0) dan floodFill qilamiz
+    # Chegara orqali flood fill (tashqi fon)
     padded_mask = cv2.copyMakeBorder(magenta_mask, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=255)
     flood_val = 128
     cv2.floodFill(padded_mask, None, (0, 0), flood_val)
-
-    # FAQAT tashqi chegaradan yetib borgan magenta hudud (padded_mask == 128)
     outer_bg = (padded_mask[1:-1, 1:-1] == flood_val)
-    print(f"Tashqi fon piksel ulushi: {np.mean(outer_bg)*100:.1f}%")
 
-    # Mandala maskasi (1 = foreground, 0 = background)
+    # Mandala foreground
     fg_mask = (~outer_bg).astype(np.uint8) * 255
+
+    # Eng katta markaziy mandala konturini aniqlash (burchak yoki chekka chiziqlar bo'lsa ularni chetlab o'tish)
+    contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:
+        raise ValueError("Mandala foreground topilmadi!")
+
+    largest_contour = max(contours, key=cv2.contourArea)
+    clean_fg = np.zeros_like(fg_mask)
+    cv2.drawContours(clean_fg, [largest_contour], -1, 255, thickness=cv2.FILLED)
 
     # b) Maskni 1–2 px eroziya qilish (magenta halo ketishi uchun)
     erode_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-    # 1 yoki 2 marta eroziya
-    fg_eroded = cv2.erode(fg_mask, erode_kernel, iterations=1)
+    fg_eroded = cv2.erode(clean_fg, erode_kernel, iterations=1)
 
     # Alphani ~0.8 px feather qilish (sigma=0.8)
     alpha = cv2.GaussianBlur(fg_eroded.astype(np.float32), (0, 0), sigmaX=0.8, sigmaY=0.8)
     alpha = np.clip(alpha / 255.0, 0.0, 1.0)
 
     # c) Spill removal: yarim shaffof piksellardan magenta aralashmasini ayirish
-    # Magenta RGB: (255, 0, 255), BGR: (255, 0, 255)
     img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB).astype(np.float32)
-
-    # Alpha 0 bo'lsa butunlay shaffof
-    # Chetdagi piksellarda (alpha < 1.0) un-premultiplication va magenta de-spill
     alpha_3d = np.repeat(alpha[:, :, np.newaxis], 3, axis=2)
     magenta_rgb = np.array([255.0, 0.0, 255.0], dtype=np.float32)
 
-    # Un-premultiply: recovered = (C - (1 - alpha) * magenta) / alpha
-    # Alpha juda kichik bo'lsa xatolik bo'lmasligi uchun xavfsiz hisoblash
+    # Un-premultiply
     safe_alpha = np.maximum(alpha_3d, 0.01)
     recovered_rgb = (img_rgb - (1.0 - alpha_3d) * magenta_rgb) / safe_alpha
     recovered_rgb = np.clip(recovered_rgb, 0.0, 255.0)
 
-    # Chekka piksellarda qolgan qizil magentani bostirish (magenta spill suppression)
-    # Agar R > G va B > G bo'lsa, qizilni G darajasiga tushirish
+    # Chekka piksellarda qolgan qizil magentani bostirish
     edge_pixels = (alpha < 0.98) & (alpha > 0.01)
     if np.any(edge_pixels):
         r = recovered_rgb[:, :, 0]
@@ -109,17 +105,11 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
         r[edge_pixels] = np.maximum(0.0, r[edge_pixels] - excess_magenta[edge_pixels] * 0.9)
         recovered_rgb[:, :, 0] = r
 
-    # Qat'iy alpha = 0 bo'lgan joylar toza 0
     recovered_rgb[alpha_3d == 0] = 0
-
-    # RGBA yaratish
     rgba = np.dstack([recovered_rgb, alpha * 255.0]).astype(np.uint8)
 
-    # d) Bounding box bo'yicha kes, KVADRATga keltirib markazla (mandala markazi = rasm markazi)
+    # d) Bounding box bo'yicha kes, KVADRATga keltirib markazla
     non_zero_coords = np.argwhere(alpha > 0.05)
-    if len(non_zero_coords) == 0:
-        raise ValueError("Mandala foreground topilmadi!")
-
     y_min, x_min = non_zero_coords.min(axis=0)
     y_max, x_max = non_zero_coords.max(axis=0)
     print(f"Bounding box: x [{x_min} .. {x_max}], y [{y_min} .. {y_max}]")
@@ -130,7 +120,7 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
     mandala_h = y_max - y_min
     diameter = max(mandala_w, mandala_h)
 
-    # Kvadrat o'lchami: aylana chetlariga ozgina 1-2% nafas olish oraliq bilan
+    # Kvadrat o'lchami: 1% nafas olish oraliq bilan
     pad_margin = int(diameter * 0.01)
     box_size = int(np.ceil(diameter + 2 * pad_margin))
     if box_size % 2 != 0:
@@ -142,10 +132,9 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
     crop_x2 = crop_x1 + box_size
     crop_y2 = crop_y1 + box_size
 
-    # Shaffof kvadrat kanvas yaratamiz
+    # Shaffof kvadrat kanvas
     square_canvas = np.zeros((box_size, box_size, 4), dtype=np.uint8)
 
-    # Kesib olish va kanvasga joylashtirish (rasm chegaralaridan oshib ketsa ham xavfsiz)
     src_x1 = max(0, crop_x1)
     src_y1 = max(0, crop_y1)
     src_x2 = min(w, crop_x2)
@@ -158,11 +147,11 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
 
     square_canvas[dst_y1:dst_y2, dst_x1:dst_x2] = rgba[src_y1:src_y2, src_x1:src_x2]
 
-    # 1400x1400 px ga keltirish
+    # 1400x1400 px ga resize
     pil_img = Image.fromarray(square_canvas, mode="RGBA")
     pil_resized = pil_img.resize((target_size, target_size), Image.Resampling.LANCZOS)
 
-    # WebP formatida saqlash (<= 500 KB bo'lguncha quality sozlanadi)
+    # WebP formatida saqlash (<= 500 KB)
     os.makedirs(os.path.dirname(out_mandala_path), exist_ok=True)
     current_q = quality
     while current_q >= 50:
@@ -177,12 +166,34 @@ def prepare_mandala(raw_mandala_path, out_mandala_path, target_size=1400, qualit
     print(f"Muvaffaqiyatli saqlandi: {out_mandala_path} ({final_size_kb:.1f} KB <= 500 KB, quality={current_q})")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Fon va mandala rasmlarini qayta ishlash")
+    parser.add_argument("--template", type=int, default=2, choices=[1, 2], help="Shablon raqami (1 yoki 2)")
+    args = parser.parse_args()
+
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    raw_bg = os.path.join(base_dir, "images", "raw", "bg.jpg")
-    raw_mandala = os.path.join(base_dir, "images", "raw", "mandala.jpg")
+
+    if args.template == 2:
+        print(f"=== Shablon 2 aktivlarini tayyorlash ===")
+        raw_bg = os.path.join(base_dir, "images", "raw", "bg2.jpg")
+        raw_mandala = os.path.join(base_dir, "images", "raw", "mandala2.jpg")
+    else:
+        print(f"=== Shablon 1 aktivlarini tayyorlash ===")
+        raw_bg = os.path.join(base_dir, "images", "raw", "bg.jpg")
+        raw_mandala = os.path.join(base_dir, "images", "raw", "mandala.jpg")
+
     out_bg = os.path.join(base_dir, "images", "bg.webp")
     out_mandala = os.path.join(base_dir, "images", "mandala.webp")
 
+    # Shuningdek, alohida nom bilan ham saqlab qo'yamiz (masalan bg2.webp, mandala2.webp)
+    named_bg = os.path.join(base_dir, "images", f"bg{args.template}.webp")
+    named_mandala = os.path.join(base_dir, "images", f"mandala{args.template}.webp")
+
     prepare_background(raw_bg, out_bg)
     prepare_mandala(raw_mandala, out_mandala)
-    print("\n[OK] Barcha rasmlar muvaffaqiyatli tayyorlandi!")
+
+    # Named nusxa
+    import shutil
+    shutil.copyfile(out_bg, named_bg)
+    shutil.copyfile(out_mandala, named_mandala)
+
+    print(f"\n[OK] Shablon {args.template} rasmlari muvaffaqiyatli tayyorlandi!")
