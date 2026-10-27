@@ -626,7 +626,7 @@ const DEFAULT_ITEMS = [
     section: 'kabob',
     price: 28000,
     desc: "Yupqa go'shtga o'ralgan maxsus ziravorli rulet kabob",
-    image: "images/030A7633.webp"
+    image: "images/030A7633.webp?v=4.2"
   },
   {
     id: 'item_78',
@@ -809,6 +809,10 @@ function migrateOldSections() {
     if (item.section === 'non') {
       changed = true;
       item.section = 'asosiy';
+    }
+    if (item.id === 'item_77' && (!item.image || !item.image.includes('?v='))) {
+      item.image = 'images/030A7633.webp?v=4.2';
+      changed = true;
     }
     if (DRINK_SECS.has(item.section)) {
       changed = true;
