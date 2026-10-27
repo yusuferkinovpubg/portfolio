@@ -4,7 +4,6 @@ const DEFAULT_SECTIONS = [
   { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/icon_shashlik.webp' },
   { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/icon_shorva.webp' },
   { id: 'salatlar',  name: 'Salatlar va Gazaklar',       cover: 'images/icon_salat.webp' },
-  { id: 'non',       name: 'Tandir Non va Somsa',        cover: 'images/030A0383.webp' },
   { id: 'gazli',     name: 'Gazlangan Ichimliklar',      cover: 'images/icon_ichimliklar.webp' },
   { id: 'sharbat',   name: 'Sharbat, Ayron va Kompot',   cover: 'images/icon_ichimliklar.webp' },
   { id: 'moxito',    name: 'Moxito va Limonadlar',       cover: 'images/icon_ichimliklar.webp' },
@@ -444,7 +443,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_54',
     name: "Samarqand tandir patir noni",
-    section: 'non',
+    section: 'asosiy',
     price: 12000,
     desc: "Issiq tandirda yopilgan sedana va kunjutli shirmoy patir non",
     image: "images/030A0383.webp"
@@ -809,6 +808,10 @@ const KOKTEYL_IDS = new Set(['item_52', 'item_53', 'item_55', 'item_78', 'item_7
 function migrateOldSections() {
   let changed = false;
   items.forEach(item => {
+    if (item.section === 'non') {
+      changed = true;
+      item.section = 'asosiy';
+    }
     if (item.section === 'ichimliklar') {
       changed = true;
       if (GAZLI_IDS.has(item.id)) {
