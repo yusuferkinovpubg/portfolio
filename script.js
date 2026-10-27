@@ -9,7 +9,7 @@ const DEFAULT_SECTIONS = [
   { id: 'moxito',    name: 'Moxito va Limonadlar',       cover: 'images/icon_ichimliklar.webp' },
   { id: 'kokteyl',   name: 'Milkshake va Kokteyllar',    cover: 'images/icon_ichimliklar.webp' },
   { id: 'choy_kofe', name: 'Choy va Qahva',              cover: 'images/030A9434.webp' },
-  { id: 'desert',    name: 'Shirinliklar va Mevalar',    cover: 'images/030A0293.webp' }
+  { id: 'desert',    name: 'Shirinliklar va Mevalar',    cover: 'images/icon_desert.webp' }
 ];
 
 let SECTIONS = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
