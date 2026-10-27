@@ -133,11 +133,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .site-header {
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(12, 22, 38, 0.75);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
-  box-shadow: 0 4px 16px rgba(18, 41, 92, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: background 0.3s ease;
 }
 
@@ -164,8 +164,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 10px rgba(27, 63, 139, 0.45);
+  background: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
 }
 
 .brand-name {
@@ -173,8 +173,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   font-weight: 700;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: var(--navy);
-  text-shadow: none;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .header-right {
@@ -189,11 +189,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   position: relative;
   z-index: 2;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(18, 41, 92, 0.16);
+  background: rgba(18, 32, 54, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: var(--navy);
+  color: #ffffff;
   padding: 8px 18px;
   border-radius: 12px;
   font-size: 13px;
@@ -203,8 +203,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   align-items: center;
   gap: 6px;
   box-shadow: 
-    0 4px 14px rgba(18, 41, 92, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 4px 14px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
@@ -232,12 +232,12 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .btn:hover {
-  background: #ffffff;
-  border-color: var(--blue);
-  color: var(--blue);
+  background: rgba(28, 48, 78, 0.9);
+  border-color: rgba(96, 165, 250, 0.4);
+  color: #ffffff;
   box-shadow: 
-    0 6px 18px rgba(27, 63, 139, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 6px 18px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1.5px);
 }
 
@@ -289,25 +289,25 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .user-badge {
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--navy);
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(27, 63, 139, 0.25);
+  color: #7dd3fc;
+  background: rgba(18, 32, 54, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 6px 13px;
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(18, 41, 92, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ================= 4. SECTIONS BAR (STICKY NAV FOR ACTIVE SECTION) ================= */
 .sections-nav {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(12, 22, 38, 0.75);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
-  box-shadow: 0 4px 16px rgba(18, 41, 92, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .sections-nav-inner {
@@ -327,23 +327,23 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   min-height: 40px;
   padding: 8px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(18, 41, 92, 0.18);
-  color: var(--navy);
+  background: rgba(18, 32, 54, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
   font-family: inherit;
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 12px rgba(18, 41, 92, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-back-home:hover {
   background: var(--blue);
-  border-color: var(--navy);
+  border-color: rgba(96, 165, 250, 0.5);
   color: #ffffff;
-  box-shadow: 0 6px 18px rgba(27, 63, 139, 0.25);
+  box-shadow: 0 6px 18px rgba(27, 63, 139, 0.35);
   transform: translateY(-1px);
 }
 
@@ -354,9 +354,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .active-sec-badge {
   font-size: 15px;
   font-weight: 700;
-  color: var(--blue);
+  color: #7dd3fc;
   letter-spacing: 0.3px;
-  text-shadow: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* ================= BOSH EKRAN: BO'LIMLAR KATAGI (TILES) ================= */
@@ -503,7 +503,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   padding-bottom: 10px;
 }
 
@@ -511,22 +511,22 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   font-size: 19px;
   font-weight: 700;
   letter-spacing: 0.4px;
-  color: var(--navy);
+  color: #ffffff;
   text-transform: uppercase;
-  text-shadow: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .section-heading span {
   font-size: 12px;
   font-weight: 600;
-  color: var(--blue);
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(18, 41, 92, 0.12);
+  color: #7dd3fc;
+  background: rgba(18, 32, 54, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 3px 12px;
   border-radius: 999px;
-  box-shadow: 0 1px 4px rgba(18, 41, 92, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Single Column Vertical Gallery Stack */
@@ -569,8 +569,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   pointer-events: none;
   z-index: 4;
   background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 35%),
-    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.25), transparent 60%);
+    linear-gradient(115deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 35%),
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%);
   mix-blend-mode: normal;
 }
 
@@ -1351,10 +1351,10 @@ img, .gallery-card, .reorder-card, .home-tile {
     -webkit-backdrop-filter: none !important;
   }
   .gallery-card {
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(12, 22, 38, 0.82);
   }
   .gallery-info {
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(10, 18, 32, 0.85);
   }
 }
 
