@@ -3,209 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mandala Shablonlari Preview & Halo QA</title>
+  <title>Chap Tomon Mandala Dizayni — Jonli Preview</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    :root {
+      --bg: #A8DDD3;
+      --navy: #12295C;
+      --blue: #1B3F8B;
+      --card: rgba(255, 255, 255, 0.86);
+      --outer: clamp(480px, 90vmin, 950px);
+      --inner-ratio: 0.72;
+      --r: 0;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #181c24;
-      color: #e5e9f0;
-      padding: 24px;
+      background: #12161f;
+      color: #e2e8f0;
+      min-height: 250vh; /* scroll qilish uchun */
+      overflow-x: hidden;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 6px;
-    }
-    p.desc {
-      color: #a0aec0;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-    .tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .tab-btn {
-      padding: 10px 20px;
-      background: #2a3241;
-      border: 1px solid #3e4a5f;
-      color: #e5e9f0;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .tab-btn.active {
-      background: #3182ce;
-      border-color: #63b3ed;
-      color: #fff;
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    .preview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-    .preview-card {
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      flex-direction: column;
-    }
-    .card-header {
-      padding: 10px 16px;
-      background: rgba(0, 0, 0, 0.6);
-      font-weight: 600;
-      font-size: 13.5px;
+    .preview-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(18, 22, 31, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-    .card-stage {
-      height: 340px;
+    .preview-header h1 {
+      font-size: 18px;
+      color: #fff;
+    }
+    .controls {
       display: flex;
+      gap: 16px;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
-    .card-stage img {
-      max-width: 85%;
-      max-height: 85%;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
-    }
-    .stage-white {
-      background-color: #FFFFFF;
-    }
-    .stage-black {
-      background-color: #000000;
-    }
-    .stage-feruza {
-      background-color: #A8DDD3;
-    }
-    .stage-bg1 {
-      background: url('../images/bg1.webp') center/cover no-repeat;
-    }
-    .stage-bg2 {
-      background: url('../images/bg2.webp') center/cover no-repeat;
-    }
-    .meta-info {
-      background: #232936;
-      padding: 16px;
-      border-radius: 12px;
-      font-family: monospace;
+    .controls label {
       font-size: 13px;
+      color: #cbd5e1;
+    }
+    .controls input[type="range"] {
+      width: 140px;
+    }
+    .desc-note {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* BG SCENE (Jonli namoyish) */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background: url('../images/bg.webp') center/cover no-repeat;
+    }
+    .mandala-side-left {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: var(--outer);
+      height: var(--outer);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .mandala {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      will-change: transform;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .mandala.mandala-back {
+      width: 100%;
+      height: 100%;
+      transform: rotate(calc(var(--r, 0) * -0.10deg));
+    }
+    .mandala.mandala-front {
+      width: calc(var(--inner-ratio, 0.72) * 100%);
+      height: calc(var(--inner-ratio, 0.72) * 100%);
+      transform: rotate(calc(var(--r, 0) * 0.16deg));
+    }
+    .bg-frame {
+      position: absolute;
+      inset: clamp(12px, 3vw, 36px);
+      border: clamp(6px, 1.2vw, 14px) solid rgba(214, 244, 238, 0.6);
+      z-index: 2;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    /* Namuna kartochkalar */
+    .demo-content {
+      max-width: 640px;
+      margin: 40px auto 60px 48%; /* o'ng tomonga siljitilgan, mandala bilan uyg'un */
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .demo-content {
+        margin: 40px auto 60px;
+      }
+    }
+    .demo-card {
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(18, 41, 92, 0.14);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(18, 41, 92, 0.08);
+      color: var(--navy);
+    }
+    .demo-card h2 {
+      color: var(--navy);
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .demo-card p {
+      color: #1f3660;
+      font-size: 14.5px;
       line-height: 1.6;
+    }
+    .price-badge {
+      display: inline-block;
+      margin-top: 14px;
+      background: var(--blue);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
-  <h1>Mandala Shablonlari Preview & Halo QA</h1>
-  <p class="desc">
-    Oq (#FFF), qora (#000), feruza (#A8DDD3) va fon rasmi ustida magenta halo yoki teshiklar yo'qligini tekshirish.
-  </p>
-
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('t2')">Shablon 2 (Hozirgi faol)</button>
-    <button class="tab-btn" onclick="switchTab('t1')">Shablon 1 (Arxivdagi variant)</button>
-  </div>
-
-  <!-- SHABLON 2 -->
-  <div id="tab-t2" class="tab-content active">
-    <div class="preview-grid">
-      <div class="preview-card">
-        <div class="card-header"><span>Oq fonda (#FFFFFF)</span><small>Shablon 2</small></div>
-        <div class="card-stage stage-white">
-          <img src="../images/mandala2.webp" alt="Mandala 2 White">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Qora fonda (#000000)</span><small>Shablon 2 (Halo yo'q)</small></div>
-        <div class="card-stage stage-black">
-          <img src="../images/mandala2.webp" alt="Mandala 2 Black">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Feruza fonda (#A8DDD3)</span><small>Shablon 2</small></div>
-        <div class="card-stage stage-feruza">
-          <img src="../images/mandala2.webp" alt="Mandala 2 Feruza">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Haqiqiy fon (bg2.webp)</span><small>Shablon 2</small></div>
-        <div class="card-stage stage-bg2">
-          <img src="../images/mandala2.webp" alt="Mandala 2 Real BG">
-        </div>
-      </div>
+  <div class="preview-header">
+    <div>
+      <h1>Mandala 2 + Mandala 2.1 (Chap tomonda yarim ko'rinish)</h1>
+      <span class="desc-note">Pastga skroll qilib yoki slayd bilan aylanishni ko'ring</span>
     </div>
-    <div class="meta-info">
-      <div><strong>Shablon 2 Mandala:</strong> images/mandala2.webp &rarr; 1400x1400 px, ~350 KB (&le; 500 KB)</div>
-      <div><strong>Shablon 2 Fon:</strong> images/bg2.webp &rarr; 1920 px kenglik, ~197 KB</div>
-      <div><strong>Holat:</strong> Toza alpha, magenta spill 0 ta, halo yo'q.</div>
+    <div class="controls">
+      <label for="rotSlider">Burchak (--r): <span id="rVal">0</span></label>
+      <input type="range" id="rotSlider" min="0" max="3600" value="0">
     </div>
   </div>
 
-  <!-- SHABLON 1 -->
-  <div id="tab-t1" class="tab-content">
-    <div class="preview-grid">
-      <div class="preview-card">
-        <div class="card-header"><span>Oq fonda (#FFFFFF)</span><small>Shablon 1</small></div>
-        <div class="card-stage stage-white">
-          <img src="../images/mandala1.webp" alt="Mandala 1 White">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Qora fonda (#000000)</span><small>Shablon 1</small></div>
-        <div class="card-stage stage-black">
-          <img src="../images/mandala1.webp" alt="Mandala 1 Black">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Feruza fonda (#A8DDD3)</span><small>Shablon 1</small></div>
-        <div class="card-stage stage-feruza">
-          <img src="../images/mandala1.webp" alt="Mandala 1 Feruza">
-        </div>
-      </div>
-      <div class="preview-card">
-        <div class="card-header"><span>Haqiqiy fon (bg1.webp)</span><small>Shablon 1</small></div>
-        <div class="card-stage stage-bg1">
-          <img src="../images/mandala1.webp" alt="Mandala 1 Real BG">
-        </div>
-      </div>
+  <!-- BG SCENE -->
+  <div class="bg-scene" id="bgScene" aria-hidden="true">
+    <div class="mandala-side-left">
+      <img class="mandala mandala-back" src="../images/mandala2.webp" alt="Mandala 2 (Orqada)">
+      <img class="mandala mandala-front" src="../images/mandala2.1.webp" alt="Mandala 2.1 (Ustida)">
     </div>
-    <div class="meta-info">
-      <div><strong>Shablon 1 Mandala:</strong> archive/shablon-1/images/mandala.webp &rarr; 1400x1400 px, ~334 KB</div>
-      <div><strong>Shablon 1 Fon:</strong> archive/shablon-1/images/bg.webp &rarr; 1920 px kenglik, ~19 KB</div>
-      <div><strong>Arxiv:</strong> archive/shablon-1.zip</div>
+    <div class="bg-frame"></div>
+  </div>
+
+  <!-- Kontent namoyishi -->
+  <div class="demo-content">
+    <div class="demo-card">
+      <h2>Chap tomon mandala dizayni</h2>
+      <p>Mandala 2 orqada soat strelkasiga teskari, Mandala 2.1 uning ustida markazda soat strelkasi bo'yicha teskari aylanadi. Mandalaning markazi ekranning chap chekkasida joylashgan va o'ng yarmi ko'rinadi.</p>
+      <span class="price-badge">65 000 so'm</span>
+    </div>
+
+    <div class="demo-card">
+      <h2>Silliq aylanish (Lerp & 60 FPS)</h2>
+      <p>Sahifa skroll bo'lganda mandala silliq aylanadi, to'xtaganda esa rAF batareya va CPU ni tejash uchun to'xtaydi.</p>
+      <span class="price-badge">85 000 so'm</span>
+    </div>
+
+    <div class="demo-card">
+      <h2>Oq va Feruza shisha kartochkalar</h2>
+      <p>Kartochkalar shaffof oq-feruza liquid glass uslubida bo'lib, naqshlar matnni to'smaydi va kontrast &ge; 4.5:1 talabiga to'liq javob beradi.</p>
+      <span class="price-badge">120 000 so'm</span>
     </div>
   </div>
 
   <script>
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      if (tabId === 't2') {
-        document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        document.getElementById('tab-t2').classList.add('active');
-      } else {
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
-        document.getElementById('tab-t1').classList.add('active');
-      }
-    }
+    const scene = document.getElementById('bgScene');
+    const slider = document.getElementById('rotSlider');
+    const rVal = document.getElementById('rVal');
+
+    slider.addEventListener('input', (e) => {
+      const val = e.target.value;
+      rVal.textContent = val;
+      scene.style.setProperty('--r', val);
+    });
+
+    // Skroll bilan sinov
+    window.addEventListener('scroll', () => {
+      const top = window.scrollY;
+      slider.value = top;
+      rVal.textContent = Math.round(top);
+      scene.style.setProperty('--r', top);
+    }, { passive: true });
   </script>
 </body>
 </html>

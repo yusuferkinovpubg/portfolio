@@ -6,9 +6,9 @@
   --blue: #1B3F8B;
   --card: rgba(255, 255, 255, 0.86);
 
-  /* Mandala o'lchamlari va aylanish burchagi */
-  --outer: clamp(300px, 64vmin, 960px);
-  --inner-ratio: 0.5;
+  /* Mandala o'lchamlari va aylanish burchagi (Chap tomon o'rtada yarmi ko'rinuvchi) */
+  --outer: clamp(520px, 94vmin, 1150px);
+  --inner-ratio: 0.72;
   --r: 0;
 
   /* Global meros ranglar (och feruza-ko'k tizimiga moslashtirilgan) */
@@ -22,7 +22,7 @@
 
 @media (max-width: 768px) {
   :root {
-    --outer: clamp(220px, 70vmin, 420px);
+    --outer: clamp(340px, 88vmin, 620px);
   }
 }
 
@@ -38,7 +38,7 @@ html {
 }
 
 /* ==========================================================================
-   BG SCENE (Feruza Fon + Ko'k Mandala Aylanishi)
+   BG SCENE (Feruza Fon + Chap tomon o'rtada yarim ko'rinuvchi mandala)
    ========================================================================== */
 .bg-scene {
   position: fixed;
@@ -49,31 +49,15 @@ html {
   background: url('images/bg.webp') center/cover no-repeat;
 }
 
-.bg-scene .corner {
+/* Chap tomonda markazlashtirilgan konteyner (Markazi chap chekkada, o'ng yarmi ko'rinadi) */
+.bg-scene .mandala-side-left {
   position: absolute;
+  top: 50%;
+  left: 0;
   width: var(--outer);
   height: var(--outer);
+  transform: translate(-50%, -50%);
   pointer-events: none;
-}
-
-.bg-scene .corner.tl {
-  top: calc(var(--outer) / -2);
-  left: calc(var(--outer) / -2);
-}
-
-.bg-scene .corner.tr {
-  top: calc(var(--outer) / -2);
-  right: calc(var(--outer) / -2);
-}
-
-.bg-scene .corner.bl {
-  bottom: calc(var(--outer) / -2);
-  left: calc(var(--outer) / -2);
-}
-
-.bg-scene .corner.br {
-  bottom: calc(var(--outer) / -2);
-  right: calc(var(--outer) / -2);
 }
 
 .bg-scene .mandala {
@@ -86,15 +70,19 @@ html {
   -webkit-user-drag: none;
 }
 
+/* Orqadagi mandala 2 (bir tomonga - soat strelkasiga teskari aylanadi) */
+.bg-scene .mandala.mandala-back,
 .bg-scene .mandala.outer {
   width: 100%;
   height: 100%;
   transform: rotate(calc(var(--r, 0) * -0.10deg));
 }
 
+/* Ustidagi markaziy mandala 2.1 (teskari tomonga - soat strelkasi bo'yicha aylanadi) */
+.bg-scene .mandala.mandala-front,
 .bg-scene .mandala.inner {
-  width: calc(var(--inner-ratio, 0.5) * 100%);
-  height: calc(var(--inner-ratio, 0.5) * 100%);
+  width: calc(var(--inner-ratio, 0.72) * 100%);
+  height: calc(var(--inner-ratio, 0.72) * 100%);
   transform: rotate(calc(var(--r, 0) * 0.16deg));
 }
 
