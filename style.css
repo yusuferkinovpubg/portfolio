@@ -49,6 +49,16 @@ html {
   background: url('images/bg.webp') center/cover no-repeat;
 }
 
+/* Fonga atrofi qora vinyetka (vignette) effekti */
+.bg-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0.68) 100%);
+}
+
 /* Chap tomonda markazlashtirilgan konteyner (Markazi chap chekkada, o'ng yarmi ko'rinadi) */
 .bg-scene .mandala-side-left {
   position: absolute;
