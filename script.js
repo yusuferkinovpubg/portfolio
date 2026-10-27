@@ -1,14 +1,14 @@
 // ================= BO'LIMLAR (SECTIONS) =================
 const DEFAULT_SECTIONS = [
-  { id: 'asosiy',    name: 'Milliy Taomlar',             cover: 'images/030A0348.webp' },
-  { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/030A0361.webp' },
+  { id: 'asosiy',    name: 'Milliy Taomlar',             cover: 'images/icon_milliy.webp' },
+  { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/icon_shashlik.webp' },
   { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/030A0283.webp' },
   { id: 'salatlar',  name: 'Salatlar va Gazaklar',       cover: 'images/030A0254.webp' },
   { id: 'non',       name: 'Tandir Non va Somsa',        cover: 'images/030A0383.webp' },
-  { id: 'gazli',     name: 'Gazlangan Ichimliklar',      cover: 'images/030A0298.webp' },
-  { id: 'sharbat',   name: 'Sharbat, Ayron va Kompot',   cover: 'images/030A0303.webp' },
-  { id: 'moxito',    name: 'Moxito va Limonadlar',       cover: 'images/030A0335.webp' },
-  { id: 'kokteyl',   name: 'Milkshake va Kokteyllar',    cover: 'images/030A0377.webp' },
+  { id: 'gazli',     name: 'Gazlangan Ichimliklar',      cover: 'images/icon_ichimliklar.webp' },
+  { id: 'sharbat',   name: 'Sharbat, Ayron va Kompot',   cover: 'images/icon_ichimliklar.webp' },
+  { id: 'moxito',    name: 'Moxito va Limonadlar',       cover: 'images/icon_ichimliklar.webp' },
+  { id: 'kokteyl',   name: 'Milkshake va Kokteyllar',    cover: 'images/icon_ichimliklar.webp' },
   { id: 'choy_kofe', name: 'Choy va Qahva',              cover: 'images/030A9434.webp' },
   { id: 'desert',    name: 'Shirinliklar va Mevalar',    cover: 'images/030A0293.webp' }
 ];
