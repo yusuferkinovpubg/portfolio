@@ -2,8 +2,8 @@
 const DEFAULT_SECTIONS = [
   { id: 'asosiy',    name: 'Milliy Taomlar',             cover: 'images/icon_milliy.webp' },
   { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/icon_shashlik.webp' },
-  { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/030A0283.webp' },
-  { id: 'salatlar',  name: 'Salatlar va Gazaklar',       cover: 'images/030A0254.webp' },
+  { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/icon_shorva.webp' },
+  { id: 'salatlar',  name: 'Salatlar va Gazaklar',       cover: 'images/icon_salat.webp' },
   { id: 'non',       name: 'Tandir Non va Somsa',        cover: 'images/030A0383.webp' },
   { id: 'gazli',     name: 'Gazlangan Ichimliklar',      cover: 'images/icon_ichimliklar.webp' },
   { id: 'sharbat',   name: 'Sharbat, Ayron va Kompot',   cover: 'images/icon_ichimliklar.webp' },
