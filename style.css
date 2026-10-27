@@ -407,6 +407,32 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   transform: scale(0.97);
 }
 
+.tile-glass-backdrop {
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 105px;
+  height: 105px;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.tile-glass-backdrop .glass-container,
+.tile-glass-backdrop .glass-button {
+  width: 105px !important;
+  height: 105px !important;
+  min-width: 105px !important;
+  min-height: 105px !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
+}
+
 .home-tile-img {
   position: absolute;
   inset: 0;
@@ -415,7 +441,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   object-fit: contain;
   padding: 14px 14px 70px;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .home-tile-info {
