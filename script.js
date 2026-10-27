@@ -1049,40 +1049,6 @@ function renderHomeMenu() {
   }).join('');
 
   container.innerHTML = tilesHtml;
-  initLiquidGlassTiles();
-}
-
-function initLiquidGlassTiles() {
-  if (typeof Container === 'undefined') return;
-
-  const placeholders = document.querySelectorAll('.tile-glass-backdrop');
-  if (!placeholders.length) return;
-
-  placeholders.forEach(wrap => {
-    if (wrap.dataset.glassInit) return;
-    wrap.dataset.glassInit = '1';
-
-    try {
-      const glass = new Container({
-        type: 'circle',
-        borderRadius: 52,
-        tintOpacity: 0.35
-      });
-      glass.width = 105;
-      glass.height = 105;
-      wrap.appendChild(glass.element);
-    } catch (e) {
-      console.warn('Liquid Glass init error:', e);
-    }
-  });
-
-  if (typeof html2canvas !== 'undefined') {
-    setTimeout(() => {
-      try {
-        Container.capturePageSnapshot();
-      } catch (err) {}
-    }, 250);
-  }
 }
 
 function renderSectionsBar() {
