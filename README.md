@@ -8,13 +8,22 @@ Zamonaviy, minimalist va to'liq moslashuvchan (responsive) restoran va choyxona 
 
 ```text
 ./
-├── index.html          # Asosiy HTML hujjati
-├── style.css           # Qorong'i-oltin (Dark-Gold) uslubdagi premium dizayn
+├── index.html          # Asosiy HTML hujjati (faol fon sahnasi bilan)
+├── style.css           # Premium dizayn, ranglar va alohida BG SCENE bo'limi
 ├── script.js           # 95 ta taom ma'lumotlari, filtrlash, admin boshqaruvi va lightbox
-├── images/             # 95 ta yuqori sifatli taom va ichimliklar fotosuratlari
+├── bg-rotate.js        # Silliq lerp scroll animatsiyasi (mandala aylanishi)
+├── SHABLONLAR.md       # Fon shablonlarini 1 buyruq bilan almashtirish bo'yicha to'liq qo'llanma 🎨
+├── tools/
+│   ├── prepare_assets.py  # Fon va mandalalarni avtomatik tozalash va WebP ga o'tkazish
+│   ├── switch_template.py # Shablonlarni (1 va 2) bir zumda almashtirish vositasi
+│   └── preview.html       # Jonli QA tekshiruvi va slaydli vizualizator
+├── archive/            # 1-shablonning to'liq zaxira arxivi (shablon-1.zip)
+├── images/             # Taomlar fotosuratlari va optimallashtirilgan fon aktivlari
 ├── .gitignore          # Keraksiz tizim fayllarini filtrlash
 └── README.md           # Loyiha hujjatlari va GitHub-ga yuklash qo'llanmasi
 ```
+
+> 💡 **Fon shablonlarini almashtirish:** Shablonlarni o'zgartirish bo'yicha batafsil qo'llanma uchun [SHABLONLAR.md](SHABLONLAR.md) fayliga qarang. Tezkor almashtirish: `python tools/switch_template.py 1` yoki `python tools/switch_template.py 2`.
 
 ---
 
