@@ -1,15 +1,11 @@
 // ================= BO'LIMLAR (SECTIONS) =================
 const DEFAULT_SECTIONS = [
-  { id: 'asosiy',    name: 'Milliy Taomlar',             cover: 'images/icon_milliy.webp' },
-  { id: 'kabob',     name: 'Kaboblar va Shashlik',       cover: 'images/icon_shashlik.webp' },
-  { id: 'shorva',    name: "Sho'rvalar",                 cover: 'images/icon_shorva.webp' },
-  { id: 'salatlar',  name: 'Salatlar va Gazaklar',       cover: 'images/icon_salat.webp' },
-  { id: 'gazli',     name: 'Gazlangan Ichimliklar',      cover: 'images/icon_ichimliklar.webp' },
-  { id: 'sharbat',   name: 'Sharbat, Ayron va Kompot',   cover: 'images/icon_ichimliklar.webp' },
-  { id: 'moxito',    name: 'Moxito va Limonadlar',       cover: 'images/icon_ichimliklar.webp' },
-  { id: 'kokteyl',   name: 'Milkshake va Kokteyllar',    cover: 'images/icon_ichimliklar.webp' },
-  { id: 'choy_kofe', name: 'Choy va Qahva',              cover: 'images/030A9434.webp' },
-  { id: 'desert',    name: 'Shirinliklar va Mevalar',    cover: 'images/icon_desert.webp' }
+  { id: 'asosiy',      name: 'Milliy Taomlar',             cover: 'images/icon_milliy.webp' },
+  { id: 'kabob',       name: 'Kaboblar va Shashlik',       cover: 'images/icon_shashlik.webp' },
+  { id: 'shorva',      name: "Sho'rvalar",                 cover: 'images/icon_shorva.webp' },
+  { id: 'salatlar',    name: 'Salatlar va Gazaklar',       cover: 'images/icon_salat.webp' },
+  { id: 'ichimliklar', name: 'Ichimliklar',                cover: 'images/icon_ichimliklar.webp' },
+  { id: 'desert',      name: 'Shirinliklar va Mevalar',    cover: 'images/icon_desert.webp' }
 ];
 
 let SECTIONS = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
@@ -107,7 +103,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_12',
     name: "Choyxona muzdek ayroni (1L)",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Yalpizli va rayhonli tabiiy qatiq ayroni (1 litr)",
     image: "images/030A0288.webp"
@@ -115,7 +111,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_13',
     name: "Uy kompoti grafinda (1L)",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 22000,
     desc: "Tabiiy mevalardan tayyorlangan muzdek uy kompoti (1 litr)",
     image: "images/030A0291.webp"
@@ -139,7 +135,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_16',
     name: "Pepsi 1.5L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 18000,
     desc: "Salqin gazlangan ichimlik Pepsi 1.5 litr",
     image: "images/030A0297.webp"
@@ -147,7 +143,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_17',
     name: "Coca-Cola 1.5L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 18000,
     desc: "Klassik salqin ichimlik Coca-Cola 1.5 litr",
     image: "images/030A0298.webp"
@@ -155,7 +151,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_18',
     name: "Fanta 1.5L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 18000,
     desc: "Apelsinli yorqin gazlangan ichimlik Fanta 1.5 litr",
     image: "images/030A0299.webp"
@@ -163,7 +159,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_19',
     name: "Dena Olma sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Tabiiy yashil olma sharbati (1 litr)",
     image: "images/030A0301.webp"
@@ -171,7 +167,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_20',
     name: "Dena Shaftoli sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Xushbo'y quyuq shaftoli sharbati (1 litr)",
     image: "images/030A0302.webp"
@@ -179,7 +175,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_21',
     name: "Dena Anor sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 22000,
     desc: "Foydali va nordon-shirin tabiiy anor sharbati (1 litr)",
     image: "images/030A0303.webp"
@@ -187,7 +183,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_22',
     name: "Dena Olcha sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Tetislashtiruvchi sarxush olcha sharbati (1 litr)",
     image: "images/030A0304.webp"
@@ -195,7 +191,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_23',
     name: "Dena Multimeva sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Tropik va mahalliy mevalar nektari (1 litr)",
     image: "images/030A0305.webp"
@@ -203,7 +199,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_24',
     name: "Dena Apelsin sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Vitaminlarga boy apelsin sharbati (1 litr)",
     image: "images/030A0306.webp"
@@ -211,7 +207,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_25',
     name: "Dena Pomidor sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Tabiiy quyuq pomidor sharbati tuz bilan (1 litr)",
     image: "images/030A0307.webp"
@@ -219,7 +215,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_26',
     name: "Dena O'rik sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Shirin va quyuq mayin o'rik sharbati (1 litr)",
     image: "images/030A0308.webp"
@@ -227,7 +223,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_27',
     name: "Dena Qora smorodina sharbati 1L",
-    section: 'sharbat',
+    section: 'ichimliklar',
     price: 22000,
     desc: "Tabiiy qora smorodina sharbati (1 litr)",
     image: "images/030A0309.webp"
@@ -235,7 +231,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_28',
     name: "Coca-Cola Classic shisha 0.25L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi klassik Coca-Cola (250 ml)",
     image: "images/030A0312.webp"
@@ -243,7 +239,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_29',
     name: "Fanta Orange shisha 0.25L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi apelsinli Fanta (250 ml)",
     image: "images/030A0313.webp"
@@ -251,7 +247,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_30',
     name: "Sprite shisha 0.25L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 12000,
     desc: "Muzdek shisha idishdagi limon-laymli Sprite (250 ml)",
     image: "images/030A0314.webp"
@@ -259,7 +255,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_31',
     name: "Pepsi banka 0.33L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi salqin Pepsi (330 ml)",
     image: "images/030A0315.webp"
@@ -267,7 +263,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_32',
     name: "Coca-Cola banka 0.33L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi klassik Coca-Cola (330 ml)",
     image: "images/030A0317.webp"
@@ -275,7 +271,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_33',
     name: "Fanta banka 0.33L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi apelsinli Fanta (330 ml)",
     image: "images/030A0318.webp"
@@ -283,7 +279,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_34',
     name: "Sprite banka 0.33L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Temir bankadagi limonli Sprite (330 ml)",
     image: "images/030A0319.webp"
@@ -291,7 +287,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_35',
     name: "Coca-Cola Zero banka 0.33L",
-    section: 'gazli',
+    section: 'ichimliklar',
     price: 14000,
     desc: "Shakarsiz salqin ichimlik Coca-Cola Zero (330 ml)",
     image: "images/030A0320.webp"
@@ -299,7 +295,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_36',
     name: "Moviy Laguna kokteyli",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Moviy Kyurasao, Sprite, limon sharbati va muz",
     image: "images/030A0326.webp"
@@ -307,7 +303,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_37',
     name: "Yashil olma va kivi moxitosi",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Yangi yalpiz, kivi, yashil olma siropi, laym va gazlangan suv",
     image: "images/030A0332.webp"
@@ -315,7 +311,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_38',
     name: "Klassik Laymli Moxito",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Barra yalpiz barglari, laym bo'laklari, shakar qiyomi va muz",
     image: "images/030A0335.webp"
@@ -323,7 +319,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_39',
     name: "Sitrusli Tropik Limonad",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Apelsin, greyfrut, limon va yangi meva sharbatlari bilan",
     image: "images/030A0337.webp"
@@ -331,7 +327,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_40',
     name: "Qulupnayli Moxito kokteyli",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Qulupnay pyuresi, yalpiz, laym va muzdek gazlangan suv",
     image: "images/030A0339.webp"
@@ -339,7 +335,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_41',
     name: "Mango-Passhion mevali kokteyl",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 30000,
     desc: "Egzotik mango, marakuya mevalari va sitrus aralashmasi",
     image: "images/030A0341.webp"
@@ -403,7 +399,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_49',
     name: "Moviy Laguna limonadi 1L grafinda",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 48000,
     desc: "Grafinda oilaviy salqin kokteyl: Moviy Kyurasao, laym, limon va muz",
     image: "images/030A0365.webp"
@@ -411,7 +407,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_50',
     name: "Yashil kivi va yalpiz limonadi 1L",
-    section: 'moxito',
+    section: 'ichimliklar',
     price: 48000,
     desc: "Grafinda tayyorlangan xushbo'y yashil moxito va kivi limonadi (1 litr)",
     image: "images/030A0368.webp"
@@ -427,7 +423,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_52',
     name: "Qulupnayli sutli milkshake",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Tabiiy sut, qulupnayli muzqaymoq va meva siropi",
     image: "images/030A0377.webp"
@@ -435,7 +431,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_53',
     name: "Qaymoqli vanil milkshake",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 25000,
     desc: "Yangi qaymoq, sovuq sut va klassik vanil aralashmasi",
     image: "images/030A0380.webp"
@@ -451,7 +447,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_55',
     name: "Shokoladli klassik milkshake",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Belgiya shokoladi, muzqaymoq, sut va shokolad qirindisi",
     image: "images/030A0391.webp"
@@ -499,7 +495,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_61',
     name: "Espresso qahvasi",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 15000,
     desc: "Klassik quyuq italyancha espresso (30 ml)",
     image: "images/030A4439.webp"
@@ -507,7 +503,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_62',
     name: "Americano qahvasi",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 18000,
     desc: "Yangi tuyilgan qahva donachalaridan tayyorlangan xushbo'y Americano",
     image: "images/030A4440.webp"
@@ -515,7 +511,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_63',
     name: "Qaymoqli Kapuchino",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 22000,
     desc: "Qalin sutli ko'pikka ega klassik kapuchino qahvasi",
     image: "images/030A4442.webp"
@@ -523,7 +519,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_64',
     name: "Qora Arabika kofesi",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 20000,
     desc: "100% Arabika donachalaridan tayyorlangan xushbo'y qora qahva",
     image: "images/030A4443.webp"
@@ -531,7 +527,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_65',
     name: "Qatlamli Latte Makiyato",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 24000,
     desc: "Issiq sut, nozik ko'pik va xushbo'y espresso qatlamlari",
     image: "images/030A4444.webp"
@@ -539,7 +535,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_66',
     name: "Issiq shokolad va Kofe miks",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 25000,
     desc: "Kakao, qaymoqli sut va mayin kofe uyg'unligi",
     image: "images/030A4445.webp"
@@ -635,7 +631,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_78',
     name: "Qulupnayli maxsus kokteyl",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Yangi qulupnay sharbati, qaymoq va muzdek shirinlik",
     image: "images/030A7637.webp"
@@ -643,7 +639,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_79',
     name: "Shaftolili qaymoqli kokteyl",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Xushbo'y shaftoli mevalari va mayin vanil kremi",
     image: "images/030A7649.webp"
@@ -651,7 +647,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_80',
     name: "Bananli va karamelli bokal kokteyl",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Pishgan banan, quyuq karamel va muzdek sut",
     image: "images/030A7653.webp"
@@ -659,7 +655,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_81',
     name: "Kivi va laymli tropik kokteyl",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Nordon-shirin kivi, laym sharbati va muz bo'laklari",
     image: "images/030A7656.webp"
@@ -667,7 +663,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_82',
     name: "Shokoladli Snikers kokteyli",
-    section: 'kokteyl',
+    section: 'ichimliklar',
     price: 29000,
     desc: "Yeryong'oq, qaymoq, karamel va erigan shokolad aralashmasi",
     image: "images/030A7661.webp"
@@ -675,7 +671,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_83',
     name: "Frensh-pressda mevali qizil choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Anor donachalari, karkade, apelsin va dolchinli issiq choy",
     image: "images/030A9434.webp"
@@ -683,7 +679,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_84',
     name: "Frensh-pressda anorli va limonli choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Barra anor sharbati, limon parraklari va tog' giyohlari",
     image: "images/030A9440.webp"
@@ -691,7 +687,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_85',
     name: "Zanjabilli va asalli shifobaxsh choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 26000,
     desc: "Yangi zanjabil ildizi, tabiiy asal, limon va ko'k choy",
     image: "images/030A9442.webp"
@@ -699,7 +695,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_86',
     name: "Dengiz itshumurti (Oblepixa) choyi",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 30000,
     desc: "Foydali oblepixa mevalari, apelsin va yalpizli xushbo'y choy",
     image: "images/030A9448.webp"
@@ -707,7 +703,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_87',
     name: "Tog' giyohlari va yalpizli choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 22000,
     desc: "Chotqol tog'larining shifobaxsh giyohlari, kiyiko't va yalpiz",
     image: "images/030A9451.webp"
@@ -715,7 +711,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_88',
     name: "Limonli va yalpizli ko'k choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Klassik 95-ko'k choy, yangi limon bo'laklari va yalpiz",
     image: "images/030A9463.webp"
@@ -723,7 +719,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_89',
     name: "Qora choy limon va novvot bilan",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 20000,
     desc: "Hindcha oliy nav qora choy, limon va oq shirin novvot",
     image: "images/030A9466.webp"
@@ -731,7 +727,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_90',
     name: "Sitrusli va mevali maxsus choy",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Limon, laym, apelsin va olma bo'laklari bilan damlangan choy",
     image: "images/030A9468.webp"
@@ -739,7 +735,7 @@ const DEFAULT_ITEMS = [
   {
     id: 'item_91',
     name: "Qulupnayli va yalpizli choynak choyi",
-    section: 'choy_kofe',
+    section: 'ichimliklar',
     price: 28000,
     desc: "Haqiqiy qulupnay donalari, yalpiz va mayin ko'k choy",
     image: "images/030A9469.webp"
@@ -805,6 +801,8 @@ const SHARBAT_IDS = new Set(['item_12', 'item_13', 'item_19', 'item_20', 'item_2
 const MOXITO_IDS = new Set(['item_36', 'item_37', 'item_38', 'item_39', 'item_40', 'item_41', 'item_49', 'item_50']);
 const KOKTEYL_IDS = new Set(['item_52', 'item_53', 'item_55', 'item_78', 'item_79', 'item_80', 'item_81', 'item_82']);
 
+const DRINK_SECS = new Set(['gazli', 'sharbat', 'moxito', 'kokteyl', 'choy_kofe']);
+
 function migrateOldSections() {
   let changed = false;
   items.forEach(item => {
@@ -812,19 +810,9 @@ function migrateOldSections() {
       changed = true;
       item.section = 'asosiy';
     }
-    if (item.section === 'ichimliklar') {
+    if (DRINK_SECS.has(item.section)) {
       changed = true;
-      if (GAZLI_IDS.has(item.id)) {
-        item.section = 'gazli';
-      } else if (SHARBAT_IDS.has(item.id)) {
-        item.section = 'sharbat';
-      } else if (MOXITO_IDS.has(item.id)) {
-        item.section = 'moxito';
-      } else if (KOKTEYL_IDS.has(item.id)) {
-        item.section = 'kokteyl';
-      } else {
-        item.section = 'gazli';
-      }
+      item.section = 'ichimliklar';
     }
   });
   if (changed) {
