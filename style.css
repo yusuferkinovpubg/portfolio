@@ -1,10 +1,29 @@
 :root {
-  --bg-black: #07070A;
-  --border-glass: rgba(255, 255, 255, 0.12);
-  --text-white: #F5F5F7;
-  --text-muted: #A0A0AC;
-  --gold: #D4AF37;
+  /* Feruza fon + ko'k mandala mavzusi */
+  --bg: #A8DDD3;
+  --bg-edge: #86C5B8;
+  --navy: #12295C;
+  --blue: #1B3F8B;
+  --card: rgba(255, 255, 255, 0.86);
+
+  /* Mandala o'lchamlari va aylanish burchagi */
+  --outer: clamp(300px, 64vmin, 960px);
+  --inner-ratio: 0.5;
+  --r: 0;
+
+  /* Global meros ranglar (och feruza-ko'k tizimiga moslashtirilgan) */
+  --bg-black: var(--bg);
+  --border-glass: rgba(18, 41, 92, 0.14);
+  --text-white: var(--navy);
+  --text-muted: #2d4677;
+  --gold: var(--blue);
   --radius: 18px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --outer: clamp(220px, 70vmin, 420px);
+  }
 }
 
 * {
@@ -18,20 +37,81 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ================= 1. SAYTNING UMUMIY FONI ================= */
+/* ==========================================================================
+   BG SCENE (Feruza Fon + Ko'k Mandala Aylanishi)
+   ========================================================================== */
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: url('images/bg.webp') center/cover no-repeat;
+}
+
+.bg-scene .corner {
+  position: absolute;
+  width: var(--outer);
+  height: var(--outer);
+  pointer-events: none;
+}
+
+.bg-scene .corner.tl {
+  top: calc(var(--outer) / -2);
+  left: calc(var(--outer) / -2);
+}
+
+.bg-scene .corner.tr {
+  top: calc(var(--outer) / -2);
+  right: calc(var(--outer) / -2);
+}
+
+.bg-scene .corner.bl {
+  bottom: calc(var(--outer) / -2);
+  left: calc(var(--outer) / -2);
+}
+
+.bg-scene .corner.br {
+  bottom: calc(var(--outer) / -2);
+  right: calc(var(--outer) / -2);
+}
+
+.bg-scene .mandala {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.bg-scene .mandala.outer {
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(var(--r, 0) * -0.10deg));
+}
+
+.bg-scene .mandala.inner {
+  width: calc(var(--inner-ratio, 0.5) * 100%);
+  height: calc(var(--inner-ratio, 0.5) * 100%);
+  transform: rotate(calc(var(--r, 0) * 0.16deg));
+}
+
+.bg-scene .bg-frame {
+  position: absolute;
+  inset: clamp(12px, 3vw, 36px);
+  border: clamp(6px, 1.2vw, 14px) solid rgba(214, 244, 238, 0.6);
+  z-index: 2;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+/* ================= 1. SAYTNING ASOSIY BODY QISMI ================= */
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-black);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 55%),
-    linear-gradient(rgba(7, 7, 10, 0.78), rgba(7, 7, 10, 0.88)),
-    url('images/full-background.webp'),
-    url('images/background.webp');
-  background-attachment: fixed;
-  background-size: cover, cover, cover, cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: var(--text-white);
+  background-color: var(--bg);
+  color: var(--navy);
   min-height: 100vh;
   line-height: 1.5;
   overflow-x: hidden;
@@ -55,9 +135,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .site-header {
   position: relative;
   z-index: 2;
-  background: rgba(12, 12, 16, 0.75);
-  backdrop-filter: blur(22px) saturate(170%);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
+  box-shadow: 0 4px 16px rgba(18, 41, 92, 0.05);
   transition: background 0.3s ease;
 }
 
@@ -84,8 +166,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 12px var(--gold);
+  background: var(--blue);
+  box-shadow: 0 0 10px rgba(27, 63, 139, 0.45);
 }
 
 .brand-name {
@@ -93,8 +175,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   font-weight: 700;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: var(--text-white);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  color: var(--navy);
+  text-shadow: none;
 }
 
 .header-right {
@@ -104,18 +186,16 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   flex-wrap: wrap;
 }
 
-/* ================= 3. LIQUID GLASS TUGMALAR (DARK GLASS EFFEKTI) ================= */
+/* ================= 3. SHISHA TUGMALAR (LIGHT LIQUID GLASS) ================= */
 .btn {
   position: relative;
   z-index: 2;
   overflow: hidden;
-  background: rgba(16, 16, 22, 0.68);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(18, 41, 92, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--navy);
   padding: 8px 18px;
   border-radius: 12px;
   font-size: 13px;
@@ -125,10 +205,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   align-items: center;
   gap: 6px;
   box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.7),
-    0 2px 6px rgba(0, 0, 0, 0.5),
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+    0 4px 14px rgba(18, 41, 92, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
@@ -140,10 +218,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  text-shadow: none;
 }
 
-/* Dark shisha yaltirashi */
 .btn::before {
   content: '';
   position: absolute;
@@ -151,64 +228,52 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   left: 4px;
   right: 4px;
   height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: inherit;
   pointer-events: none;
 }
 
 .btn:hover {
-  background: rgba(26, 26, 36, 0.8);
-  border-color: rgba(255, 255, 255, 0.15);
-  border-bottom-color: rgba(0, 0, 0, 0.8);
+  background: #ffffff;
+  border-color: var(--blue);
+  color: var(--blue);
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.8),
-    inset 0 1px 1px rgba(255, 255, 255, 0.12),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.7);
+    0 6px 18px rgba(27, 63, 139, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-1.5px);
 }
 
 .btn:active {
   transform: translateY(0.5px) scale(0.985);
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 6px rgba(18, 41, 92, 0.1);
 }
 
 .btn-gold {
-  background: rgba(45, 36, 12, 0.7);
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  border-top: 1px solid rgba(212, 175, 55, 0.75);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
-  color: #FFE680;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 14px rgba(212, 175, 55, 0.2), inset 0 1px 1px rgba(212, 175, 55, 0.3);
+  background: var(--blue);
+  border: 1px solid var(--navy);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(27, 63, 139, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn-gold:hover {
-  background: rgba(58, 46, 16, 0.85);
-  border-color: rgba(212, 175, 55, 0.65);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.35);
+  background: #143272;
+  border-color: #0b1c40;
+  color: #ffffff;
+  box-shadow: 0 6px 22px rgba(27, 63, 139, 0.45);
 }
 
 .btn-danger {
-  color: #FFA3A6;
-  background: rgba(45, 16, 20, 0.75);
-  border: 1px solid rgba(229, 72, 77, 0.35);
-  border-top: 1px solid rgba(255, 133, 137, 0.65);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.75),
-    0 0 14px rgba(229, 72, 77, 0.2),
-    inset 0 1px 1px rgba(255, 133, 137, 0.25),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  background: #dc3545;
+  border: 1px solid #b02a37;
+  box-shadow: 0 4px 14px rgba(220, 53, 69, 0.3);
 }
 
 .btn-danger:hover {
-  background: rgba(65, 20, 26, 0.9);
-  color: #FFF;
-  border-color: rgba(255, 133, 137, 0.6);
-  box-shadow: 
-    0 8px 26px rgba(0, 0, 0, 0.85),
-    0 0 20px rgba(229, 72, 77, 0.35);
+  background: #bb2d3b;
+  color: #ffffff;
+  border-color: #a52834;
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.45);
   transform: translateY(-1.5px);
 }
 
@@ -226,27 +291,25 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .user-badge {
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--gold);
-  background: 
-    linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(20, 18, 10, 0.55) 100%) padding-box,
-    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(212, 175, 55, 0.35) 100%) border-box;
-  border: 1px solid transparent;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(27, 63, 139, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 6px 13px;
   border-radius: 999px;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(18, 41, 92, 0.06);
 }
 
 /* ================= 4. SECTIONS BAR (STICKY NAV FOR ACTIVE SECTION) ================= */
 .sections-nav {
   position: relative;
   z-index: 1;
-  background: rgba(10, 10, 14, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
+  box-shadow: 0 4px 16px rgba(18, 41, 92, 0.06);
 }
 
 .sections-nav-inner {
@@ -266,25 +329,23 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   min-height: 40px;
   padding: 8px 18px;
   border-radius: 999px;
-  background: rgba(22, 22, 28, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.28);
-  border-bottom-color: rgba(0, 0, 0, 0.7);
-  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(18, 41, 92, 0.18);
+  color: var(--navy);
   font-family: inherit;
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(18, 41, 92, 0.08);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-back-home:hover {
-  background: rgba(45, 36, 12, 0.85);
-  border-color: rgba(212, 175, 55, 0.55);
-  color: #FFE680;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(212, 175, 55, 0.25);
+  background: var(--blue);
+  border-color: var(--navy);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(27, 63, 139, 0.25);
   transform: translateY(-1px);
 }
 
@@ -295,9 +356,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .active-sec-badge {
   font-size: 15px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--blue);
   letter-spacing: 0.3px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+  text-shadow: none;
 }
 
 /* ================= BOSH EKRAN: BO'LIMLAR KATAGI (TILES) ================= */
@@ -326,13 +387,13 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   aspect-ratio: 1 / 1.1;
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(22, 22, 28, 0.85) 0%, rgba(12, 12, 16, 0.92) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top-color: rgba(255, 255, 255, 0.24);
-  border-bottom-color: rgba(0, 0, 0, 0.7);
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(18, 41, 92, 0.12);
   box-shadow: 
-    0 10px 28px rgba(0, 0, 0, 0.55),
-    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    0 10px 24px rgba(18, 41, 92, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   cursor: pointer;
   user-select: none;
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
@@ -341,13 +402,13 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 @media (hover: hover) {
   .home-tile:hover {
     transform: translateY(-2px);
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: rgba(27, 63, 139, 0.4);
     box-shadow: 
-      0 14px 36px rgba(0, 0, 0, 0.65),
-      0 0 18px rgba(212, 175, 55, 0.2);
+      0 14px 32px rgba(18, 41, 92, 0.14),
+      0 0 14px rgba(27, 63, 139, 0.12);
   }
   .home-tile:hover .home-tile-title {
-    color: #FFE680;
+    color: var(--blue);
   }
 }
 
@@ -377,16 +438,16 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   justify-content: flex-end;
   text-align: center;
   gap: 3px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.60) 65%, transparent 100%);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.82) 65%, transparent 100%);
   pointer-events: none;
 }
 
 .home-tile-title {
   font-size: 15px;
   font-weight: 700;
-  color: var(--text-white);
+  color: var(--navy);
   line-height: 1.25;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95);
+  text-shadow: none;
   word-break: normal;
   overflow-wrap: break-word;
 }
@@ -394,9 +455,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .home-tile-count {
   font-size: 12px;
   font-weight: 600;
-  color: var(--gold);
+  color: var(--blue);
   letter-spacing: 0.2px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+  text-shadow: none;
 }
 
 @media (max-width: 599px) {
@@ -418,7 +479,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   text-align: center;
   padding: 60px 20px;
   color: var(--text-muted);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border: 1px dashed rgba(18, 41, 92, 0.2);
   border-radius: 16px;
   font-size: 14px;
 }
@@ -444,7 +505,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(18, 41, 92, 0.12);
   padding-bottom: 10px;
 }
 
@@ -452,23 +513,22 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   font-size: 19px;
   font-weight: 700;
   letter-spacing: 0.4px;
-  color: var(--gold);
+  color: var(--navy);
   text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
+  text-shadow: none;
 }
 
 .section-heading span {
   font-size: 12px;
-  color: var(--text-muted);
-  background: 
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(20, 20, 26, 0.5)) padding-box,
-    linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05)) border-box;
-  border: 1px solid transparent;
+  font-weight: 600;
+  color: var(--blue);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(18, 41, 92, 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 3px 12px;
   border-radius: 999px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 4px rgba(18, 41, 92, 0.05);
 }
 
 /* Single Column Vertical Gallery Stack */
@@ -478,40 +538,31 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   gap: 26px;
 }
 
-/* ===== Qora Liquid Glass Kartochka ===== */
+/* ===== Liquid Glass Kartochka (Feruza + Oq shisha) ===== */
 .gallery-card {
   content-visibility: auto;
   contain-intrinsic-size: auto 520px;
   position: relative;
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.38) 100%);
-  border: 1px solid rgba(0,0,0,0.55);
-  border-top-color: rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
-  -webkit-backdrop-filter: blur(10px) saturate(150%) brightness(0.65);
+  background: var(--card);
+  border: 1px solid rgba(18, 41, 92, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius);
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow:
-    0 14px 36px rgba(0,0,0,0.55),
-    inset 0 1px 1px rgba(0,0,0,0.60),
-    inset 0 -1px 1px rgba(0,0,0,0.50),
-    inset 0 0 28px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 28px rgba(18, 41, 92, 0.08);
 }
 
 .gallery-card:hover {
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.28) 45%, rgba(0,0,0,0.44) 100%);
-  border-color: rgba(212,175,55,0.40);
-  border-top-color: rgba(255,255,255,0.14);
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(27, 63, 139, 0.35);
   box-shadow: 
-    0 18px 48px rgba(0, 0, 0, 0.68),
-    0 0 20px rgba(212, 175, 55, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    0 16px 36px rgba(18, 41, 92, 0.14),
+    0 0 16px rgba(27, 63, 139, 0.12);
   transform: translateY(-2px);
 }
 
-/* Yaltirash (qora soya) */
+/* Yaltirash */
 .gallery-card::after {
   content: '';
   position: absolute;
@@ -520,8 +571,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   pointer-events: none;
   z-index: 4;
   background:
-    linear-gradient(115deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 30%),
-    radial-gradient(120% 60% at 50% 0%, rgba(0,0,0,0.18), transparent 60%);
+    linear-gradient(115deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 35%),
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.25), transparent 60%);
   mix-blend-mode: normal;
 }
 
@@ -548,7 +599,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   padding: 12px 16px 44px;
   display: block;
   opacity: 0;
-  pointer-events: none; /* Galaxy Tab va Chrome uzoq bosganda rasmni saqlash menyusini chiqarmaydi */
+  pointer-events: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
@@ -563,7 +614,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   transform: scale(1.035);
 }
 
-/* Ma'lumot paneli (Qora shisha) */
+/* Ma'lumot paneli (Oq shisha) */
 .gallery-info {
   position: relative;
   z-index: 3;
@@ -574,16 +625,13 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  background: linear-gradient(135deg,
-    rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.40) 100%);
-  border: 1px solid rgba(0,0,0,0.55);
-  border-top-color: rgba(255,255,255,0.12);
-  backdrop-filter: blur(14px) saturate(170%);
-  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(18, 41, 92, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.55),
-    inset 0 1px 1px rgba(0,0,0,0.60),
-    inset 0 -12px 24px rgba(0,0,0,0.25);
+    0 8px 24px rgba(18, 41, 92, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .gallery-text {
@@ -594,30 +642,28 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .gallery-title {
   font-size: 19px;
   font-weight: 700;
-  color: var(--text-white);
+  color: var(--navy);
   margin-bottom: 6px;
   line-height: 1.35;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+  text-shadow: none;
 }
 
 .gallery-desc {
   font-size: 13.5px;
-  color: #C8C8D0;
+  color: #1f3660;
   line-height: 1.5;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+  text-shadow: none;
 }
 
-/* Authentic Dark Liquid Glass Price Badge */
+/* Authentic Liquid Glass Price Badge (Ko'k) */
 .gallery-price {
   position: relative;
   overflow: hidden;
   font-size: 17.5px;
   font-weight: 800;
-  color: #FFE680;
-  background: rgba(16, 16, 20, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(212, 175, 55, 0.4);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  background: var(--blue);
+  border: 1px solid var(--navy);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   padding: 8px 18px;
@@ -625,11 +671,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   white-space: nowrap;
   flex-shrink: 0;
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.75),
-    0 0 16px rgba(212, 175, 55, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.08),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.65);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 14px rgba(212, 175, 55, 0.5);
+    0 4px 14px rgba(27, 63, 139, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -640,26 +684,24 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   left: 8px;
   right: 8px;
   height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
   border-radius: 999px;
   pointer-events: none;
 }
 
 .gallery-card:hover .gallery-price {
-  background: rgba(24, 24, 30, 0.85);
-  border-color: rgba(212, 175, 55, 0.55);
+  background: #143272;
+  border-color: #0b1c40;
   box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.85),
-    0 0 24px rgba(212, 175, 55, 0.35),
-    inset 0 1px 1px rgba(212, 175, 55, 0.2);
+    0 6px 20px rgba(27, 63, 139, 0.45);
   transform: translateY(-1.5px) scale(1.03);
 }
 
 /* Admin Quick-Edit Row inside Card */
 .card-admin-bar {
   padding: 12px 20px;
-  background: rgba(10, 10, 14, 0.65);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(240, 248, 246, 0.88);
+  border-top: 1px solid rgba(18, 41, 92, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -681,51 +723,41 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 
 .inline-price-input {
   width: 120px;
-  background: rgba(20, 20, 26, 0.7);
-  color: var(--text-white);
-  border: 1px solid var(--border-glass);
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid rgba(18, 41, 92, 0.2);
   padding: 7px 10px;
   border-radius: 9px;
   font-size: 13.5px;
   font-weight: 700;
   outline: none;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 2px rgba(18, 41, 92, 0.05);
 }
 
 .inline-price-input:focus {
-  border-color: var(--gold);
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(27, 63, 139, 0.25);
 }
 
 .btn-save-price {
   position: relative;
   overflow: hidden;
-  background: rgba(18, 38, 26, 0.75);
-  border: 1px solid rgba(85, 212, 146, 0.35);
-  border-top: 1px solid rgba(85, 212, 146, 0.65);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  color: #55D492;
+  background: #198754;
+  border: 1px solid #146c43;
+  color: #ffffff;
   padding: 7px 15px;
   border-radius: 999px;
   font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.7),
-    0 0 12px rgba(85, 212, 146, 0.2),
-    inset 0 1px 1px rgba(85, 212, 146, 0.25),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-save-price:hover {
-  background: rgba(24, 52, 36, 0.9);
-  color: #A3F3C6;
-  border-color: rgba(85, 212, 146, 0.6);
-  box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.8),
-    0 0 18px rgba(85, 212, 146, 0.35);
+  background: #157347;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(25, 135, 84, 0.45);
   transform: translateY(-1px);
 }
 
@@ -745,9 +777,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .btn-sec-reorder {
   font-size: 12px;
   font-weight: 600;
-  color: var(--gold);
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--blue);
+  background: rgba(27, 63, 139, 0.08);
+  border: 1px solid rgba(27, 63, 139, 0.25);
   padding: 4px 12px;
   border-radius: 999px;
   cursor: pointer;
@@ -755,9 +787,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .btn-sec-reorder:hover {
-  background: rgba(212, 175, 55, 0.22);
-  border-color: var(--gold);
-  color: #FFE680;
+  background: var(--blue);
+  border-color: var(--navy);
+  color: #ffffff;
 }
 
 /* ================= DASHBOARD: TAOMLAR TARTIBI (IKONKA SHAKLIDA) ================= */
@@ -782,23 +814,23 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   gap: 10px;
   margin-bottom: 14px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(18, 41, 92, 0.12);
   border-radius: 10px;
 }
 
 .reorder-section-select-wrap label {
   font-size: 13px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--navy);
 }
 
 .reorder-section-select-wrap select {
   flex: 1;
   min-width: 160px;
-  background: rgba(20, 20, 26, 0.85);
-  color: var(--text-white);
-  border: 1px solid var(--border-glass);
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid rgba(18, 41, 92, 0.2);
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 13.5px;
@@ -837,10 +869,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   text-align: center;
   padding: 8px 6px 10px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(24, 24, 30, 0.9) 0%, rgba(14, 14, 18, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(18, 41, 92, 0.12);
+  box-shadow: 0 4px 14px rgba(18, 41, 92, 0.08);
   cursor: grab;
   touch-action: pan-y;   /* 1 soniya bosib turguncha erkin tepa/pastga skroll bo'ladi */
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s, border-color 0.18s, opacity 0.18s;
@@ -853,8 +886,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 /* Bosib turganda (300ms) dastlabki belgi */
 .reorder-card.is-pressing {
   transform: scale(0.95);
-  border-color: rgba(212, 175, 55, 0.75);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  border-color: var(--blue);
+  box-shadow: 0 2px 10px rgba(18, 41, 92, 0.15);
   transition: transform 0.1s ease;
   touch-action: none !important;
 }
@@ -862,8 +895,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 /* Original kartochka o'rnida qoladigan shaffof joy (placeholder) */
 .reorder-card.is-placeholder {
   opacity: 0.32 !important;
-  border: 2px dashed rgba(212, 175, 55, 0.7) !important;
-  background: rgba(212, 175, 55, 0.06) !important;
+  border: 2px dashed rgba(27, 63, 139, 0.6) !important;
+  background: rgba(27, 63, 139, 0.08) !important;
   transform: scale(0.95) !important;
   box-shadow: none !important;
   pointer-events: none;
@@ -879,9 +912,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   margin: 0 !important;
   opacity: 0.96;
   border-radius: 14px;
-  border: 2px solid #FFE680 !important;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.88), 0 0 30px rgba(212, 175, 55, 0.8) !important;
-  background: linear-gradient(135deg, rgba(28, 28, 36, 0.98) 0%, rgba(14, 14, 20, 0.98) 100%) !important;
+  border: 2px solid var(--blue) !important;
+  box-shadow: 0 16px 40px rgba(18, 41, 92, 0.35) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
   will-change: transform;
   transform-origin: center center;
   box-sizing: border-box;
@@ -889,17 +922,17 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 
 /* Ustiga keltirilganda (dragover nishon) */
 .reorder-card.is-drag-over {
-  border-color: #55D492 !important;
-  background: rgba(85, 212, 146, 0.18) !important;
+  border-color: #198754 !important;
+  background: rgba(25, 135, 84, 0.18) !important;
   transform: scale(1.06);
-  box-shadow: 0 0 20px rgba(85, 212, 146, 0.6) !important;
+  box-shadow: 0 0 20px rgba(25, 135, 84, 0.5) !important;
 }
 
 /* Tanlangan holat (tap-to-swap uchun) */
 .reorder-card.is-selected {
-  border-color: #FFE680;
-  background: rgba(212, 175, 55, 0.18);
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.5);
+  border-color: var(--blue);
+  background: rgba(27, 63, 139, 0.12);
+  box-shadow: 0 0 14px rgba(27, 63, 139, 0.35);
   transform: translateY(-2px);
 }
 
@@ -909,11 +942,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   left: 5px;
   font-size: 11px;
   font-weight: 800;
-  color: #000;
-  background: linear-gradient(135deg, #FFE680 0%, #D4AF37 100%);
+  color: #ffffff;
+  background: var(--blue);
   padding: 2px 6px;
   border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 6px rgba(18, 41, 92, 0.2);
   z-index: 2;
   pointer-events: none;
 }
@@ -939,7 +972,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .reorder-title {
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--text-white);
+  color: var(--navy);
   line-height: 1.22;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -972,15 +1005,15 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(18, 41, 92, 0.12);
   border-radius: 12px;
   transition: border-color 0.2s, background 0.2s;
 }
 
 .sec-edit-row:focus-within {
-  border-color: rgba(212, 175, 55, 0.5);
-  background: rgba(212, 175, 55, 0.04);
+  border-color: var(--blue);
+  background: #ffffff;
 }
 
 .sec-edit-cover {
@@ -1023,9 +1056,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 
 .sec-name-input {
   width: 100%;
-  background: rgba(12, 12, 16, 0.85);
-  color: var(--text-white);
-  border: 1px solid var(--border-glass);
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid rgba(18, 41, 92, 0.2);
   padding: 8px 10px;
   border-radius: 8px;
   font-size: 14px;
@@ -1036,8 +1069,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .sec-name-input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(27, 63, 139, 0.25);
 }
 
 .sections-modal-foot {
@@ -1052,9 +1085,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.84);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(18, 41, 92, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -1067,23 +1100,22 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .modal-box {
-  background: 
-    linear-gradient(145deg, rgba(20, 20, 28, 0.85) 0%, rgba(12, 12, 16, 0.92) 100%) padding-box,
-    linear-gradient(145deg, rgba(255, 255, 255, 0.22) 0%, rgba(212, 175, 55, 0.2) 100%) border-box;
-  border: 1px solid transparent;
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(18, 41, 92, 0.14);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   width: 100%;
   max-width: 480px;
   max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 60px rgba(18, 41, 92, 0.25);
+  color: var(--navy);
 }
 
 .modal-top {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(18, 41, 92, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1092,7 +1124,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .modal-top h3 {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text-white);
+  color: var(--navy);
 }
 
 .btn-close {
@@ -1103,24 +1135,20 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(22, 22, 28, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: var(--text-muted);
+  background: rgba(18, 41, 92, 0.06);
+  border: 1px solid rgba(18, 41, 92, 0.14);
+  color: var(--navy);
   font-size: 20px;
   cursor: pointer;
   line-height: 1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(18, 41, 92, 0.06);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-close:hover {
-  background: rgba(36, 36, 46, 0.88);
-  color: var(--text-white);
-  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(18, 41, 92, 0.12);
+  color: var(--navy);
+  border-color: rgba(18, 41, 92, 0.25);
   transform: scale(1.08);
 }
 
@@ -1140,33 +1168,34 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .field label {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--navy);
 }
 
 .field input,
 .field select,
 .field textarea {
-  background: rgba(12, 12, 16, 0.7);
-  color: var(--text-white);
-  border: 1px solid var(--border-glass);
+  background: #ffffff;
+  color: var(--navy);
+  border: 1px solid rgba(18, 41, 92, 0.2);
   padding: 10px 12px;
   border-radius: 10px;
   font-size: 14px;
   font-family: inherit;
   outline: none;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 2px rgba(18, 41, 92, 0.05);
   transition: border-color 0.2s;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--gold);
+  border-color: var(--blue);
+  box-shadow: 0 0 8px rgba(27, 63, 139, 0.25);
 }
 
 .modal-foot {
   padding: 14px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(18, 41, 92, 0.1);
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -1186,18 +1215,16 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .toast {
-  background: 
-    linear-gradient(135deg, rgba(24, 24, 32, 0.88), rgba(16, 16, 22, 0.92)) padding-box,
-    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(212, 175, 55, 0.5) 100%) border-box;
-  border: 1px solid transparent;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(18, 41, 92, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--navy);
   padding: 12px 20px;
   border-radius: 14px;
   font-size: 13.5px;
   font-weight: 600;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 32px rgba(18, 41, 92, 0.15);
   animation: toastFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1216,11 +1243,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .site-footer {
   text-align: center;
   padding: 36px 20px 48px;
-  background: rgba(10, 10, 14, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(18, 41, 92, 0.1);
+  color: var(--navy);
   font-size: 13px;
 }
 
@@ -1326,11 +1353,9 @@ img, .gallery-card, .reorder-card, .home-tile {
     -webkit-backdrop-filter: none !important;
   }
   .gallery-card {
-    background: linear-gradient(135deg,
-      rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.55) 100%);
+    background: rgba(255, 255, 255, 0.94);
   }
   .gallery-info {
-    background: linear-gradient(135deg,
-      rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.52) 45%, rgba(0,0,0,0.62) 100%);
+    background: rgba(255, 255, 255, 0.94);
   }
 }
