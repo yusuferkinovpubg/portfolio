@@ -1037,7 +1037,6 @@ function renderHomeMenu() {
 
     return `
       <div class="home-tile" data-sec="${sec.id}" role="button" tabindex="0">
-        <div class="tile-glass-backdrop"></div>
         <img class="home-tile-img" src="${coverSrc}" alt="" width="200" height="200" loading="${loadingAttr}" decoding="async"
           onerror="if (!this.dataset.fallback) { this.dataset.fallback = '1'; this.src = 'images/030A0348.webp'; }" />
         <div class="home-tile-info">

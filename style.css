@@ -373,139 +373,88 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   }
 }
 
+/* ================= BOSH EKRAN: 6 TA BO'LIM KATAGI (FULL LIQUID GLASS CARD) ================= */
 .home-tile {
   position: relative;
   aspect-ratio: 1 / 1.1;
-  border-radius: 20px;
+  border-radius: 24px;
   overflow: hidden;
-  background: var(--card);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 
-    0 10px 24px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   cursor: pointer;
   user-select: none;
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
+  
+  /* Qabariq optik suyuq shisha (Apple visionOS Liquid Glass) */
+  background:
+    /* Yuqori chap nur manbai (specular surface flare) */
+    radial-gradient(130% 90% at 18% 10%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.08) 36%, transparent 68%),
+    /* Pastki o'ng akslantiruvchi firuza/ko'k sinish nurlari */
+    radial-gradient(100% 100% at 85% 90%, rgba(56, 189, 248, 0.22) 0%, transparent 60%),
+    /* Chuqur suyuq qorong'u shisha asosi */
+    linear-gradient(155deg, rgba(20, 36, 64, 0.68) 0%, rgba(10, 18, 32, 0.82) 100%);
+  
+  /* Optik shisha sindirish va rang to'yintirish */
+  backdrop-filter: blur(16px) saturate(200%) contrast(105%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%) contrast(105%);
+  
+  /* Shisha qirrasi (rim light) va ichki 3D sinish nurlari */
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.38),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(56, 189, 248, 0.15),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.65),
+    inset 0 -2.5px 5px rgba(0, 0, 0, 0.4),
+    inset 0 0 16px rgba(255, 255, 255, 0.08);
+
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+/* Shisha kartochka yuzasidagi optik yaltiroqlik (glossy specular sweep) */
+.home-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 65%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Pastki qirradagi nozik akslanish (ambient rim refraction) */
+.home-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 -18px 28px -10px rgba(56, 189, 248, 0.24);
+  pointer-events: none;
+  z-index: 1;
 }
 
 @media (hover: hover) {
   .home-tile:hover {
-    transform: translateY(-2px);
-    border-color: rgba(27, 63, 139, 0.4);
-    box-shadow: 
-      0 14px 32px rgba(18, 41, 92, 0.14),
-      0 0 14px rgba(27, 63, 139, 0.12);
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow:
+      0 24px 50px rgba(0, 0, 0, 0.48),
+      0 0 32px rgba(56, 189, 248, 0.32),
+      inset 0 2px 4px rgba(255, 255, 255, 0.88),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.45),
+      inset 0 0 20px rgba(255, 255, 255, 0.16);
+  }
+  .home-tile:hover .home-tile-img {
+    transform: scale(1.08);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
   }
   .home-tile:hover .home-tile-title {
-    color: var(--blue);
+    color: #38bdf8;
   }
 }
 
 .home-tile:active {
   transform: scale(0.97);
-}
-
-/* ================= LIQUID GLASS LENS (1-YO'L: SOF CSS APPLE VISIONOS) ================= */
-.tile-glass-backdrop {
-  position: absolute;
-  top: 36%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 106px;
-  height: 106px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.12) 28%, transparent 58%),
-    radial-gradient(circle at 74% 78%, rgba(56, 189, 248, 0.22) 0%, transparent 60%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06) 0%, rgba(14, 26, 48, 0.38) 72%, rgba(10, 18, 32, 0.58) 100%);
-  backdrop-filter: blur(14px) saturate(190%) contrast(105%);
-  -webkit-backdrop-filter: blur(14px) saturate(190%) contrast(105%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.36),
-    0 2px 6px rgba(0, 0, 0, 0.22),
-    0 0 20px rgba(56, 189, 248, 0.16),
-    inset 0 2px 3px rgba(255, 255, 255, 0.72),
-    inset 0 -2.5px 5px rgba(0, 0, 0, 0.45),
-    inset 0 0 10px rgba(255, 255, 255, 0.12);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s ease,
-              border-color 0.25s ease;
-  will-change: transform;
-}
-
-.tile-glass-backdrop::before {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 14px;
-  width: 44px;
-  height: 22px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 75%);
-  transform: rotate(-26deg);
-  pointer-events: none;
-  filter: blur(0.5px);
-}
-
-.tile-glass-backdrop::after {
-  content: '';
-  position: absolute;
-  bottom: 8px;
-  right: 14px;
-  width: 38px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(315deg, rgba(56, 189, 248, 0.4) 0%, transparent 80%);
-  transform: rotate(-22deg);
-  pointer-events: none;
-  filter: blur(1px);
-}
-
-@media (hover: hover) {
-  .home-tile:hover .tile-glass-backdrop {
-    transform: translate(-50%, -50%) scale(1.08);
-    border-color: rgba(255, 255, 255, 0.58);
-    box-shadow:
-      0 16px 36px rgba(0, 0, 0, 0.44),
-      0 0 26px rgba(56, 189, 248, 0.32),
-      inset 0 2.5px 4px rgba(255, 255, 255, 0.88),
-      inset 0 -3px 6px rgba(0, 0, 0, 0.42),
-      inset 0 0 14px rgba(255, 255, 255, 0.18);
-  }
-
-  .home-tile:hover .home-tile-img {
-    transform: scale(1.06);
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.55));
-  }
-}
-
-.home-tile:active .tile-glass-backdrop {
-  transform: translate(-50%, -50%) scale(0.96);
-}
-
-@media (max-width: 420px) {
-  .tile-glass-backdrop {
-    width: 92px;
-    height: 92px;
-  }
-  .tile-glass-backdrop::before {
-    top: 5px;
-    left: 12px;
-    width: 36px;
-    height: 18px;
-  }
-  .tile-glass-backdrop::after {
-    bottom: 6px;
-    right: 12px;
-    width: 30px;
-    height: 14px;
-  }
 }
 
 .home-tile-img {
@@ -514,23 +463,25 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 14px 14px 70px;
+  padding: 16px 16px 66px;
   pointer-events: none;
   z-index: 2;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s ease;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
 }
 
 .home-tile-info {
   position: absolute;
   inset: auto 0 0 0;
   z-index: 2;
-  padding: 24px 10px 12px;
+  padding: 22px 10px 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
   gap: 3px;
-  background: linear-gradient(to top, rgba(10, 18, 32, 0.92) 0%, rgba(10, 18, 32, 0.7) 65%, transparent 100%);
+  background: linear-gradient(to top, rgba(8, 14, 26, 0.9) 0%, rgba(8, 14, 26, 0.62) 65%, transparent 100%);
   pointer-events: none;
 }
 
@@ -539,9 +490,10 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   font-weight: 700;
   color: #ffffff;
   line-height: 1.25;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   word-break: normal;
   overflow-wrap: break-word;
+  transition: color 0.2s ease;
 }
 
 .home-tile-count {
@@ -553,6 +505,15 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 @media (max-width: 599px) {
+  .home-tile {
+    border-radius: 18px;
+  }
+  .home-tile-img {
+    padding: 12px 12px 60px;
+  }
+  .home-tile-info {
+    padding: 16px 8px 10px;
+  }
   .home-tile-title {
     font-size: 13.5px;
   }
@@ -1503,7 +1464,6 @@ img, .gallery-card, .reorder-card, .home-tile {
   .gallery-card,
   .gallery-info,
   .btn,
-  .home-tile,
   .site-header {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
