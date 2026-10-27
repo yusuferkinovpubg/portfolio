@@ -6,7 +6,7 @@
   <meta name="description" content="Sangzor kaboblar — Milliy taomlar, kaboblar, salatlar va shirinliklar rasmlar galereyasi." />
   <title>Sangzor kaboblar — Rasmlar Galereyasi</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>" />
-  <link rel="stylesheet" href="style.css?v=4.0" />
+  <link rel="stylesheet" href="style.css?v=4.1" />
 </head>
 <body>
   <!-- ================= BG SCENE (2-shablon: Chap tomon o'rtada mandala 2 + 2.1) ================= -->
@@ -210,10 +210,28 @@
     <div class="modal-box sections-modal-box">
       <div class="modal-top">
         <div>
-          <h3 id="sectionsModalTitle">Bo'limlar nomlarini tahrirlash</h3>
-          <p class="reorder-subtitle">Bo'lim nomlarini o'zgartiring va saqlang</p>
+          <h3 id="sectionsModalTitle">Bo'limlarni boshqarish</h3>
+          <p class="reorder-subtitle">Yangi bo'lim qo'shing yoki nomlarini tahrirlang</p>
         </div>
         <button class="btn-close" type="button" data-close="sectionsModal" aria-label="Yopish">×</button>
+      </div>
+      <!-- Yangi bo'lim qo'shish bloki -->
+      <div class="sec-add-box">
+        <div class="sec-add-title">➕ Yangi bo'lim qo'shish</div>
+        <div class="sec-add-row">
+          <input type="text" id="newSectionNameInput" class="sec-name-input" placeholder="Bo'lim nomi (masalan: Pitsa va Fastfud)..." maxlength="60" />
+          <select id="newSectionIconSelect" class="sec-name-input sec-icon-select">
+            <option value="images/icon_milliy.webp">🍲 Osh / Milliy taomlar</option>
+            <option value="images/icon_shashlik.webp">🍢 Shashlik / Kabob</option>
+            <option value="images/icon_shorva.webp">🥣 Sho'rva</option>
+            <option value="images/icon_salat.webp">🥗 Salat</option>
+            <option value="images/icon_ichimliklar.webp">🍾 Ichimliklar</option>
+            <option value="images/icon_desert.webp">🧇 Shirinliklar</option>
+          </select>
+          <button class="btn btn-gold" type="button" id="btnAddNewSection">
+            <span class="label">+ Qo'shish</span>
+          </button>
+        </div>
       </div>
       <form id="sectionsForm">
         <div class="modal-body sections-modal-body" id="sectionsListContainer">
@@ -235,7 +253,7 @@
   <div class="toast-wrap" id="toastWrap"></div>
 
   <!-- Asosiy JavaScript kodi -->
-  <script src="script.js?v=4.0"></script>
+  <script src="script.js?v=4.1"></script>
   <!-- Mandala aylanishi skripti (Feruza fon + ko'k mandala) -->
   <script src="bg-rotate.js?v=3.0" defer></script>
 </body>

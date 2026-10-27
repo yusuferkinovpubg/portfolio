@@ -830,6 +830,13 @@ function loadData() {
           const target = SECTIONS.find(x => x.id === s.id);
           if (target && s.name && s.name.trim()) {
             target.name = s.name.trim();
+            if (s.cover) target.cover = s.cover;
+          } else if (!target && s.id && s.name && s.name.trim()) {
+            SECTIONS.push({
+              id: s.id,
+              name: s.name.trim(),
+              cover: s.cover || 'images/icon_milliy.webp'
+            });
           }
         });
       }
@@ -907,7 +914,7 @@ function saveCredentialsData() {
 
 function saveSectionsData() {
   try {
-    localStorage.setItem(STORAGE_KEYS.SECTIONS, JSON.stringify(SECTIONS.map(s => ({ id: s.id, name: s.name }))));
+    localStorage.setItem(STORAGE_KEYS.SECTIONS, JSON.stringify(SECTIONS.map(s => ({ id: s.id, name: s.name, cover: s.cover }))));
     return true;
   } catch (e) {
     return false;
@@ -947,7 +954,7 @@ function renderSectionsEditList() {
     const count = items.filter(i => i.section === s.id).length;
     return `
       <div class="sec-edit-row" data-sec-row="${s.id}">
-        <img src="${s.cover || 'images/030A0348.webp'}" alt="" class="sec-edit-cover" onerror="this.src='images/030A0348.webp'" />
+        <img src="${s.cover || 'images/icon_milliy.webp'}" alt="" class="sec-edit-cover" onerror="this.src='images/icon_milliy.webp'" />
         <div class="sec-edit-fields">
           <div class="sec-edit-header">
             <span class="sec-edit-badge">${escapeHtml(s.id)}</span>
@@ -955,6 +962,7 @@ function renderSectionsEditList() {
           </div>
           <input type="text" class="sec-name-input" data-sec-id="${s.id}" value="${escapeHtml(s.name)}" placeholder="Bo'lim nomi" required maxlength="60" />
         </div>
+        <button type="button" class="btn-del-sec" data-del-sec="${s.id}" title="Bo'limni o'chirish" aria-label="Bo'limni o'chirish">🗑️</button>
       </div>
     `;
   }).join('');
@@ -1889,6 +1897,59 @@ function setupEvents() {
       refreshAllSectionsUI();
       closeModal('sectionsModal');
       showToast("Bo'limlar nomlari muvaffaqiyatli saqlandi!");
+    });
+  }
+
+  // Yangi bo'lim qo'shish tugmasi
+  const btnAddNewSection = document.getElementById('btnAddNewSection');
+  if (btnAddNewSection) {
+    btnAddNewSection.addEventListener('click', () => {
+      const nameInp = document.getElementById('newSectionNameInput');
+      const iconSel = document.getElementById('newSectionIconSelect');
+      const name = nameInp ? nameInp.value.trim() : '';
+      if (!name) {
+        showToast("Iltimos, yangi bo'lim nomini kiriting.");
+        if (nameInp) nameInp.focus();
+        return;
+      }
+      const newId = 'sec_' + Date.now();
+      const newCover = iconSel ? iconSel.value : 'images/icon_milliy.webp';
+      SECTIONS.push({
+        id: newId,
+        name: name,
+        cover: newCover
+      });
+      saveSectionsData();
+      renderSectionsEditList();
+      refreshAllSectionsUI();
+      if (nameInp) nameInp.value = '';
+      showToast(`"${name}" bo'limi muvaffaqiyatli qo'shildi!`);
+    });
+  }
+
+  // Bo'limni o'chirish (delegated click)
+  const sectionsListContainer = document.getElementById('sectionsListContainer');
+  if (sectionsListContainer) {
+    sectionsListContainer.addEventListener('click', (e) => {
+      const delBtn = e.target.closest('[data-del-sec]');
+      if (!delBtn) return;
+      const secId = delBtn.getAttribute('data-del-sec');
+      const targetSec = SECTIONS.find(s => s.id === secId);
+      if (!targetSec) return;
+
+      const dishCount = items.filter(i => i.section === secId).length;
+      if (dishCount > 0) {
+        alert(`"${targetSec.name}" bo'limida ${dishCount} ta taom bor. Bo'limni o'chirishdan oldin undagi taomlarni boshqa bo'limga o'tkazing yoki o'chiring.`);
+        return;
+      }
+
+      if (confirm(`Haqiqatan ham "${targetSec.name}" bo'limini o'chirmoqchimisiz?`)) {
+        SECTIONS = SECTIONS.filter(s => s.id !== secId);
+        saveSectionsData();
+        renderSectionsEditList();
+        refreshAllSectionsUI();
+        showToast(`"${targetSec.name}" bo'limi o'chirildi.`);
+      }
     });
   }
 

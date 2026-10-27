@@ -794,7 +794,7 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 
 .reorder-subtitle {
   font-size: 12.5px;
-  color: var(--text-muted);
+  color: #94a3b8;
   margin-top: 3px;
 }
 
@@ -805,23 +805,23 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   gap: 10px;
   margin-bottom: 14px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(18, 41, 92, 0.12);
+  background: rgba(8, 16, 30, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 10px;
 }
 
 .reorder-section-select-wrap label {
   font-size: 13px;
   font-weight: 700;
-  color: var(--navy);
+  color: #e2e8f0;
 }
 
 .reorder-section-select-wrap select {
   flex: 1;
   min-width: 160px;
-  background: #ffffff;
-  color: var(--navy);
-  border: 1px solid rgba(18, 41, 92, 0.2);
+  background: rgba(18, 32, 54, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 13.5px;
@@ -991,20 +991,75 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   padding: 16px 20px;
 }
 
+.sec-add-box {
+  background: rgba(8, 16, 30, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 14px 20px 0;
+}
+
+.sec-add-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7dd3fc;
+  margin-bottom: 8px;
+}
+
+.sec-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sec-add-row .sec-name-input {
+  flex: 1.2;
+  min-width: 140px;
+}
+
+.sec-icon-select {
+  flex: 1;
+  min-width: 130px;
+}
+
+.btn-del-sec {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-del-sec:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #dc2626;
+  transform: scale(1.05);
+}
+
 .sec-edit-row {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(18, 41, 92, 0.12);
+  background: rgba(8, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   transition: border-color 0.2s, background 0.2s;
 }
 
 .sec-edit-row:focus-within {
-  border-color: var(--blue);
-  background: #ffffff;
+  border-color: #38bdf8;
+  background: rgba(8, 16, 30, 0.8);
 }
 
 .sec-edit-cover {
@@ -1030,33 +1085,42 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   justify-content: space-between;
   align-items: center;
   font-size: 11.5px;
-  color: var(--text-muted);
+  color: #94a3b8;
 }
 
 .sec-edit-badge {
   font-weight: 700;
-  color: var(--gold);
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 6px;
+  border-radius: 4px;
   letter-spacing: 0.3px;
   font-size: 11px;
 }
 
 .sec-edit-count {
   font-size: 11px;
-  color: var(--text-muted);
+  color: #94a3b8;
 }
 
 .sec-name-input {
   width: 100%;
-  background: #ffffff;
-  color: var(--navy);
-  border: 1px solid rgba(18, 41, 92, 0.2);
+  background: rgba(18, 32, 54, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 8px 10px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.sec-name-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
 }
 
 .sec-name-input:focus {
@@ -1076,9 +1140,9 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(18, 41, 92, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(4, 9, 18, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -1091,8 +1155,8 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .modal-box {
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(18, 41, 92, 0.14);
+  background: rgba(14, 24, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
@@ -1100,22 +1164,22 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   max-width: 480px;
   max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 24px 60px rgba(18, 41, 92, 0.25);
-  color: var(--navy);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 24px rgba(27, 63, 139, 0.2);
+  color: #ffffff;
 }
 
 .modal-top {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(18, 41, 92, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .modal-top h3 {
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 700;
-  color: var(--navy);
+  color: #ffffff;
 }
 
 .btn-close {
@@ -1126,20 +1190,20 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(18, 41, 92, 0.06);
-  border: 1px solid rgba(18, 41, 92, 0.14);
-  color: var(--navy);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   font-size: 20px;
   cursor: pointer;
   line-height: 1;
-  box-shadow: 0 2px 8px rgba(18, 41, 92, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-close:hover {
-  background: rgba(18, 41, 92, 0.12);
-  color: var(--navy);
-  border-color: rgba(18, 41, 92, 0.25);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.08);
 }
 
@@ -1159,34 +1223,34 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .field label {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--navy);
+  color: #e2e8f0;
 }
 
 .field input,
 .field select,
 .field textarea {
-  background: #ffffff;
-  color: var(--navy);
-  border: 1px solid rgba(18, 41, 92, 0.2);
+  background: rgba(8, 16, 30, 0.75);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 10px 12px;
   border-radius: 10px;
   font-size: 14px;
   font-family: inherit;
   outline: none;
-  box-shadow: inset 0 1px 2px rgba(18, 41, 92, 0.05);
-  transition: border-color 0.2s;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 8px rgba(27, 63, 139, 0.25);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
 }
 
 .modal-foot {
   padding: 14px 20px;
-  border-top: 1px solid rgba(18, 41, 92, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -1206,16 +1270,16 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 }
 
 .toast {
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(18, 41, 92, 0.14);
+  background: rgba(14, 24, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: var(--navy);
+  color: #ffffff;
   padding: 12px 20px;
   border-radius: 14px;
   font-size: 13.5px;
   font-weight: 600;
-  box-shadow: 0 12px 32px rgba(18, 41, 92, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
   animation: toastFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1234,11 +1298,11 @@ input, textarea, select, [contenteditable="true"], .gallery-text, .user-badge, .
 .site-footer {
   text-align: center;
   padding: 36px 20px 48px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(12, 22, 38, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(18, 41, 92, 0.1);
-  color: var(--navy);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
   font-size: 13px;
 }
 
@@ -1354,9 +1418,10 @@ img, .gallery-card, .reorder-card, .home-tile {
 
 /* Modal ichidagi reorder-card ko'rinishi */
 .modal-box .reorder-card {
-  background: rgba(240, 248, 246, 0.9);
-  color: var(--navy);
+  background: rgba(18, 32, 54, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 .modal-box .reorder-card .reorder-title {
-  color: var(--navy);
+  color: #ffffff;
 }
