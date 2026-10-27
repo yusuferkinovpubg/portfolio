@@ -96,14 +96,7 @@ html {
   transform: rotate(calc(var(--r, 0) * 0.16deg));
 }
 
-.bg-scene .bg-frame {
-  position: absolute;
-  inset: clamp(12px, 3vw, 36px);
-  border: clamp(6px, 1.2vw, 14px) solid rgba(214, 244, 238, 0.6);
-  z-index: 2;
-  pointer-events: none;
-  box-sizing: border-box;
-}
+.bg-scene .bg-frame { display: none !important; }
 
 /* ================= 1. SAYTNING ASOSIY BODY QISMI ================= */
 body {
